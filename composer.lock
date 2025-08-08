@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edf1f8df17902aa38b83cde546970c3f",
+    "content-hash": "60335b8e972a3f686a4dae06546eaddf",
     "packages": [
+        {
+            "name": "atlas/pdo",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/atlasphp/Atlas.Pdo.git",
+                "reference": "cee83863c54eead5e43d627bb43fdf30747af7e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/atlasphp/Atlas.Pdo/zipball/cee83863c54eead5e43d627bb43fdf30747af7e1",
+                "reference": "cee83863c54eead5e43d627bb43fdf30747af7e1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pds/skeleton": "^1.0",
+                "phpstan/phpstan": "^0.12.82",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Atlas\\Pdo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Atlas.Pdo Contributors",
+                    "homepage": "https://github.com/atlasphp/Atlas.Pdo/contributors"
+                }
+            ],
+            "description": "Provides a PDO instance decorator with convenience methods, and a connection manager.",
+            "homepage": "https://github.com/atlasphp/Atlas.Pdo",
+            "keywords": [
+                "Connection",
+                "database",
+                "pdo",
+                "sql"
+            ],
+            "support": {
+                "issues": "https://github.com/atlasphp/Atlas.Pdo/issues",
+                "source": "https://github.com/atlasphp/Atlas.Pdo/tree/2.0.0"
+            },
+            "time": "2021-05-31T18:16:35+00:00"
+        },
         {
             "name": "carbonphp/carbon-doctrine-types",
             "version": "3.2.0",

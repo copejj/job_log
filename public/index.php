@@ -1,9 +1,8 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use JeffCode\Config;
+use Jeff\Code\Config;
 
-Config::sayHi();
 
 ?>
 Hello, PHP World.
