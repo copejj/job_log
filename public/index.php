@@ -5,6 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-use Jeff\Code\Page;
+use Jeff\Code\Page\Index;
 
-Page::sayHi();
+Index::display();
