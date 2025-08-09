@@ -18,13 +18,14 @@ class Config
 			// The config_setting section needs env values for the database 
 			// connection so we need to set the env variables immediately
 			// before retrieving the config_settings values
-			self::$env = require static::FILENAME;
+			$file = require static::FILENAME;
+			self::$env = $file;
 
 			$settings = self::getSettings();
 			self::$env = array_merge($settings, self::$env);
 
 			self::setPlacement($settings, 'db');
-			self::setPlacement($env, 'file');
+			self::setPlacement($file, 'file');
 		}
 	}
 
@@ -48,10 +49,7 @@ class Config
 			where inactive_date is null
 				and trim(upper(environment)) in ('ANY', ?)
 			order by name, environment desc";
-		D::p('sql', $sql);
 		$settings = DB::fetchAll($sql, [trim(strtoupper(self::$env['ENVIRONMENT']))]);
-		D::p('settings', $settings);
-		exit;
 		if (!empty($settings))
 		{
 			foreach ($settings as $setting)
