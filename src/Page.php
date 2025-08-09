@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code;
 
-class Test
+class Page 
 {
 	public static function sayHi(): void
 	{
