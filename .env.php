@@ -1,7 +1,8 @@
 <?php return [
 	'ENVIRONMENT' => 'dev',
-	'DB_HOST' => '',
-	'DB_USER' => '',
-	'DB_PASS' => '',
-	'DB_NAME' => '',
+	'DB_HOST' => 'localhost',
+	'DB_RO_HOST' => 'localhost',
+	'DB_USER' => 'jjcope',
+	'DB_PASS' => 'zappy1971',
+	'DB_NAME' => 'postgres',
 ];
