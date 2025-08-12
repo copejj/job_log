@@ -1,12 +1,14 @@
 <?php
 namespace Jeff\Code\Page;
 
-use Jeff\Code\Content;
+use Jeff\Code\Template\HeaderedContent;
 
-class Index implements Content
+class Index extends HeaderedContent
 {
-	public static function display(): void
+	protected function content(): void
 	{
-		echo "Hello, World.";
+		?>
+		Hello, World!
+		<?php
 	}
 }

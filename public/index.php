@@ -1,10 +1,15 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+use Jeff\Code\Config;
+use Jeff\Code\Decider;
 
-use Jeff\Code\Page\Index;
+if (Config::get('ENVIRONMENT') !== 'prod')
+{
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+}
 
-Index::display();
+$content = Decider::getContent($_GET, $_POST);
+$content->display();
