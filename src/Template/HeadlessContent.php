@@ -1,6 +1,9 @@
 <?php
 namespace Jeff\Code\Template;
 
+use Jeff\Code\D;
+use Jeff\Code\Config;
+
 abstract class HeadlessContent extends Content
 {
 	protected function top(): void
@@ -24,5 +27,10 @@ abstract class HeadlessContent extends Content
 		?>
 		</div>
 		<?php
+		if (Config::get('ENVIRONMENT') === 'dev' && !empty($_GET['debug']))
+		{
+			D::p('GET', $_GET);
+			D::p('POST', $_POST);
+		}
 	}
 }

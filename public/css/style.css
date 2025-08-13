@@ -23,3 +23,17 @@
     height: 2rem;
 	margin-right: 1rem;
 }
+
+.check_span {
+    width: 33%;
+    display: inline-table;
+}
+
+.input_label {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+.input_cont {
+	margin-bottom: 1rem;
+}

@@ -1,10 +1,8 @@
 <?php
 namespace Jeff\Code\Template\Elements;
 
-class Select
+class Select extends Inputs
 {
-	protected string $name;
-	protected string $title;
 	protected array $data;
 	protected int $default;
 	protected int $selected;
@@ -33,8 +31,8 @@ class Select
 			$selected = (empty($this->selected)) ? $this->default : $this->selected;
 			foreach ($this->data as $id => $text)
 			{
-				$selected = ($id === $selected) ? " selected='selected'" : "";
-				$options[] = "<option value='{$id}'{$selected}>{$text}</option>";
+				$selector = ($id == $selected) ? " selected='selected'" : "";
+				$options[] = "<option value='{$id}'{$selector}>{$text}</option>";
 			}
 
 			if (!empty($options))
@@ -45,7 +43,7 @@ class Select
 					$titleOption = "<option value=''>{$this->title}</option>";
 				}
 
-				$result = "<select class='input select_input' id='select_{$this->name}' name='{$this->name}'>{$titleOption}" . implode($options) . "</select>";
+				$result = $this->getLabel() . "<select class='input select_input' id='select_{$this->name}' name='{$this->name}'>{$titleOption}" . implode($options) . "</select>";
 			}
 		}
 		return $result;

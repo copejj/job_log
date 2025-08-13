@@ -9,7 +9,8 @@ use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
 use Jeff\Code\Helper\Log\LogService;
 
-use Jeff\Code\Template\Elements\Select;
+use Jeff\Code\Template\Elements\Checkboxes;
+use Jeff\Code\Template\Elements\RadioButton;
 
 class Logs extends HeaderedContent
 {
@@ -31,12 +32,13 @@ class Logs extends HeaderedContent
 
 	public function content(): void
 	{
-		$actionSelect = new Select('action', $this->actions->data(), $this->actions->default(), $_POST['action'] ?? 0, '[Select an action]');
-		$methodSelect = new Select('method', $this->methods->data(), $this->methods->default(), $_POST['method'] ?? 0, '[Select a method]');
+		$actionInput = new Checkboxes('action', $this->actions->data(), $_POST['action'] ?? [], 'Actions');
+		$methodInput = new Checkboxes('method', $this->methods->data(), $_POST['method'] ?? [], "Methods");
 		?>
 		<form method='post'>
-			<?=$actionSelect?>
-			<?=$methodSelect?>
+			<?=$actionInput?>
+			<?=$methodInput?>
+			<input type='submit' value='Submit' />
 		</form>
 		<?php
 	}
