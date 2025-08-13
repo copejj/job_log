@@ -3,7 +3,7 @@ namespace Jeff\Code;
 
 use Jeff\Code\Template\Content;
 use Jeff\Code\Page\Index;
-use Jeff\Code\Page\LogPage;
+use Jeff\Code\Page\Logs;
 
 class Decider
 {
@@ -14,7 +14,7 @@ class Decider
 		switch ($page)
 		{
 			case 'log':
-				$content = new LogPage;
+				$content = new Logs;
 				break;
 			case 'index':
 			default:

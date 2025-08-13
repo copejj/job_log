@@ -9,6 +9,8 @@ use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
 use Jeff\Code\Helper\Log\LogService;
 
+use Jeff\Code\Template\Elements\Select;
+
 class Logs extends HeaderedContent
 {
 	protected LogService $logService;
@@ -18,9 +20,7 @@ class Logs extends HeaderedContent
 	public function processing(): void
 	{
 		$this->actions = new Actions();
-		D::p('actions', [$this->actions->default(), $this->actions->data()]);
 		$this->methods = new Methods();
-		D::p('methods', [$this->actions->default(), $this->actions->data()]);
 		$this->logService = new LogService();
 	}
 
@@ -31,9 +31,12 @@ class Logs extends HeaderedContent
 
 	public function content(): void
 	{
+		$actionSelect = new Select('action', $this->actions->data(), $this->actions->default(), $_POST['action'] ?? 0, '[Select an action]');
+		$methodSelect = new Select('method', $this->methods->data(), $this->methods->default(), $_POST['method'] ?? 0, '[Select a method]');
 		?>
 		<form method='post'>
-			
+			<?=$actionSelect?>
+			<?=$methodSelect?>
 		</form>
 		<?php
 	}

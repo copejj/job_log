@@ -40,7 +40,7 @@ abstract class Entities
 	{
 		if ($this->update_data)
 		{
-			$sql = "SELECT * from {$this->type}s";
+			$sql = "SELECT * from {$this->type}s order by {$this->type}_id";
 			$results = DB::getInstance(true)->fetchAll($sql);
 
 			if (!empty($results))
