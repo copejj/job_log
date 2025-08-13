@@ -9,6 +9,7 @@ abstract class Content
 	protected function processing(): void { }
 	protected function header(): void { }
 	protected function top(): void { }
+	protected function title(): void {}
 	protected function content(): void {}
 	protected function bottom(): void {}
 	protected function footer(): void {}
@@ -24,6 +25,7 @@ abstract class Content
 		$this->processing();
 		$this->header();
 		$this->top();
+		$this->title();
 		$this->content();
 		$this->bottom();
 		$this->footer();

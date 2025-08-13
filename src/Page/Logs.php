@@ -9,7 +9,7 @@ use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
 use Jeff\Code\Helper\Log\LogService;
 
-class LogPage extends HeaderedContent
+class Logs extends HeaderedContent
 {
 	protected LogService $logService;
 	protected Actions $actions;
@@ -24,10 +24,14 @@ class LogPage extends HeaderedContent
 		$this->logService = new LogService();
 	}
 
+	public function getTitle(): string
+	{
+		return "Logs";
+	}
+
 	public function content(): void
 	{
 		?>
-		<h2>Logs</h2>
 		<form method='post'>
 			
 		</form>

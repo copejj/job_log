@@ -1,4 +1,19 @@
 .header_cont, .footer_cont {
 	background-color: navy;
 	color: white;
+	padding: .75rem;
+}
+
+.header_cont {
+	margin-bottom: 1rem;
+}
+
+.footer_cont {
+	margin-top: 1rem;
+	font-size: .75rem;
+	font-style: italic;
+}
+
+.content_cont {
+	margin: 1rem;
 }
