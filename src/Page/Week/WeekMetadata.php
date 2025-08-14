@@ -13,11 +13,11 @@ class WeekMetadata extends Metadata
 			],
 			'start_date' => [
 				'label' => 'Start Date',
-				'format' => 'Jeff\Code\Template\Elements\Date::format',
+				'format' => 'Jeff\Code\Template\Elements\Date',
 			],
 			'end_date' => [
 				'label' => 'End Date',
-				'format' => 'Jeff\Code\Template\Elements\Date::format',
+				'format' => 'Jeff\Code\Template\Elements\Date',
 			],
 		];
 	}

@@ -4,6 +4,8 @@ namespace Jeff\Code\Template\Elements;
 use Jeff\Code\Template\Display\Formatter;
 use Jeff\Code\Template\Elements\Inputs;
 
+use Jeff\Code\Helper\Data\Record;
+
 class Date extends Inputs implements Formatter
 {
 	protected string $name;
@@ -26,12 +28,12 @@ class Date extends Inputs implements Formatter
 			</div>";
 	}
 
-	public static function format(string $data): string
+	public static function format(string $key, Record $data): string
 	{
 		if (empty($data))
 		{
 			return '';
 		}
-		return date("F j, Y", strtotime($data));
+		return date("F j, Y", strtotime($data->$key));
 	}
 }

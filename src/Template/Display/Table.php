@@ -1,6 +1,8 @@
 <?php
 namespace Jeff\Code\Template\Display;
 
+use ReflectionClass;
+
 class Table
 {
 	protected Metadata $metadata;
@@ -28,14 +30,13 @@ class Table
 			$cells = [];
 			foreach ($metadata as $key => $meta)
 			{
-				$text = $row->$key;
-				if (!empty($meta['function']))
+				if (empty($meta['format']))
 				{
-					$text = $meta['format']($row);
+					$text = $row->$key;
 				}
-				else if (!empty($meta['format']))
+				else
 				{
-					$text = $meta['format']($text);
+					$text = $meta['format']::format($key, $row);
 				}
 
 				$cells[] = "<td>{$text}</td>";
