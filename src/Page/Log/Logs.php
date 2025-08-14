@@ -5,17 +5,17 @@ use Jeff\Code\Template\HeaderedContent;
 
 use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
-use Jeff\Code\Helper\Log\LogService;
+use Jeff\Code\Helper\Log\Logs as Service;
 
 class Logs extends HeaderedContent
 {
-	protected LogService $logService;
+	protected Service $logs;
 	protected Actions $actions;
 	protected Methods $methods;
 
 	public function processing(): void
 	{
-		$this->logService = new LogService();
+		$this->logs = Service::init();
 	}
 
 	public function getTitle(): string

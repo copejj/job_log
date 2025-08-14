@@ -11,6 +11,7 @@ class WorkWeeks extends HeaderedContent
 	public function processing(): void
 	{
 		$this->workweek = Service::init();
+		\Jeff\Code\D::p('workweek', $this->workweek);
 	}
 
 	public function getTitle(): string
