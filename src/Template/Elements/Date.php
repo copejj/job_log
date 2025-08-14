@@ -34,6 +34,6 @@ class Date extends Inputs implements Formatter
 		{
 			return '';
 		}
-		return date("F j, Y", strtotime($data->$key));
+		return date("M j, Y", strtotime($data->$key));
 	}
 }
