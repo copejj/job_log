@@ -2,6 +2,7 @@
 namespace Jeff\Code\Page\Week;
 
 use Jeff\Code\Helper\Week\Weeks as Service;
+use Jeff\Code\Template\Display\Table;
 use Jeff\Code\Template\HeaderedContent;
 
 class Weeks extends HeaderedContent
@@ -20,7 +21,10 @@ class Weeks extends HeaderedContent
 
 	public function content(): void
 	{
+		$metadata = new WeekMetadata();
+		$list = new Table($metadata, $this->week->getAll());
 		?>
+			<?=$list?>
 		<?php
 	}
 }

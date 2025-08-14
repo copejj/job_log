@@ -28,4 +28,9 @@ abstract class Records
 	{
 		return print_r($this->data, true);
 	}
+
+	public function getAll(): array
+	{
+		return $this->data;
+	}
 }

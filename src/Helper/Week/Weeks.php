@@ -6,8 +6,6 @@ use Jeff\Code\Helper\Data\Records;
 
 class Weeks extends Records
 {
-	protected array $weeks;
-
 	public static function init(): Weeks
 	{
 		$sql = 

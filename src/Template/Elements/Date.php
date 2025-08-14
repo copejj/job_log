@@ -1,9 +1,10 @@
 <?php
 namespace Jeff\Code\Template\Elements;
 
+use Jeff\Code\Template\Display\Formatter;
 use Jeff\Code\Template\Elements\Inputs;
 
-class Date extends Inputs
+class Date extends Inputs implements Formatter
 {
 	protected string $name;
 	protected string $default;
@@ -23,5 +24,14 @@ class Date extends Inputs
 			"<div id='{$this->name}_group' class='input_cont date_input_cont'> 
 				<input type='date' class='input date_input' id='select_{$this->name}' name='{$this->name}' value='{$this->date}' />
 			</div>";
+	}
+
+	public static function format(string $data): string
+	{
+		if (empty($data))
+		{
+			return '';
+		}
+		return date("F j, Y", strtotime($data));
 	}
 }
