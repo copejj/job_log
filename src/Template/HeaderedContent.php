@@ -12,11 +12,25 @@ abstract class HeaderedContent extends HeadlessContent
 			</head>
 			<body>
 				<div class='header_cont'> Jeff's Work Log Page </div>
-				<div class='links_cont'>
-					<a href='/?'>Home</a>
-					<a href='/?page=log'>Log</a>
-				</div>
 		<?php
+	}
+
+	protected function links(): void
+	{
+		$links = $this->links;
+		if (!empty($links))
+		{
+			$refs = [];
+			foreach ($links as $label => $ref)
+			{
+				$refs[] = "<a href='{$ref}'>{$label}</a>";
+			}
+			?>
+				<div class='links_cont'>
+					<?=implode($refs)?>
+				</div>
+			<?php
+		}
 	}
 
 	protected function footer(): void 

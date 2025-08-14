@@ -3,7 +3,8 @@ namespace Jeff\Code;
 
 use Jeff\Code\Template\Content;
 use Jeff\Code\Page\Index;
-use Jeff\Code\Page\Logs;
+use Jeff\Code\Page\Log\Logs;
+use Jeff\Code\Page\Week\WorkWeeks;
 
 class Decider
 {
@@ -13,15 +14,24 @@ class Decider
 		$content = null;
 		switch ($page)
 		{
+			case 'workweek':
+				$content = new WorkWeeks();
+				break;
 			case 'log':
-				$content = new Logs;
+				$content = new Logs();
 				break;
 			case 'index':
 			default:
 				$content = new Index();
 		}
 
-		$content->setArgs($get, $post);
+		$content->get = $get;
+		$content->post = $post;
+		$content->links = [
+			'Home' => '/',
+			'Weeks' => '/?page=workweek',
+			'Logs' => '/?page=log',
+		];
 		return $content;
 	}
 }

@@ -1,18 +1,12 @@
 <?php
-namespace Jeff\Code\Page;
-
-use Jeff\Code\D;
-
-use Jeff\Code\Template\HeaderedContent;
+namespace Jeff\Code\Page\Week;
 
 use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
 use Jeff\Code\Helper\Log\LogService;
-
 use Jeff\Code\Template\Elements\Checkboxes;
-use Jeff\Code\Template\Elements\RadioButton;
 
-class Logs extends HeaderedContent
+class WorkWeeksEdit extends WorkWeeks
 {
 	protected LogService $logService;
 	protected Actions $actions;
@@ -20,14 +14,9 @@ class Logs extends HeaderedContent
 
 	public function processing(): void
 	{
+		parent::processing();
 		$this->actions = new Actions();
 		$this->methods = new Methods();
-		$this->logService = new LogService();
-	}
-
-	public function getTitle(): string
-	{
-		return "Logs";
 	}
 
 	public function content(): void

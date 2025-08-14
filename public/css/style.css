@@ -4,10 +4,6 @@
 	padding: .75rem;
 }
 
-.header_cont {
-	margin-bottom: 1rem;
-}
-
 .footer_cont {
 	margin-top: 1rem;
 	font-size: .75rem;
@@ -30,10 +26,20 @@
 }
 
 .input_label {
-	font-size: 1.25rem;
+	font-size: 1.1rem;
 	font-weight: bold;
 }
 
 .input_cont {
 	margin-bottom: 1rem;
+}
+
+.links_cont {
+	background: #9b9cb3;
+	padding: .5rem;
+	margin-bottom: 1rem;
+}
+
+.links_cont a {
+	margin: 0rem .25rem;
 }
