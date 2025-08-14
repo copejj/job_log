@@ -10,30 +10,23 @@ abstract class Record
 	protected bool $update_data = false;
 
 	public abstract function save(): bool;
+	public abstract static function validate(array $data): bool;
+	public abstract static function getInstance(array $data): ?Record;
 
 	public function __construct(array $data)
 	{
 		$this->data = $data;
 	}
 
-	public static function getInstance(array $data): ?Record
-	{
-		if (empty($data))
-		{
-			return null;
-		}
-
-		return new Record($data);
-	}
 
 	public static function create(array $data): ?Record
 	{
-		if (empty($data))
+		if (!static::validate($data))
 		{
 			return null;
 		}
 
-		$record = new Record($data);
+		$record = static::getInstance($data);
 		$record->update_data = true;
 		$record->save();
 		return $record;

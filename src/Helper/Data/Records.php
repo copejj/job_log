@@ -6,7 +6,7 @@ abstract class Records
 	protected array $data = [];
 
 	public abstract static function init(): Records;
-	protected abstract function getInstance(array $row): ?Record;
+	public abstract static function getInstance(array $row): ?Record;
 
 	public function __construct(array $data)
 	{
@@ -15,7 +15,7 @@ abstract class Records
 			$record = null;
 			foreach ($data as $row)
 			{
-				$record = Record::getInstance($row);
+				$record = static::getInstance($row);
 				if (!empty($record))
 				{
 					$this->data[] = $record;

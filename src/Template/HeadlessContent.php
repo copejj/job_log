@@ -13,6 +13,13 @@ abstract class HeadlessContent extends Content
 		<?php
 	}
 
+	protected function messages(): void
+	{
+		?>
+		<div class='message_cont'><?=$this->message?></div>
+		<?php
+	}
+
 	protected abstract function getTitle(): string;
 	protected function title(): void
 	{
@@ -27,7 +34,7 @@ abstract class HeadlessContent extends Content
 		?>
 		</div>
 		<?php
-		if (Config::get('ENVIRONMENT') === 'dev' && !empty($_GET['debug']))
+		if (Config::get('ENVIRONMENT') !== 'prod' && !empty($_GET['debug']))
 		{
 			D::p('GET', $_GET);
 			D::p('POST', $_POST);

@@ -3,13 +3,11 @@ namespace Jeff\Code\Page\Log;
 
 use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
-use Jeff\Code\Helper\Log\LogService;
 
 use Jeff\Code\Template\Elements\Checkboxes;
 
 class LogsEdit extends Logs
 {
-	protected LogService $logService;
 	protected Actions $actions;
 	protected Methods $methods;
 

@@ -8,6 +8,7 @@ abstract class Content
 	protected array $data = [
 		'get' => null,
 		'post' => null,
+		'message' => '',
 		'links' => null,
 		'update_data' => false,
 	];
@@ -16,6 +17,7 @@ abstract class Content
 	protected function header(): void { }
 	protected function links(): void { }
 	protected function top(): void { }
+	protected function messages(): void {}
 	protected function title(): void {}
 	protected function content(): void {}
 	protected function bottom(): void {}
@@ -27,6 +29,7 @@ abstract class Content
 		$this->header();
 		$this->links();
 		$this->top();
+		$this->messages();
 		$this->title();
 		$this->content();
 		$this->bottom();

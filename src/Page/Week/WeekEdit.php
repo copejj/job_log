@@ -3,12 +3,10 @@ namespace Jeff\Code\Page\Week;
 
 use Jeff\Code\Helper\Actions;
 use Jeff\Code\Helper\Methods;
-use Jeff\Code\Helper\Log\LogService;
 use Jeff\Code\Template\Elements\Checkboxes;
 
-class WorkWeeksEdit extends WorkWeeks
+class WeekEdit extends Weeks
 {
-	protected LogService $logService;
 	protected Actions $actions;
 	protected Methods $methods;
 

@@ -10,8 +10,17 @@ class Log extends Record
 		return false;
 	}
 
-	public static function create(array $data): ?Log
+	public static function validate(array $data): bool
 	{
+		return false;
+	}
+
+	public static function getInstance(array $data): ?Record
+	{
+		if (static::validate($data))
+		{
+			return new Record($data);
+		}
 		return null;
 	}
 }

@@ -25,7 +25,6 @@ class Checkboxes extends Inputs
 				$this->selected[$id] = $id;
 			}
 		}
-
 	}
 
 	public function __toString()

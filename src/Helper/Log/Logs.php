@@ -16,7 +16,7 @@ class Logs extends Records
 		return new Logs($results);
 	}
 
-	protected function getInstance(array $row): ?Record
+	public static function getInstance(array $row): ?Record
 	{
 		return new Log($row);
 	}

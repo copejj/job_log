@@ -1,17 +1,16 @@
 <?php
 namespace Jeff\Code\Page\Week;
 
-use Jeff\Code\Helper\Week\WorkWeeks as Service;
+use Jeff\Code\Helper\Week\Weeks as Service;
 use Jeff\Code\Template\HeaderedContent;
 
-class WorkWeeks extends HeaderedContent
+class Weeks extends HeaderedContent
 {
-	protected Service $workweek;
+	protected Service $week;
 
 	public function processing(): void
 	{
-		$this->workweek = Service::init();
-		\Jeff\Code\D::p('workweek', $this->workweek);
+		$this->week = Service::init();
 	}
 
 	public function getTitle(): string
