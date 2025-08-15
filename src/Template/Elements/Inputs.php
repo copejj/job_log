@@ -9,7 +9,7 @@ class Inputs extends Input
 	protected array $inputs;
 	protected string $type = 'group';
 
-	public function __construct(Input|array $inputs, string $label='', ?string $name, ?string $type)
+	public function __construct(Input|array $inputs, string $label='', ?string $name=null, ?string $type=null)
 	{
 		if (empty($inputs))
 		{

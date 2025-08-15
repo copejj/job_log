@@ -4,7 +4,9 @@ namespace Jeff\Code\Page\Week;
 use Exception;
 use Jeff\Code\Helper\Week\Week;
 use Jeff\Code\Template\Elements\Date;
+use Jeff\Code\Template\Elements\Form;
 use Jeff\Code\Template\Elements\Input;
+use Jeff\Code\Template\Elements\Inputs;
 
 class WeekEdit extends Weeks
 {
@@ -43,23 +45,23 @@ class WeekEdit extends Weeks
 
 	public function content(): void
 	{
-		$inputs = [];
-		$inputs[] =	new Input('week_id', 'hidden', $this->post['week_id']);
-		$inputs[] = new Date('start_date', $this->current->start_date ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date');
-		$inputs[] = new Date('end_date', $this->current->end_date ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date');
 		?>
 		<script>
 			function save_form()
 			{
-				$('#edit_form').append("<input type='hidden' name='action' value='edit' />");
+				$('#edit_form').append("<?=new Input('action', 'hidden', 'edit')?>");
 				return true;
 			}
 		</script>
-		<form id='edit_form' method='post'>
-			<?=implode($inputs)?>
-			<input type='submit' name='save_week' value='Submit' onclick='return save_form()' />
-			<input type='submit' name='cancel_week' value='Cancel' />
-		</form>
 		<?php
+		echo new Form([
+			new Inputs([ 
+				new Input('week_id', 'hidden', $this->post['week_id']),
+				new Date('start_date', $this->current->start_date ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date'),
+				new Date('end_date', $this->current->end_date ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
+			], 'date', 'date'),
+			new Input('save_week', 'submit', 'Submit', '', '', "onclick='return save_form()'"),
+			new Input('cancel_week', 'submit', 'Cancel'),
+		], 'post', "id='edit_form'");
 	}
 }

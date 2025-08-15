@@ -22,7 +22,7 @@ class Input
 	{
 		if (!empty($this->label))
 		{
-			return "<label for='{$this->name}_group' class='input_label'>{$this->label}</label>";
+			return "<label for='{$this->type}_{$this->name}' class='input_label'>{$this->label}</label>";
 		}
 		return "";
 	}
