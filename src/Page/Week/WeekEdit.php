@@ -12,6 +12,7 @@ use Jeff\Code\Template\Elements\Inputs;
 class WeekEdit extends Weeks
 {
 	protected Week $current;
+	protected bool $acted = false;
 
 	public function processing(): void
 	{
@@ -27,6 +28,7 @@ class WeekEdit extends Weeks
 				if ($has_saved)
 				{
 					$message = "This week updated successfully";
+					$this->acted = true;
 				}
 			}
 			catch (Exception $e)
@@ -61,7 +63,7 @@ class WeekEdit extends Weeks
 				new Date('end_date', $this->current->end_date ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
 			], 'date', 'date'),
 			new Input('save_week', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
-			new Input('cancel_week', 'submit', 'Cancel'),
+			new Input('cancel_week', 'submit', ($this->acted) ? 'Done' : 'Cancel'),
 		], 'post', new Attributes(['id' => 'edit_form']));
 	}
 }

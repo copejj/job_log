@@ -11,6 +11,8 @@ use Jeff\Code\Template\Elements\Inputs;
 
 class WeekAdd extends Weeks
 {
+	protected bool $acted = false;
+
 	public function processing(): void
 	{
 		if (empty($post['save_week']))
@@ -22,6 +24,7 @@ class WeekAdd extends Weeks
 				if (!empty($result))
 				{
 					$message = "This week created successfully";
+					$this->acted = true;
 				}
 			}
 			catch (Exception $e)
@@ -55,7 +58,7 @@ class WeekAdd extends Weeks
 				new Date('end_date', $this->post['end_date'] ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
 			], 'date', 'date'),
 			new Input('save_week', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
-			new Input('cancel_week', 'submit', 'Cancel'),
+			new Input('cancel_week', 'submit', ($this->acted) ? 'Done' : 'Cancel'),
 		], 'post', new Attributes(['id' => 'add_form']));
 	}
 }
