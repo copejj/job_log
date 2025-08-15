@@ -4,6 +4,8 @@ namespace Jeff\Code\Page\Week;
 use Jeff\Code\Helper\Data\Record;
 use Jeff\Code\Template\Display\Formatter;
 use Jeff\Code\Template\Display\Metadata;
+use Jeff\Code\Template\Elements\Form;
+use Jeff\Code\Template\Elements\Input;
 
 class WeekMetadata extends Metadata implements Formatter
 {
@@ -32,11 +34,11 @@ class WeekMetadata extends Metadata implements Formatter
 		{
 			return '';
 		}
-		return 
-			"<form method='post'>
-				<input type='hidden' name='action' value='edit' />
-				<input type='hidden' name='week_id' value='{$id}' />
-				<input type='submit' name='edit_week' value='Edit' />
-			</form>";
+
+		return new Form([
+			new Input('action', 'hidden', 'edit'),
+			new Input('week_id', 'hidden', $id),
+			new Input('edit_week', 'submit', 'Edit'),
+		]);
 	}
 }

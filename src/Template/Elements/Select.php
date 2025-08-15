@@ -11,15 +11,15 @@ class Select extends Input
 	 * Creates a html select
 	 * @param array $data The target data array should be $data['id'] = 'text' format
 	 * @param integer $selected The selected ID if there is one
-	 * @param string $title The title to display if nothing is selected
+	 * @param string $label The label to display if nothing is selected
 	 */
-	public function __construct(string $name, array $data, int $default=0, int $selected=0, string $title='')
+	public function __construct(string $name, array $data, int $default=0, int $selected=0, string $label='')
 	{
 		$this->name = $name;
 		$this->data = $data;
 		$this->default= $default;
 		$this->selected = $selected;
-		$this->title = $title;
+		$this->label = $label;
 	}
 
 	public function __toString()
@@ -38,12 +38,12 @@ class Select extends Input
 			if (!empty($options))
 			{
 				$titleOption = '';
-				if (!empty($this->title))
+				if (!empty($this->label))
 				{
-					$titleOption = "<option value=''>{$this->title}</option>";
+					$labelOption = "<option value=''>{$this->label}</option>";
 				}
 
-				$result = $this->getLabel() . "<select class='input select_input' id='select_{$this->name}' name='{$this->name}'>{$titleOption}" . implode($options) . "</select>";
+				$result = "<select class='input select_input' id='select_{$this->name}' name='{$this->name}'>{$labelOption}" . implode($options) . "</select>";
 			}
 		}
 		return $result;

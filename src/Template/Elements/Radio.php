@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Template\Elements;
 
-class RadioButton extends Input
+class Radio extends Input
 {
 	protected array $data;
 	protected string $selected;
@@ -12,11 +12,11 @@ class RadioButton extends Input
 	 * @param array $data The target data array should be $data['id'] = 'text' format
 	 * @param string $selected The selected IDs if there are ones
 	 */
-	public function __construct(string $name, array $data, string $selected='', string $title='')
+	public function __construct(string $name, array $data, string $selected='', string $label='')
 	{
 		$this->data = $data;
 		$this->name = $name;
-		$this->title = $title;
+		$this->label = $label;
 		$this->selected = $selected;
 	}
 
@@ -29,12 +29,12 @@ class RadioButton extends Input
 			foreach ($this->data as $id => $text)
 			{
 				$selector = ($id == $this->selected) ? " checked='checked'" : "";
-				$inputs[] = "<span class='check_span'><input name='{$this->name}' class='input check_input' type='radio' value='{$id}'{$selector} /> {$text}</span>";
+				$inputs[] = "<span class='radio_span'><input name='{$this->name}' class='input check_input' type='radio' value='{$id}'{$selector} /> {$text}</span>";
 			}
 
 			if (!empty($inputs))
 			{
-				$result = $this->getLabel() . " <div class='input_cont'> <fieldset id='{$this->name}_group'> " . implode($inputs) . " </fieldset> </div>";
+				$result = "<fieldset id='{$this->name}_group'> " . implode($inputs) . " </fieldset>";
 			}
 		}
 		return $result;

@@ -41,7 +41,7 @@ class Checkboxes extends Input
 
 			if (!empty($inputs))
 			{
-				$result = $this->getLabel() . " <div id='{$this->name}_group' class='input_cont'> " . implode($inputs) . " </div>";
+				$result = implode($inputs);
 			}
 		}
 		return $result;

@@ -28,6 +28,11 @@ class WeekAdd extends Weeks
 		}
 	}
 
+	public function getTitle(): string
+	{
+		return "Add " . parent::getTitle();
+	}
+
 	public function content(): void
 	{
 		$inputs = [];

@@ -36,6 +36,11 @@ class WeekEdit extends Weeks
 		}
 	}
 
+	public function getTitle(): string
+	{
+		return "Edit " . parent::getTitle();
+	}
+
 	public function content(): void
 	{
 		$inputs = [];

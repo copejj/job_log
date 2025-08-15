@@ -21,9 +21,6 @@ class Weeks extends HeaderedContent
 
 	public function content(): void
 	{
-		$list = new Table(new WeekMetadata(), $this->week->getAll());
-		?>
-			<?=$list?>
-		<?php
+		echo new Table(new WeekMetadata(), $this->week->getAll());
 	}
 }
