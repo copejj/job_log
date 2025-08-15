@@ -12,11 +12,11 @@ class Checkboxes extends Input
 	 * @param array $data The target data array should be $data['id'] = 'text' format
 	 * @param array $selected The selected IDs if there are ones
 	 */
-	public function __construct(string $name, array $data, array $selected=[], string $title='')
+	public function __construct(string $name, array $data, array $selected=[], string $label='')
 	{
 		$this->name = $name;
 		$this->data = $data;
-		$this->title = $title;
+		$this->label = $label;
 		$this->selected = [];
 		if (!empty($selected))
 		{
