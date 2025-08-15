@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Template\Elements;
 
-class RadioButton extends Inputs
+class RadioButton extends Input
 {
 	protected array $data;
 	protected string $selected;

@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Template\Elements;
 
-class Select extends Inputs
+class Select extends Input
 {
 	protected array $data;
 	protected int $default;

@@ -10,6 +10,7 @@ abstract class Record
 	protected bool $update_data = false;
 
 	public abstract function save(): bool;
+	public abstract static function load(int $id): ?Record;
 	public abstract static function validate(array $data): bool;
 	public abstract static function getInstance(array $data): ?Record;
 

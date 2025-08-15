@@ -4,6 +4,7 @@ namespace Jeff\Code\Helper\Data;
 abstract class Records
 {
 	protected array $data = [];
+	protected array $args = [];
 
 	public abstract static function init(): Records;
 	public abstract static function getInstance(array $row): ?Record;
@@ -22,6 +23,16 @@ abstract class Records
 				}
 			}
 		}
+	}
+
+	public function setArgs(array $args): void
+	{
+		$this->args = $args;
+	}
+
+	public function __get(string $name): string
+	{
+		return $this->args[$name] ?? '';
 	}
 
 	public function __toString()

@@ -9,7 +9,7 @@ class WeekAdd extends Weeks
 {
 	public function processing(): void
 	{
-		if (empty($post['add_week']))
+		if (empty($post['save_week']))
 		{
 			try
 			{
@@ -36,7 +36,7 @@ class WeekAdd extends Weeks
 		?>
 		<form method='post'>
 			<?=implode($inputs)?>
-			<input type='submit' name='add_week' value='Submit' />
+			<input type='submit' name='save_week' value='Submit' />
 		</form>
 		<?php
 	}

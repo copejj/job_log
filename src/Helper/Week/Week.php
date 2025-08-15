@@ -16,24 +16,38 @@ class Week extends Record
 			{
 				return false;
 			}
+		\Jeff\Code\D::p('is valid', $this->data);
 
 			$bind = [
 				$this->data['start_date'],
 				$this->data['end_date'],
 			];
 
-			if (empty($result['work_week_id']))
+			if (empty($this->data['week_id']))
 			{
+		\Jeff\Code\D::p('insert');
 				$sql = "INSERT into weeks (start_date, end_date) values (?, ?) returning *";
 			}
 			else 
 			{
-				$sql = "UPDATE weeks set start_date = ?, end_date = ? where work_week_id = ? returning *";
-				$bind[] = $this->data['work_week_id'];
+		\Jeff\Code\D::p('update');
+				$sql = "UPDATE weeks set start_date = ?, end_date = ? where week_id = ? returning *";
+				$bind[] = $this->data['week_id'];
 			}
 			$result = DB::getInstance()->fetchOne($sql, $bind);
 		}
-		return !empty($result['work_week_id']);
+		\Jeff\Code\D::p('result', $result);
+		return !empty($result['week_id']);
+	}
+
+	public static function load(int $id): Week
+	{
+		$sql = 
+			"SELECT *
+			from weeks
+			where week_id = ?";
+		$data = DB::getInstance(true)->fetchOne($sql, [$id]);
+		return static::getInstance($data);
 	}
 
 	public static function validate(array $data): bool

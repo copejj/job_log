@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Template\Elements;
 
-class Checkboxes extends Inputs
+class Checkboxes extends Input
 {
 	protected array $data;
 	protected array $selected;
