@@ -22,8 +22,19 @@ class Weeks extends Records
 			$sql_cond = implode(' and ', $conds);
 		}
 		$sql = 
-			"SELECT week_id as id, *
-			from weeks {$sql_cond}
+			"WITH target as (
+				select week_id
+				from weeks {$sql_cond}
+			), job_count as (
+				select count(job_log_id) job_count, week_id
+				from job_logs
+				where week_id = (select week_id from target)
+				group by week_id 
+			)
+			select week_id as id, weeks.*, coalesce(job_count, 0) as job_count
+			from target
+				join weeks using (week_id)
+				left join job_count using (week_id)
 			order by start_date desc, end_date desc";
 		$results = DB::getInstance(true)->fetchAll($sql, $bind);
 		return new Weeks($results);

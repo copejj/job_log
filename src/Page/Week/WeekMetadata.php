@@ -12,7 +12,7 @@ class WeekMetadata extends Metadata implements Formatter
 	public function init(): void
 	{
 		$this->metadata = [
-			'week_id' => [
+			'edit_col' => [
 				'label' => '',
 				'format' => 'Jeff\Code\Page\Week\WeekMetaData',
 			],
@@ -24,12 +24,15 @@ class WeekMetadata extends Metadata implements Formatter
 				'label' => 'End Date',
 				'format' => 'Jeff\Code\Template\Elements\Date',
 			],
+			'job_count' => [
+				'label' => 'Job Count',
+			]
 		];
 	}
 
 	public static function format(string $key, Record $data): string
 	{
-		$id = $data->$key;
+		$id = $data->week_id;
 		if (empty($id))
 		{
 			return '';

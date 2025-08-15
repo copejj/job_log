@@ -35,14 +35,7 @@ abstract class Record
 
 	public function __get(string $name): string
 	{
-		if (array_key_exists($name, $this->data))
-		{
-			return $this->data[$name];
-		}
-		else
-		{
-			throw new Exception("Array key '{$name}' does not exist.");
-		}
+		return $this->data[$name] ?? '';
 	}
 
 	public function __set(string $name, string $value): void

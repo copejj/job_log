@@ -60,6 +60,12 @@ class Table
 						"paging": true,
 						"searching": true,
 						"info": true,
+						"order": [[1, 'asc']],
+						"columnDefs": [
+						{
+							"orderable": false,
+							"targets": 0 // Disable sorting on the first column (index 0)
+						}],
 					});
 				});
 			</script>
