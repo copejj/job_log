@@ -1,60 +1,66 @@
-.header_cont, .footer_cont {
+.header-cont, .footer-cont {
 	background-color: navy;
 	color: white;
 	padding: .75rem;
 }
 
-.footer_cont {
+.footer-cont {
 	margin-top: 1rem;
 	font-size: .75rem;
 	font-style: italic;
 }
 
-.content_cont {
+.content-cont {
 	margin: 1rem;
 }
 
-.select_input {
+.select-input {
     min-width: 20rem;
     height: 2rem;
 	margin-right: 1rem;
 }
 
-.check_span {
+.check-span {
     width: 33%;
     display: inline-table;
 }
 
-.input_label {
+.input-label {
 	font-size: 1.1rem;
 	font-weight: bold;
 }
 
-.input_cont {
+.input-cont {
 	margin-bottom: 1rem;
 }
 
-.links_cont {
+.links-cont {
 	background: #9b9cb3;
 	padding: .5rem;
 	margin-bottom: 1rem;
 }
 
-.links_cont a {
+.links-cont a {
 	margin: 0rem .25rem;
 }
 
-.table_cont {
+.table-cont {
 	padding: 1rem;
 }
 
-.input_cont {
+.input-cont {
     display: grid;
     width: 20rem;
 }
-.input_cont label {
+.input-cont label {
     margin: .6rem 0rem .15rem 0rem;
 }
-.input_cont input {
+.input-cont input {
     min-height: 1.5rem;
+}
+.half-width {
+	width: 40%;
+}
+.centered {
+	margin: auto;
 }

@@ -9,14 +9,14 @@ abstract class HeadlessContent extends Content
 	protected function top(): void
 	{
 		?>
-		<div class='content_cont'>
+		<div class='content-cont'>
 		<?php
 	}
 
 	protected function messages(): void
 	{
 		?>
-		<div class='message_cont'><?=$this->message?></div>
+		<div class='message-cont'><?=$this->message?></div>
 		<?php
 	}
 

@@ -4,6 +4,10 @@ namespace Jeff\Code\Page\Week;
 use Exception;
 use Jeff\Code\Template\Elements\Date;
 use Jeff\Code\Helper\Week\Week;
+use Jeff\Code\Template\Display\Attributes;
+use Jeff\Code\Template\Elements\Form;
+use Jeff\Code\Template\Elements\Input;
+use Jeff\Code\Template\Elements\Inputs;
 
 class WeekAdd extends Weeks
 {
@@ -11,6 +15,7 @@ class WeekAdd extends Weeks
 	{
 		if (empty($post['save_week']))
 		{
+			$message = '';
 			try
 			{
 				$result = Week::create($this->post);
@@ -30,19 +35,27 @@ class WeekAdd extends Weeks
 
 	public function getTitle(): string
 	{
-		return "Add " . parent::getTitle();
+		return "Add Week";
 	}
 
 	public function content(): void
 	{
-		$inputs = [];
-		$inputs[] = new Date('start_date', $this->post['start_date'] ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date');
-		$inputs[] = new Date('end_date', $this->post['end_date'] ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date');
 		?>
-		<form method='post'>
-			<?=implode($inputs)?>
-			<input type='submit' name='save_week' value='Submit' />
-		</form>
+		<script>
+			function save_form()
+			{
+				$('#add_form').append("<?=new Input('action', 'hidden', 'add')?>");
+				return true;
+			}
+		</script>
 		<?php
+		echo new Form([
+			new Inputs([ 
+				new Date('start_date', $this->post['start_date'] ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date'),
+				new Date('end_date', $this->post['end_date'] ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
+			], 'date', 'date'),
+			new Input('save_week', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
+			new Input('cancel_week', 'submit', 'Cancel'),
+		], 'post', new Attributes(['id' => 'add_form']));
 	}
 }

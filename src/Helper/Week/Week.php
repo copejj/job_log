@@ -16,7 +16,6 @@ class Week extends Record
 			{
 				return false;
 			}
-		\Jeff\Code\D::p('is valid', $this->data);
 
 			$bind = [
 				$this->data['start_date'],
@@ -25,18 +24,15 @@ class Week extends Record
 
 			if (empty($this->data['week_id']))
 			{
-		\Jeff\Code\D::p('insert');
 				$sql = "INSERT into weeks (start_date, end_date) values (?, ?) returning *";
 			}
 			else 
 			{
-		\Jeff\Code\D::p('update');
 				$sql = "UPDATE weeks set start_date = ?, end_date = ? where week_id = ? returning *";
 				$bind[] = $this->data['week_id'];
 			}
 			$result = DB::getInstance()->fetchOne($sql, $bind);
 		}
-		\Jeff\Code\D::p('result', $result);
 		return !empty($result['week_id']);
 	}
 

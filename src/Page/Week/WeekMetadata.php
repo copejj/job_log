@@ -13,7 +13,7 @@ class WeekMetadata extends Metadata implements Formatter
 	{
 		$this->metadata = [
 			'week_id' => [
-				'label' => 'ID',
+				'label' => '',
 				'format' => 'Jeff\Code\Page\Week\WeekMetaData',
 			],
 			'start_date' => [

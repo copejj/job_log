@@ -1,17 +1,24 @@
 <?php
-namespace Jeff\Code\Template\Display;
+namespace Jeff\Code\Template\Elements;
 
-use ReflectionClass;
+use Jeff\Code\Template\Display\Attributes;
+use Jeff\Code\Template\Display\Metadata;
 
 class Table
 {
 	protected Metadata $metadata;
 	protected array $data;
+	protected Attributes $attrs;
 
-	public function __construct(Metadata $metadata, array $data)
+	public function __construct(Metadata $metadata, array $data, ?Attributes $attrs=null)
 	{
 		$this->metadata = $metadata;
 		$this->data = $data;
+		$this->attrs = new Attributes(['class' => 'table table-striped table-bordered']);
+		if (!empty($attrs))
+		{
+			$this->attrs->merge($attrs);
+		}
 	}
 
 	public function __toString(): string
@@ -45,20 +52,19 @@ class Table
 		}
 		$body = implode($rows);
 		ob_start();
+		$table_name = 'datatable_' . sprintf('%s', random_int(100000, 999999));
 		?>
 			<script>
 				$(document).ready(function() {
-					$('#datatable').DataTable({
-						// Optional: Add DataTables options here
-						// For example, to enable searching and pagination:
+					$('#<?=$table_name?>').DataTable({
 						"paging": true,
 						"searching": true,
-						"info": true
+						"info": true,
 					});
 				});
 			</script>
-			<div class='table_cont'>
-				<table id='datatable' class='table table-striped table-bordered'>
+			<div <?=$this->attrs?>>
+				<table id='<?=$table_name?>'>
 					<thead><?=$headers?></thead>
 					<tbody><?=$body?></tbody>
 				</table>

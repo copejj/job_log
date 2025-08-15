@@ -2,7 +2,10 @@
 namespace Jeff\Code\Page\Week;
 
 use Jeff\Code\Helper\Week\Weeks as Service;
-use Jeff\Code\Template\Display\Table;
+use Jeff\Code\Template\Display\Attributes;
+use Jeff\Code\Template\Elements\Table;
+use Jeff\Code\Template\Elements\Form;
+use Jeff\Code\Template\Elements\Input;
 use Jeff\Code\Template\HeaderedContent;
 
 class Weeks extends HeaderedContent
@@ -21,6 +24,10 @@ class Weeks extends HeaderedContent
 
 	public function content(): void
 	{
-		echo new Table(new WeekMetadata(), $this->week->getAll());
+		echo new Form([
+			new Input('action', 'hidden', 'add'),
+			new Input('add_week', 'submit', 'New'),
+		]);
+		echo new Table(new WeekMetadata(), $this->week->getAll(), new Attributes(['class' => 'half-width']));
 	}
 }

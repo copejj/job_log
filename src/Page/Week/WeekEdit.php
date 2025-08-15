@@ -3,6 +3,7 @@ namespace Jeff\Code\Page\Week;
 
 use Exception;
 use Jeff\Code\Helper\Week\Week;
+use Jeff\Code\Template\Display\Attributes;
 use Jeff\Code\Template\Elements\Date;
 use Jeff\Code\Template\Elements\Form;
 use Jeff\Code\Template\Elements\Input;
@@ -15,7 +16,6 @@ class WeekEdit extends Weeks
 	public function processing(): void
 	{
 		$this->current = Week::load($this->post['week_id']);
-		\Jeff\Code\D::p('here', $this->current);
 		if (!empty($this->post['save_week']))
 		{
 			$message = '';
@@ -40,7 +40,7 @@ class WeekEdit extends Weeks
 
 	public function getTitle(): string
 	{
-		return "Edit " . parent::getTitle();
+		return "Edit Week";
 	}
 
 	public function content(): void
@@ -60,8 +60,8 @@ class WeekEdit extends Weeks
 				new Date('start_date', $this->current->start_date ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date'),
 				new Date('end_date', $this->current->end_date ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
 			], 'date', 'date'),
-			new Input('save_week', 'submit', 'Submit', '', '', "onclick='return save_form()'"),
+			new Input('save_week', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_week', 'submit', 'Cancel'),
-		], 'post', "id='edit_form'");
+		], 'post', new Attributes(['id' => 'edit_form']));
 	}
 }

@@ -45,6 +45,6 @@ class Inputs extends Input
 		{
 			$inputs[] = $input->getLabel() . $input;
 		}
-		return "<div id='{$this->name}_group' class='input_cont {$this->type}_input_cont'>" . implode($inputs) . "</div>";
+		return "<div id='{$this->name}_group' class='input-cont {$this->type}-input-cont'>" . implode($inputs) . "</div>";
 	}
 }

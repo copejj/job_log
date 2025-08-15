@@ -3,19 +3,22 @@ namespace Jeff\Code\Template\Elements;
 
 use Exception;
 
-class Form implements Element
+use Jeff\Code\Template\Display\Printable;
+use Jeff\Code\Template\Display\Attributes;
+
+class Form implements Printable
 {
-	protected $inputs;
-	protected $method;
-	protected $attrs;
+	protected array $inputs;
+	protected string $method;
+	protected Attributes $attrs;
 
 	/**
 	 * A basic form
 	 * @param Input[] $inputs
 	 * @param string $method
-	 * @param string|null $attrs
+	 * @param Attributes|null $attrs
 	 */
-	public function __construct(array $inputs, string $method='post', string $attrs='')
+	public function __construct(array $inputs, string $method='post', ?Attributes $attrs=null)
 	{
 		if (empty($inputs))
 		{
@@ -36,7 +39,7 @@ class Form implements Element
 		}
 
 		$this->method = $method ?? 'post';
-		$this->attrs = $attrs;
+		$this->attrs = $attrs ?? new Attributes();
 	}
 
 	public function __toString()

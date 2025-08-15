@@ -16,7 +16,7 @@ abstract class HeaderedContent extends HeadlessContent
 				<script src="js/datatables/datatables.min.js" integrity="sha384-UeCeWNYLaY2mvxN9AsU1R1+aV0hde/ksgd68wqgf87HJF8ge3gGnhUPPh0hHFooK" crossorigin="anonymous"></script>
 			</head>
 			<body>
-				<div class='header_cont'> Jeff's Work Log Page </div>
+				<div class='header-cont'> Jeff's Work Log Page </div>
 		<?php
 	}
 
@@ -31,7 +31,7 @@ abstract class HeaderedContent extends HeadlessContent
 				$refs[] = "<a href='{$ref}'>{$label}</a>";
 			}
 			?>
-				<div class='links_cont'>
+				<div class='links-cont'>
 					<?=implode($refs)?>
 				</div>
 			<?php
@@ -41,7 +41,7 @@ abstract class HeaderedContent extends HeadlessContent
 	protected function footer(): void 
 	{
 		?>
-				<div class='footer_cont'> &copy; 2025 Jeff Cope, All Rights Reserved. </div>
+				<div class='footer-cont'> &copy; 2025 Jeff Cope, All Rights Reserved. </div>
 			</body>
 		</html>
 		<?php
