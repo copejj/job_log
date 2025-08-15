@@ -1,12 +1,12 @@
 <?php
 namespace Jeff\Code;
 
-use Jeff\Code\Template\Content;
-use Jeff\Code\Page\Index;
-use Jeff\Code\Page\Log\Logs;
-use Jeff\Code\Page\Week\Weeks;
-use Jeff\Code\Page\Week\WeekAdd;
-use Jeff\Code\Page\Week\WeekEdit;
+use Jeff\Code\View\Content;
+use Jeff\Code\Controller\Index;
+use Jeff\Code\Controller\Log\Logs;
+use Jeff\Code\Controller\Week\Weeks;
+use Jeff\Code\Controller\Week\WeekAdd;
+use Jeff\Code\Controller\Week\WeekEdit;
 
 class Decider
 {
