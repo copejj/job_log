@@ -44,12 +44,29 @@ class Table
 			$rows[] = "<tr>" . implode($cells) . "</tr>";
 		}
 		$body = implode($rows);
-		return 
-			"<div class='table_cont'>
-				<table>
-					<thead>{$headers}<thead>
-					<tbody>{$body}</tbody>
+		ob_start();
+		?>
+			<script>
+				$(document).ready(function() {
+					$('#datatable').DataTable({
+						// Optional: Add DataTables options here
+						// For example, to enable searching and pagination:
+						"paging": true,
+						"searching": true,
+						"info": true
+					});
+				});
+			</script>
+			<div class='table_cont'>
+				<table id='datatable' class='table table-striped table-bordered'>
+					<thead><?=$headers?></thead>
+					<tbody><?=$body?></tbody>
 				</table>
-			</div>";
+			</div>
+		<?php
+
+		$page = ob_get_contents();
+		ob_end_clean();
+		return $page;
 	}
 }
