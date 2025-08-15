@@ -6,7 +6,7 @@ use Jeff\Code\Helper\Methods;
 
 use Jeff\Code\Template\Elements\Checkboxes;
 
-class LogsEdit extends Logs
+class LogEdit extends Logs
 {
 	protected Actions $actions;
 	protected Methods $methods;
