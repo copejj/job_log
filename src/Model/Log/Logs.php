@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Model\Log;
 
-use Jeff\Code\DB;
+use Jeff\Code\Util\DB;
 use Jeff\Code\Model\Record;
 use Jeff\Code\Model\Records;
 

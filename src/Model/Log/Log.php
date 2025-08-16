@@ -1,13 +1,14 @@
 <?php
 namespace Jeff\Code\Model\Log;
 
-use Jeff\Code\DB;
+use Jeff\Code\Util\DB;
 use Jeff\Code\Model\Record;
 
 class Log extends Record
 {
 	public function save(): bool
 	{
+		\Jeff\Code\Util\D::p('save');
 		return false;
 	}
 
@@ -23,6 +24,7 @@ class Log extends Record
 
 	public static function validate(array $data): bool
 	{
+		\Jeff\Code\Util\D::p('validate');
 		return true;
 	}
 

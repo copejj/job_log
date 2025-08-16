@@ -1,8 +1,8 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use Jeff\Code\Config;
 use Jeff\Code\Decider;
+use Jeff\Code\Util\Config;
 
 if (Config::get('ENVIRONMENT') !== 'prod')
 {

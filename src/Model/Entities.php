@@ -3,7 +3,7 @@ namespace Jeff\Code\Model;
 
 use Exception;
 
-use Jeff\Code\DB;
+use Jeff\Code\Util\DB;
 
 abstract class Entities
 {
@@ -24,16 +24,16 @@ abstract class Entities
 		$this->type = $type;
 	}
 
-	public function data(): array
+	public function __get($name): mixed
 	{
-		$this->init();
-		return $this->data;
-	}
-
-	public function default(): int
-	{
-		$this->init();
-		return $this->default;
+		switch ($name)
+		{
+			case 'data':
+			case 'default':
+				$this->init();
+				return $this->$name;
+		}
+		return null;
 	}
 
 	protected function init(): void

@@ -38,6 +38,15 @@ class Inputs extends Input
 		$this->label = $label;
 	}
 
+	public function getLabel() 
+	{
+		if (!empty($this->label))
+		{
+			return "<h3 class='input-label'>{$this->label}</h3>";
+		}
+		return "";
+	}
+
 	public function __toString()
 	{
 		$inputs = [];

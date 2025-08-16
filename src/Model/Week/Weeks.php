@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Model\Week;
 
-use Jeff\Code\DB;
+use Jeff\Code\Util\DB;
 use Jeff\Code\Model\Records;
 
 class Weeks extends Records

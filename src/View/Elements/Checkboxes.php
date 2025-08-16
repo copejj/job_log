@@ -17,6 +17,7 @@ class Checkboxes extends Input
 		$this->name = $name;
 		$this->data = $data;
 		$this->label = $label;
+		$this->type = 'checkboxes';
 		$this->selected = [];
 		if (!empty($selected))
 		{
@@ -36,7 +37,11 @@ class Checkboxes extends Input
 			foreach ($this->data as $id => $text)
 			{
 				$selector = (empty($this->selected[$id])) ? "" : " checked='checked'";
-				$inputs[] = "<span class='check-span'><input name='{$this->name}[$id]' class='input check-input' type='checkbox' value='{$id}'{$selector} /> {$text}</span>";
+				$inputs[] = 
+					"<div class='check-div'>
+						<input id='{$this->type}-{$this->name}-{$id}' name='{$this->name}[$id]' class='input check-input' type='checkbox' value='{$id}'{$selector} />
+						<label for='{$this->type}-{$this->name}-{$id}' class='check-label'>{$text}</label>
+					</div>";
 			}
 
 			if (!empty($inputs))

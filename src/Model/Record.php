@@ -29,8 +29,11 @@ abstract class Record
 
 		$record = static::getInstance($data);
 		$record->update_data = true;
-		$record->save();
-		return $record;
+		if ($record->save())
+		{
+			return $record;
+		}
+		return null;
 	}
 
 	public function __get(string $name): string

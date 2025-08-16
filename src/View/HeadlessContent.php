@@ -1,8 +1,8 @@
 <?php
 namespace Jeff\Code\View;
 
-use Jeff\Code\D;
-use Jeff\Code\Config;
+use Jeff\Code\Util\Config;
+use Jeff\Code\Util\D;
 
 abstract class HeadlessContent extends Content
 {

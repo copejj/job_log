@@ -1,7 +1,7 @@
 <?php
-namespace Jeff\Code;
+namespace Jeff\Code\Util;
 
-use Jeff\Code\Config;
+use Jeff\Code\Util\Config;
 
 use Atlas\Pdo\Connection;
 use Atlas\Pdo\ConnectionLocator;

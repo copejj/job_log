@@ -4,6 +4,8 @@ namespace Jeff\Code;
 use Jeff\Code\View\Content;
 use Jeff\Code\Controller\Index;
 use Jeff\Code\Controller\Log\Logs;
+use Jeff\Code\Controller\Log\LogAdd;
+use Jeff\Code\Controller\Log\LogEdit;
 use Jeff\Code\Controller\Week\Weeks;
 use Jeff\Code\Controller\Week\WeekAdd;
 use Jeff\Code\Controller\Week\WeekEdit;
@@ -31,7 +33,17 @@ class Decider
 				}
 				break;
 			case 'log':
-				$content = new Logs();
+				switch ($action)
+				{
+					case 'add':
+						$content = new LogAdd();
+						break;
+					case 'edit':
+						$content = new LogEdit();
+						break;
+					default:
+						$content = new Logs();
+				}
 				break;
 			case 'index':
 			default:

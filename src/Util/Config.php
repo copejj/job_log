@@ -1,5 +1,5 @@
 <?php
-namespace Jeff\Code;
+namespace Jeff\Code\Util;
 
 use RuntimeException;
 
