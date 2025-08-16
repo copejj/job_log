@@ -36,8 +36,12 @@ abstract class Record
 		return null;
 	}
 
-	public function __get(string $name): string
+	public function __get(string $name): mixed
 	{
+		if ($name === 'data')
+		{
+			return $this->data ?? [];
+		}
 		return $this->data[$name] ?? '';
 	}
 

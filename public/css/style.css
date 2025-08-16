@@ -98,3 +98,25 @@ div#actions_group div.check-div {
 div#methods_group div.check-div {
     width: 10%;
 }
+div.table table.dataTable th.dt-type-numeric,
+div.table table.dataTable th.dt-type-date,
+div.table table.dataTable td.dt-type-numeric,
+div.table table.dataTable td.dt-type-date {
+	text-align: left;
+}
+div.table table.dataTable th.dt-type-numeric div.dt-column-header,
+div.table table.dataTable th.dt-type-numeric div.dt-column-footer,
+div.table table.dataTable th.dt-type-date div.dt-column-header,
+div.table table.dataTable th.dt-type-date div.dt-column-footer,
+div.table table.dataTable td.dt-type-numeric div.dt-column-header,
+div.table table.dataTable td.dt-type-numeric div.dt-column-footer,
+div.table table.dataTable td.dt-type-date div.dt-column-header,
+div.table table.dataTable td.dt-type-date div.dt-column-footer {
+	flex-direction: row;
+}
+div.table table.dataTable th.dt-type-numeric,
+div.table table.dataTable th.dt-type-date,
+div.table table.dataTable td.dt-type-numeric,
+div.table table.dataTable td.dt-type-date {
+	text-align: left;
+}

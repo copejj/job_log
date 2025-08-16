@@ -49,6 +49,7 @@ class WeekAdd extends Weeks
 
 	public function content(): void
 	{
+		$data = $this->week->data ?? $this->post;
 		?>
 		<script>
 			function save_form()
@@ -60,9 +61,9 @@ class WeekAdd extends Weeks
 		<?php
 		echo new Form([
 			new Inputs([ 
-				new Input('week_id', 'hidden', $this->post['week_id'] ?? ''),
-				new Date('start_date', $this->post['start_date'] ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date'),
-				new Date('end_date', $this->post['end_date'] ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
+				new Input('week_id', 'hidden', $data['week_id'] ?? ''),
+				new Date('start_date', $data['start_date'] ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date'),
+				new Date('end_date', $data['end_date'] ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
 			], 'date', 'date'),
 			new Input('save_week', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_week', 'submit', ($this->acted) ? 'Done' : 'Cancel'),

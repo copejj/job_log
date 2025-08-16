@@ -14,7 +14,7 @@ class LogMetadata extends Metadata implements Formatter
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Week\WeekMetaData',
+				'format' => 'Jeff\Code\Controller\Week\LogMetaData',
 			],
 		];
 	}
