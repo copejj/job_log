@@ -7,21 +7,21 @@ use Jeff\Code\Util\DB;
 
 abstract class Entities
 {
-	private string $type;
+	protected string $table;
+	protected string $key;
+	protected string $name;
 
 	protected int $default;
 	protected array $data;
 
 	protected bool $update_data = true;
 
-	protected function __construct(string $type)
+	protected function __construct(string $table, string $key, string $name='', int $default=0)
 	{
-		if (trim($type) === '')
-		{
-			throw new Exception('Type cannot be null or blank');
-		}
-
-		$this->type = $type;
+		$this->table = $table;
+		$this->key = $key;
+		$this->name = $name;
+		$this->default = $default;
 	}
 
 	public function __get($name): mixed
@@ -40,21 +40,26 @@ abstract class Entities
 	{
 		if ($this->update_data)
 		{
-			$sql = "SELECT * from {$this->type}s order by {$this->type}_id";
-			$results = DB::getInstance(true)->fetchAll($sql);
+			$sql = "SELECT * from {$this->table} order by {$this->key}";
+			$rows = DB::getInstance(true)->fetchAll($sql);
 
-			if (!empty($results))
+			if (!empty($rows))
 			{
-				foreach ($results as $result)
+				foreach ($rows as $row)
 				{
-					if (!empty($result['default']))
+					if (!empty($this->default))
 					{
-						$this->default = $result["{$this->type}_id"];
+						$this->default = $row[$this->key];
 					}
-					$this->data[$result["{$this->type}_id"]] = $result['name'];
+					$this->data[$row[$this->key]] = $this->name($row);
 				}
 			}
 			$this->update_data = false;
 		}
+	}
+
+	public function name(array $row): string
+	{
+		return $row[$this->name];
 	}
 }

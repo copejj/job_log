@@ -20,6 +20,7 @@ class Select extends Input
 		$this->default= $default;
 		$this->selected = $selected;
 		$this->label = $label;
+		$this->type = 'select';
 	}
 
 	public function __toString()

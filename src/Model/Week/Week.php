@@ -1,12 +1,13 @@
 <?php
 namespace Jeff\Code\Model\Week;
 
-use Jeff\Code\Util\DB;
 use Jeff\Code\Model\Record;
+
+use Jeff\Code\Util\DB;
 
 class Week extends Record
 {
-	public function save(): bool
+	public function onSave(): bool
 	{
 		if ($this->update_data)
 		{
@@ -15,21 +16,32 @@ class Week extends Record
 				return false;
 			}
 
-			$bind = [
+			$this->bind = [
 				$this->data['start_date'],
 				$this->data['end_date'],
 			];
 
 			if (empty($this->data['week_id']))
 			{
-				$sql = "INSERT into weeks (start_date, end_date) values (?, ?) returning *";
+				$this->sql = 
+					"INSERT into weeks (
+						start_date
+						, end_date
+					) 
+					values (?, ?) 
+					returning *";
 			}
 			else 
 			{
-				$sql = "UPDATE weeks set start_date = ?, end_date = ? where week_id = ? returning *";
-				$bind[] = $this->data['week_id'];
+				$this->sql = 
+					"UPDATE weeks 
+					set start_date = ?
+						, end_date = ? 
+					where week_id = ? 
+					returning *";
+				$this->bind[] = $this->data['week_id'];
 			}
-			$result = DB::getInstance()->fetchOne($sql, $bind);
+			$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
 		}
 		return !empty($result['week_id']);
 	}

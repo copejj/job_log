@@ -6,10 +6,59 @@ use Jeff\Code\Model\Record;
 
 class Log extends Record
 {
-	public function save(): bool
+	protected string $key_name = 'job_log_id';
+
+	public function onSave(): bool
 	{
-		\Jeff\Code\Util\D::p('save');
-		return false;
+		if ($this->update_data)
+		{
+			if (!static::validate($this->data))
+			{
+				return false;
+			}
+
+			$this->bind = [
+				$this->data['week_id'] ?? null,
+				$this->data['action_date'], 
+				$this->data['company_id'] ?? null, 
+				$this->data['contact_id'] ?? null, 
+				$this->data['title'] ?? null, 
+				$this->data['job_number'] ?? null, 
+				$this->data['next_step'] ?? null, 
+			];
+
+			if (empty($this->data[$this->key_name]))
+			{
+				$this->sql = 
+					"INSERT into job_logs (
+						week_id
+						, action_date
+						, company_id
+						, contact_id
+						, title
+						, job_number
+						, next_step
+					)
+					values (?, ?, ?, ?, ?, ?, ?)
+					returning *";
+			}
+			else
+			{
+				$this->sql = 
+					"UPDATE job_logs
+						week_id = ?
+						, action_date = ?
+						, company_id = ?
+						, contact_id = ?
+						, title = ?
+						, job_number = ?
+						, next_step = ?
+					where job_log_id = ?
+					returning *";
+				$bind[] = $this->data[$this->key_name];
+			}
+		}
+		return true;
 	}
 
 	public static function load(int $id): ?Record
@@ -24,7 +73,12 @@ class Log extends Record
 
 	public static function validate(array $data): bool
 	{
-		\Jeff\Code\Util\D::p('validate');
+		switch (true)
+		{
+			case empty($data['week_id']):
+			case empty($data['action_date']):
+				return false;
+		}
 		return true;
 	}
 

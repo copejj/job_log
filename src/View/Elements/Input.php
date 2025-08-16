@@ -18,7 +18,7 @@ class Input
 		$this->type = $type;
 		$this->value = (empty($value)) ? $default : $value;
 		$this->attr = new Attributes([
-			'class' => "input {$this->type}_input",
+			'class' => "input {$this->type}-input",
 			'id' => "{$this->type}_{$this->name}",
 		]);
 		if (!empty($attr))

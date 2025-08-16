@@ -11,9 +11,11 @@ use Jeff\Code\View\Elements\Date;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Inputs;
+use Jeff\Code\View\Elements\Select;
 
 use Jeff\Code\Model\Entities\Actions;
 use Jeff\Code\Model\Entities\Methods;
+use Jeff\Code\Model\Entities\Weeks;
 
 class LogAdd extends Logs
 {
@@ -24,14 +26,15 @@ class LogAdd extends Logs
 
 	protected Actions $actions;
 	protected Methods $methods;
+	protected Weeks $weeks;
 
 	public function processing(): void
 	{
 		$this->actions = new Actions();
 		$this->methods = new Methods();
+		$this->weeks = new Weeks();
 		if (!empty($this->post['save_job']))
 		{
-			\Jeff\Code\Util\D::p('post', $this->post);
 			$message = '';
 			try
 			{
@@ -49,7 +52,7 @@ class LogAdd extends Logs
 			}
 			catch (Exception $e)
 			{
-				$message = "This log already exists, use that or create a different range";
+				$message = $e->getMessage();
 			}
 
 			$this->message = $message;
@@ -76,6 +79,7 @@ class LogAdd extends Logs
 		echo new Form([
 			new Inputs([ 
 				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),
+				new Select('week_id', $this->weeks->data, $this->weeks->default ?? 0, $data['week_id'] ?? 0, '[ Select a work week ]'),
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), 'Actions', 'actions'),
 				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), 'Methods', 'methods'),

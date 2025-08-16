@@ -3,13 +3,18 @@ namespace Jeff\Code\Model;
 
 use Exception;
 
+use Jeff\Code\Util\DB;
+
 abstract class Record
 {
 	protected array $data;
+	protected string $key_name;
+	protected string $sql = '';
+	protected array $bind = [];
 
 	protected bool $update_data = false;
 
-	public abstract function save(): bool;
+	public abstract function onSave(): bool;
 	public abstract static function load(int $id): ?Record;
 	public abstract static function validate(array $data): bool;
 	public abstract static function getInstance(array $data): ?Record;
@@ -34,6 +39,14 @@ abstract class Record
 			return $record;
 		}
 		return null;
+	}
+
+	public function save(): bool
+	{
+		$this->onSave();
+		\Jeff\Code\Util\D::p('query', [$this->sql, $this->bind]);
+		$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
+		return !empty($result[$this->key_name]);
 	}
 
 	public function __get(string $name): mixed
