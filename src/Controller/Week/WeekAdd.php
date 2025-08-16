@@ -12,7 +12,11 @@ use Jeff\Code\View\Elements\Inputs;
 
 class WeekAdd extends Weeks
 {
+	protected Week $week;
+
 	protected bool $acted = false;
+	protected string $mode = 'add';
+	protected string $title = 'Add';
 
 	public function processing(): void
 	{
@@ -21,10 +25,11 @@ class WeekAdd extends Weeks
 			$message = '';
 			try
 			{
-				$result = Week::create($this->post);
-				if (!empty($result))
+				$week = Week::create($this->post);
+				if (!empty($week))
 				{
 					$message = "This week created successfully";
+					$this->week = $week;
 					$this->acted = true;
 				}
 			}
@@ -39,7 +44,7 @@ class WeekAdd extends Weeks
 
 	public function getTitle(): string
 	{
-		return "Add Week";
+		return "{$this->title} Week";
 	}
 
 	public function content(): void
@@ -48,18 +53,19 @@ class WeekAdd extends Weeks
 		<script>
 			function save_form()
 			{
-				$('#add_form').append("<?=new Input('action', 'hidden', 'add')?>");
+				$('#week_form').append("<?=new Input('action', 'hidden', $this->mode)?>");
 				return true;
 			}
 		</script>
 		<?php
 		echo new Form([
 			new Inputs([ 
+				new Input('week_id', 'hidden', $this->post['week_id'] ?? ''),
 				new Date('start_date', $this->post['start_date'] ?? '', date('Y-m-d', strtotime('last sunday')), 'Start Date'),
 				new Date('end_date', $this->post['end_date'] ?? '', date('Y-m-d', strtotime('next saturday')), 'End Date'),
 			], 'date', 'date'),
 			new Input('save_week', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_week', 'submit', ($this->acted) ? 'Done' : 'Cancel'),
-		], 'post', new Attributes(['id' => 'add_form']));
+		], 'post', new Attributes(['id' => 'week_form']));
 	}
 }

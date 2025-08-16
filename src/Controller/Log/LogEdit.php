@@ -20,8 +20,8 @@ class LogEdit extends Logs
 
 	public function content(): void
 	{
-		$actionInput = new Checkboxes('action', $this->actions->data(), $_POST['action'] ?? [], 'Actions');
-		$methodInput = new Checkboxes('method', $this->methods->data(), $_POST['method'] ?? [], "Methods");
+		$actionInput = new Checkboxes('action', $this->actions->data, $_POST['action'] ?? [], 'Actions');
+		$methodInput = new Checkboxes('method', $this->methods->data, $_POST['method'] ?? [], "Methods");
 		?>
 		<form method='post'>
 			<?=$actionInput?>
