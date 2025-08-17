@@ -60,6 +60,16 @@ class LogAdd extends Logs
 		}
 	}
 
+	protected function saveActions(int $job_log_id, array $actions): bool
+	{
+		return false;
+	}
+
+	protected function saveMethods(int $job_log_id, array $methods): bool
+	{
+		return false;
+	}
+
 	public function getTitle(): string
 	{
 		return "{$this->title} Log";

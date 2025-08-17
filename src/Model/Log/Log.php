@@ -6,9 +6,12 @@ use Jeff\Code\Model\Record;
 
 class Log extends Record
 {
-	protected string $key_name = 'job_log_id';
+	protected static function getKey(): string
+	{
+		return 'job_log_id';
+	}
 
-	public function onSave(): bool
+	protected function onSave(): bool
 	{
 		if ($this->update_data)
 		{
@@ -17,6 +20,7 @@ class Log extends Record
 				return false;
 			}
 
+			$key = static::getKey();
 			$this->bind = [
 				$this->data['week_id'],
 				$this->data['action_date'], 
@@ -27,7 +31,7 @@ class Log extends Record
 				$this->data['next_step'] ?? null, 
 			];
 
-			if (empty($this->data[$this->key_name]))
+			if (empty($this->data[$key]))
 			{
 				$this->sql = 
 					"INSERT into job_logs (
@@ -55,23 +59,13 @@ class Log extends Record
 						, next_step = ?
 					where job_log_id = ?
 					returning *";
-				$this->bind[] = $this->data[$this->key_name];
+				$this->bind[] = $this->data[$key];
 			}
 		}
 		return true;
 	}
 
-	public static function load(int $id): ?Record
-	{
-		$sql = 
-			"SELECT *
-			from job_logs
-			where job_log_id = ?";
-		$data = DB::getInstance(true)->fetchOne($sql, [$id]);
-		return static::getInstance($data);
-	}
-
-	public static function validate(array $data): bool
+	protected static function validate(array $data): bool
 	{
 		switch (true)
 		{
@@ -91,4 +85,27 @@ class Log extends Record
 		return null;
 	}
 
+	public static function getSelect(array $args = [], array &$bind = []): string
+	{
+		$conds = [];
+		$key = static::getKey();
+		if (!empty($args[$key]))
+		{
+			$conds[] = "{$key} = ?";
+			$bind[] = $args[$key];
+		}
+
+		$sql_cond = '';
+		if (!empty($conds))
+		{
+			$sql_cond = 'where ' . implode(' and ', $conds);
+		}
+		$sql = 
+			"SELECT job_logs.*
+				, start_date
+				, end_date
+			from job_logs
+				join weeks using (week_id) {$sql_cond}";
+		return $sql;
+	}
 }

@@ -8,22 +8,22 @@ use Jeff\Code\Util\DB;
 abstract class Record
 {
 	protected array $data;
-	protected string $key_name;
 	protected string $sql = '';
 	protected array $bind = [];
 
 	protected bool $update_data = false;
 
-	public abstract function onSave(): bool;
-	public abstract static function load(int $id): ?Record;
-	public abstract static function validate(array $data): bool;
+	protected abstract function onSave(): bool;
+	protected abstract static function getKey(): string;
+	protected abstract static function validate(array $data): bool;
+
+	public abstract static function getSelect(array $args=[], array &$bind=[]): string;
 	public abstract static function getInstance(array $data): ?Record;
 
 	public function __construct(array $data)
 	{
 		$this->data = $data;
 	}
-
 
 	public static function create(array $data): ?Record
 	{
@@ -46,7 +46,15 @@ abstract class Record
 	{
 		$this->onSave();
 		$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
-		return !empty($result[$this->key_name]);
+		return !empty($result[static::getKey()]);
+	}
+
+	public static function load(int $id): ?Record
+	{
+		$bind = [];
+		$sql = static::getSelect([static::getKey() => $id], $bind);
+		$data = DB::getInstance(true)->fetchOne($sql, $bind);
+		return static::getInstance($data);
 	}
 
 	public function __get(string $name): mixed

@@ -7,7 +7,10 @@ use Jeff\Code\Util\DB;
 
 class LogAction extends Record
 {
-	protected string $key_name = 'job_log_action_id';
+	protected static function getKey(): string
+	{
+		return 'job_log_id';
+	}
 
 	public function onSave(): bool
 	{
@@ -19,7 +22,7 @@ class LogAction extends Record
 			}
 
 			$this->bind = [
-				$this->data['job_log_id'],
+				$this->data[static::getKey()],
 				$this->data['action_id'], 
 			];
 
@@ -29,26 +32,41 @@ class LogAction extends Record
 					, action_id
 				)
 				values (?, ?)
-				returning *";
+				returning * on conflict do nothing";
 		}
 		return true;
 	}
 
-	public static function load(int $id): ?Record
+	public static function getSelect(array $args = [], array &$bind = []): string
 	{
+		$conds = [];
+		$key = static::getKey();
+		$conds[] = "{$key} = ?";
+		$bind[] = $args[$key];
+
+		if (!empty($args['action_id']))
+		{
+			$conds[] = "action_id = ?";
+			$bind[] = $args['action_id'];
+		}
+
+		$sql_cond = '';
+		if (!empty($conds))
+		{
+			$sql_cond = 'where ' . implode(' and ', $conds);
+		}
+
 		$sql = 
 			"SELECT *
-			from job_log_action
-			where job_log_action_id = ?";
-		$data = DB::getInstance(true)->fetchOne($sql, [$id]);
-		return static::getInstance($data);
+			from job_log_action {$sql_cond} ";
+		return $sql;
 	}
 
 	public static function validate(array $data): bool
 	{
 		switch (true)
 		{
-			case empty($data['job_log_id']):
+			case empty($data[static::getKey()]):
 			case empty($data['action_id']):
 				return false;
 		}

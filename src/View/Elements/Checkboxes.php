@@ -36,10 +36,11 @@ class Checkboxes extends Input
 			$inputs = [];
 			foreach ($this->data as $id => $text)
 			{
-				$selector = (empty($this->selected[$id])) ? "" : " checked='checked'";
+				$value = $this->selected[$id] ?? '';
+				$selector = (empty($value)) ? "" : " checked='checked'";
 				$inputs[] = 
 					"<div class='check-div'>
-						<input id='{$this->type}-{$this->name}-{$id}' name='{$this->name}[$id]' class='input check-input' type='checkbox' value='{$id}'{$selector} />
+						<input id='{$this->type}-{$this->name}-{$id}' name='{$this->name}[$id]' class='input check-input' type='checkbox' value='{$value}'{$selector} />
 						<label for='{$this->type}-{$this->name}-{$id}' class='check-label'>{$text}</label>
 					</div>";
 			}

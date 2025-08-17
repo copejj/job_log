@@ -7,7 +7,10 @@ use Jeff\Code\Util\DB;
 
 class LogMethod extends Record
 {
-	protected string $key_name = 'job_log_method_id';
+	protected static function getKey(): string
+	{
+		return 'job_log_id';
+	}
 
 	public function onSave(): bool
 	{
@@ -19,7 +22,7 @@ class LogMethod extends Record
 			}
 
 			$this->bind = [
-				$this->data['job_log_id'],
+				$this->data[static::getKey()],
 				$this->data['method_id'], 
 			];
 
@@ -29,26 +32,41 @@ class LogMethod extends Record
 					, method_id
 				)
 				values (?, ?)
-				returning *";
+				returning * on conflict do nothing";
 		}
 		return true;
 	}
 
-	public static function load(int $id): ?Record
+	public static function getSelect(array $args = [], array &$bind = []): string
 	{
+		$conds = [];
+		$key = static::getKey();
+		$conds[] = "{$key} = ?";
+		$bind[] = $args[$key];
+
+		if (!empty($args['method_id']))
+		{
+			$conds[] = "method_id = ?";
+			$bind[] = $args['method_id'];
+		}
+
+		$sql_cond = '';
+		if (!empty($conds))
+		{
+			$sql_cond = 'where ' . implode(' and ', $conds);
+		}
+
 		$sql = 
 			"SELECT *
-			from job_log_method
-			where job_log_method_id = ?";
-		$data = DB::getInstance(true)->fetchOne($sql, [$id]);
-		return static::getInstance($data);
+			from job_log_method {$sql_cond} ";
+		return $sql;
 	}
 
 	public static function validate(array $data): bool
 	{
 		switch (true)
 		{
-			case empty($data['job_log_id']):
+			case empty($data[static::getKey()]):
 			case empty($data['method_id']):
 				return false;
 		}

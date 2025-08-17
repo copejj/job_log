@@ -7,9 +7,12 @@ use Jeff\Code\Util\DB;
 
 class Week extends Record
 {
-	protected string $key_name = 'week_id';
+	protected static function getKey(): string
+	{
+		return 'week_id';
+	}
 
-	public function onSave(): bool
+	protected function onSave(): bool
 	{
 		if ($this->update_data)
 		{
@@ -48,17 +51,7 @@ class Week extends Record
 		return !empty($result['week_id']);
 	}
 
-	public static function load(int $id): Week
-	{
-		$sql = 
-			"SELECT *
-			from weeks
-			where week_id = ?";
-		$data = DB::getInstance(true)->fetchOne($sql, [$id]);
-		return static::getInstance($data);
-	}
-
-	public static function validate(array $data): bool
+	protected static function validate(array $data): bool
 	{
 		switch (true)
 		{
@@ -72,5 +65,38 @@ class Week extends Record
 	public static function getInstance(array $data): Week
 	{
 		return new Week($data);
+	}
+
+	public static function getSelect(array $args=[], array &$bind=[]): string
+	{
+		$conds = [];
+		$key = static::getKey();
+		if (!empty($args[$key]))
+		{
+			$conds[] = "{$key} = ?";
+			$bind[] = $args[$key];
+		}
+
+		$sql_cond = '';
+		if (!empty($conds))
+		{
+			$sql_cond = 'where ' . implode(' and ', $conds);
+		}
+		$sql = 
+			"WITH target as (
+				select week_id
+				from weeks {$sql_cond}
+			), job_count as (
+				select count(job_log_id) job_count, week_id
+				from job_logs
+					join target using (week_id)
+				group by week_id 
+			)
+			select week_id as id, weeks.*, coalesce(job_count, 0) as job_count
+			from target
+				join weeks using (week_id)
+				left join job_count using (week_id)
+			order by start_date desc, end_date desc";
+		return $sql;
 	}
 }

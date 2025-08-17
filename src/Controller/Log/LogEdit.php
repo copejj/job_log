@@ -22,6 +22,7 @@ class LogEdit extends LogAdd
 		$this->log = Log::load($this->post['job_log_id']);
 		if (!empty($this->post['save_job_log']))
 		{
+			\Jeff\Code\Util\D::p('post', $this->post);
 			$message = '';
 			try
 			{
