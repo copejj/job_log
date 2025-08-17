@@ -3,8 +3,6 @@ namespace Jeff\Code\Model\Log\Method;
 
 use Jeff\Code\Model\Record;
 
-use Jeff\Code\Util\DB;
-
 class LogMethod extends Record
 {
 	protected static function getKey(): string
@@ -60,6 +58,13 @@ class LogMethod extends Record
 			"SELECT *
 			from job_log_method {$sql_cond} ";
 		return $sql;
+	}
+
+	public static function getDelete(array $args=[], array &$bind=[]): string 
+	{
+		$key = static::getKey();
+		$bind[] = $args[$key];
+		return "DELETE from job_log_method where {$key} = ?";
 	}
 
 	public static function validate(array $data): bool

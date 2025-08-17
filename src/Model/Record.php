@@ -17,12 +17,20 @@ abstract class Record
 	protected abstract static function getKey(): string;
 	protected abstract static function validate(array $data): bool;
 
+	public abstract static function getDelete(array $args=[], array &$bind=[]): string;
 	public abstract static function getSelect(array $args=[], array &$bind=[]): string;
 	public abstract static function getInstance(array $data): ?Record;
 
 	public function __construct(array $data)
 	{
 		$this->data = $data;
+	}
+
+	public static function delete(array $data): void
+	{
+		$bind = [];
+		$sql = static::getDelete($data, $bind);
+		DB::getInstance()->perform($sql, $bind);
 	}
 
 	public static function create(array $data): ?Record

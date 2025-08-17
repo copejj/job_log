@@ -99,4 +99,11 @@ class Week extends Record
 			order by start_date desc, end_date desc";
 		return $sql;
 	}
+
+	public static function getDelete(array $args=[], array &$bind=[]): string 
+	{
+		$key = static::getKey();
+		$bind[] = $args[$key];
+		return "DELETE from week where {$key} = ?";
+	}
 }

@@ -37,6 +37,13 @@ class LogAction extends Record
 		return true;
 	}
 
+	public static function getDelete(array $args=[], array &$bind=[]): string 
+	{
+		$key = static::getKey();
+		$bind[] = $args[$key];
+		return "DELETE from job_log_action where {$key} = ?";
+	}
+
 	public static function getSelect(array $args = [], array &$bind = []): string
 	{
 		$conds = [];

@@ -46,9 +46,17 @@ class LogAdd extends Logs
 				}
 				else
 				{
+					$this->log = $log;
+					if ($this->saveActions($this->log->job_log_id, $this->post['actions']))
+					{
+
+					}
+					if ($this->saveMethods($this->log->job_log_id, $this->post['methods']))
+					{
+
+					}
 					$message = "Log entry saved";
 					$this->acted = true;
-					$this->log = $log;
 				}
 			}
 			catch (Exception $e)
@@ -62,11 +70,13 @@ class LogAdd extends Logs
 
 	protected function saveActions(int $job_log_id, array $actions): bool
 	{
+		\Jeff\Code\Util\D::p(__FUNCTION__, func_get_args());
 		return false;
 	}
 
 	protected function saveMethods(int $job_log_id, array $methods): bool
 	{
+		\Jeff\Code\Util\D::p(__FUNCTION__, func_get_args());
 		return false;
 	}
 

@@ -108,4 +108,11 @@ class Log extends Record
 				join weeks using (week_id) {$sql_cond}";
 		return $sql;
 	}
+
+	public static function getDelete(array $args=[], array &$bind=[]): string 
+	{
+		$key = static::getKey();
+		$bind[] = $args[$key];
+		return "DELETE from job_logs where {$key} = ?";
+	}
 }
