@@ -7,13 +7,7 @@ class Select extends Input
 	protected int $default;
 	protected int $selected;
 
-	/**
-	 * Creates a html select
-	 * @param array $data The target data array should be $data['id'] = 'text' format
-	 * @param integer $selected The selected ID if there is one
-	 * @param string $label The label to display if nothing is selected
-	 */
-	public function __construct(string $name, array $data, int $default=0, int $selected=0, string $label='')
+	public function __construct(string $name, array $data, int $selected=0, int $default=0, string $label='')
 	{
 		$this->name = $name;
 		$this->data = $data;

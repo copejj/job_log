@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\Model\Entities;
 
-use Jeff\Code\View\Display\Formatter;
+use Jeff\Code\View\Format\Formatter;
 
 use Jeff\Code\Model\Entities;
 use Jeff\Code\Model\Week\Week; 

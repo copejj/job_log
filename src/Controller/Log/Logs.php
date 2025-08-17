@@ -28,6 +28,6 @@ class Logs extends HeaderedContent
 			new Input('action', 'hidden', 'add'),
 			new Input('add_log', 'submit', 'New'),
 		]);
-		echo new Table(new LogMetadata(), $this->service->getAll(), new Attributes(['class' => 'half-width']));
+		echo new Table(new LogMetadata(), $this->service->getAll());
 	}
 }

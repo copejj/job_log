@@ -28,7 +28,7 @@ class Weeks extends Records
 			), job_count as (
 				select count(job_log_id) job_count, week_id
 				from job_logs
-				where week_id = (select week_id from target)
+					join target using (week_id)
 				group by week_id 
 			)
 			select week_id as id, weeks.*, coalesce(job_count, 0) as job_count

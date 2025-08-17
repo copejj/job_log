@@ -1,7 +1,7 @@
 <?php
 namespace Jeff\Code\View\Elements;
 
-use Jeff\Code\View\Display\Formatter;
+use Jeff\Code\View\Format\Formatter;
 use Jeff\Code\View\Elements\Input;
 
 use Jeff\Code\Model\Record;

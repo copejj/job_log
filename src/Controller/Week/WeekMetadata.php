@@ -2,8 +2,8 @@
 namespace Jeff\Code\Controller\Week;
 
 use Jeff\Code\Model\Record;
-use Jeff\Code\View\Display\Formatter;
 use Jeff\Code\View\Display\Metadata;
+use Jeff\Code\View\Format\Formatter;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 
@@ -25,7 +25,7 @@ class WeekMetadata extends Metadata implements Formatter
 				'format' => 'Jeff\Code\View\Elements\Date',
 			],
 			'job_count' => [
-				'label' => 'Job Count',
+				'label' => '# Logs',
 			]
 		];
 	}

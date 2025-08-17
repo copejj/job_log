@@ -2,8 +2,8 @@
 namespace Jeff\Code\Controller\Log;
 
 use Jeff\Code\Model\Record;
-use Jeff\Code\View\Display\Formatter;
 use Jeff\Code\View\Display\Metadata;
+use Jeff\Code\View\Format\Formatter;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 
@@ -14,14 +14,41 @@ class LogMetadata extends Metadata implements Formatter
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Week\LogMetaData',
+				'format' => 'Jeff\Code\Controller\Log\LogMetaData',
+			],
+			'start_date' => [
+				'label' => 'Start Week',
+				'format' => 'Jeff\Code\View\Elements\Date',
+			],
+			'end_date' => [
+				'label' => 'End Week',
+				'format' => 'Jeff\Code\View\Elements\Date',
+			],
+			'action_date' => [
+				'label' => 'Action Date',
+				'format' => 'Jeff\Code\View\Elements\Date',
+			],
+			'company_id' => [
+				'label' => 'Company',
+			],
+			'contact_id' => [
+				'label' => 'Contact',
+			],
+			'title' => [
+				'label' => 'Title',
+			],
+			'job_number' => [
+				'label' => 'job_number',
+			],
+			'next_step' => [
+				'label' => 'job_number',
 			],
 		];
 	}
 
 	public static function format(string $key, Record $data): string
 	{
-		$id = $data->log_job_id;
+		$id = $data->job_log_id;
 		if (empty($id))
 		{
 			return '';

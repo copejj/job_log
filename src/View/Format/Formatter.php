@@ -1,5 +1,5 @@
 <?php
-namespace Jeff\Code\View\Display;
+namespace Jeff\Code\View\Format;
 
 use Jeff\Code\Model\Record;
 
