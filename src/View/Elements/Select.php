@@ -6,14 +6,16 @@ class Select extends Input
 	protected array $data;
 	protected int $default;
 	protected int $selected;
+	protected string $option_label;
 
-	public function __construct(string $name, array $data, int $selected=0, int $default=0, string $label='')
+	public function __construct(string $name, array $data, int $selected=0, int $default=0, string $label='', string $option_label='')
 	{
 		$this->name = $name;
 		$this->data = $data;
 		$this->default= $default;
 		$this->selected = $selected;
 		$this->label = $label;
+		$this->option_label = $option_label;
 		$this->type = 'select';
 	}
 
@@ -32,10 +34,10 @@ class Select extends Input
 
 			if (!empty($options))
 			{
-				$titleOption = '';
-				if (!empty($this->label))
+				$labelOption = '';
+				if (!empty($this->option_label))
 				{
-					$labelOption = "<option value=''>{$this->label}</option>";
+					$labelOption = "<option value=''>{$this->option_label}</option>";
 				}
 
 				$result = "<select class='input select-input' id='select_{$this->name}' name='{$this->name}'>{$labelOption}" . implode($options) . "</select>";

@@ -16,13 +16,12 @@ class LogMetadata extends Metadata implements Formatter
 				'label' => '',
 				'format' => 'Jeff\Code\Controller\Log\LogMetaData',
 			],
-			'start_date' => [
-				'label' => 'Start Week',
-				'format' => 'Jeff\Code\View\Elements\Date',
+			'week_id' => [
+				'label' => 'Week',
+				'format' => 'Jeff\Code\Model\Entities\Weeks',
 			],
-			'end_date' => [
-				'label' => 'End Week',
-				'format' => 'Jeff\Code\View\Elements\Date',
+			'title' => [
+				'label' => 'Title',
 			],
 			'action_date' => [
 				'label' => 'Action Date',
@@ -56,7 +55,7 @@ class LogMetadata extends Metadata implements Formatter
 
 		return new Form([
 			new Input('action', 'hidden', 'edit'),
-			new Input('week_id', 'hidden', $id),
+			new Input('job_log_id', 'hidden', $id),
 			new Input('edit_week', 'submit', 'Edit'),
 		]);
 	}

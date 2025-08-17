@@ -36,6 +36,7 @@ abstract class Record
 		$record->update_data = true;
 		if ($record->save())
 		{
+			$record->update_data = false;
 			return $record;
 		}
 		return null;
@@ -44,7 +45,6 @@ abstract class Record
 	public function save(): bool
 	{
 		$this->onSave();
-		\Jeff\Code\Util\D::p('query', [$this->sql, $this->bind]);
 		$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
 		return !empty($result[$this->key_name]);
 	}
@@ -58,7 +58,7 @@ abstract class Record
 		return $this->data[$name] ?? '';
 	}
 
-	public function __set(string $name, string $value): void
+	public function __set(string $name, mixed $value): void
 	{
 		if (array_key_exists($name, $this->data))
 		{

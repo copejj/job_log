@@ -4,12 +4,6 @@ namespace Jeff\Code\Controller\Week;
 use Exception;
 use Jeff\Code\Model\Week\Week;
 
-use Jeff\Code\View\Display\Attributes;
-use Jeff\Code\View\Elements\Date;
-use Jeff\Code\View\Elements\Form;
-use Jeff\Code\View\Elements\Input;
-use Jeff\Code\View\Elements\Inputs;
-
 class WeekEdit extends WeekAdd
 {
 	public function processing(): void

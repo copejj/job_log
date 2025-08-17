@@ -22,6 +22,7 @@ class LogAdd extends Logs
 	protected bool $acted = false;
 	protected string $mode = 'add';
 	protected string $title = 'Add';
+
 	protected Log $log;
 
 	protected Actions $actions;
@@ -33,7 +34,7 @@ class LogAdd extends Logs
 		$this->actions = new Actions();
 		$this->methods = new Methods();
 		$this->weeks = new Weeks();
-		if (!empty($this->post['save_job']))
+		if (!empty($this->post['save_job_log']))
 		{
 			$message = '';
 			try
@@ -52,7 +53,7 @@ class LogAdd extends Logs
 			}
 			catch (Exception $e)
 			{
-				$message = $e->getMessage();
+				$message = "Exception: " . $e->getMessage();
 			}
 
 			$this->message = $message;
@@ -67,6 +68,7 @@ class LogAdd extends Logs
 	public function content(): void
 	{
 		$data = $this->log->data ?? $this->post;
+		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()
@@ -78,15 +80,16 @@ class LogAdd extends Logs
 		<?php
 		echo new Form([
 			new Inputs([ 
-				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),
-				new Select('week_id', $this->weeks->data, $this->weeks->default ?? 0, $data['week_id'] ?? 0, '[ Select a work week ]'),
+				new Input('job_log_id', 'hidden', $data['job_log_id'] ?? ''),
+				new Select('week_id', $this->weeks->data, $data['week_id'] ?? 0, 0, 'Week', '[ Select a work week ]'),
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
+				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), 'Actions', 'actions'),
 				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), 'Methods', 'methods'),
 				new Input('job_number', 'text', $data['job_number'] ?? '', '', 'Job Number'),
 				new Input('next_step', 'text', $data['next_step'] ?? '', '', 'Next Step'),
 			], 'logs', 'logs'),
-			new Input('save_job', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
+			new Input('save_job_log', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_job', 'submit', ($this->acted) ? 'Done' : 'Cancel'),
 		], 'post', new Attributes(['id' => 'log_form']));
 	}

@@ -7,6 +7,8 @@ use Jeff\Code\Util\DB;
 
 class Week extends Record
 {
+	protected string $key_name = 'week_id';
+
 	public function onSave(): bool
 	{
 		if ($this->update_data)

@@ -18,7 +18,7 @@ class Log extends Record
 			}
 
 			$this->bind = [
-				$this->data['week_id'] ?? null,
+				$this->data['week_id'],
 				$this->data['action_date'], 
 				$this->data['company_id'] ?? null, 
 				$this->data['contact_id'] ?? null, 
@@ -46,7 +46,7 @@ class Log extends Record
 			{
 				$this->sql = 
 					"UPDATE job_logs
-						week_id = ?
+					set week_id = ?
 						, action_date = ?
 						, company_id = ?
 						, contact_id = ?
@@ -55,7 +55,8 @@ class Log extends Record
 						, next_step = ?
 					where job_log_id = ?
 					returning *";
-				$bind[] = $this->data[$this->key_name];
+				$this->bind[] = $this->data[$this->key_name];
+				\Jeff\Code\Util\D::p('query', ['$sql' => $this->sql, 'bind' => $this->bind]);
 			}
 		}
 		return true;
@@ -65,7 +66,7 @@ class Log extends Record
 	{
 		$sql = 
 			"SELECT *
-			from job_log
+			from job_logs
 			where job_log_id = ?";
 		$data = DB::getInstance(true)->fetchOne($sql, [$id]);
 		return static::getInstance($data);

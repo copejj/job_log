@@ -1,13 +1,12 @@
 <?php
-namespace Jeff\Code\Model;
-
-use Exception;
+namespace Jeff\Code\Model\Entities;
 
 use Jeff\Code\Util\DB;
 
 abstract class Entities
 {
 	protected string $table;
+	protected string $order;
 	protected string $key;
 	protected string $name;
 
@@ -16,9 +15,10 @@ abstract class Entities
 
 	protected bool $update_data = true;
 
-	protected function __construct(string $table, string $key, string $name='', int $default=0)
+	protected function __construct(string $table, string $key, string $name='', string $order='', int $default=0)
 	{
 		$this->table = $table;
+		$this->order = (empty($order)) ? $key : $order;
 		$this->key = $key;
 		$this->name = $name;
 		$this->default = $default;
@@ -40,7 +40,7 @@ abstract class Entities
 	{
 		if ($this->update_data)
 		{
-			$sql = "SELECT * from {$this->table} order by {$this->key}";
+			$sql = "SELECT * from {$this->table} order by {$this->order}";
 			$rows = DB::getInstance(true)->fetchAll($sql);
 
 			if (!empty($rows))
