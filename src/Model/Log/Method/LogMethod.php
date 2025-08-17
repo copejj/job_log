@@ -23,26 +23,13 @@ class LogMethod extends Record
 				$this->data['method_id'], 
 			];
 
-			if (empty($this->data[$this->key_name]))
-			{
-				$this->sql = 
-					"INSERT into job_log_method (
-						job_log_id
-						, method_id
-					)
-					values (?, ?)
-					returning *";
-			}
-			else
-			{
-				$this->sql = 
-					"UPDATE job_log_method
-					set job_log_id = ?
-						, method_id = ?
-					where job_log_method_id = ?
-					returning *";
-				$this->bind[] = $this->data[$this->key_name];
-			}
+			$this->sql = 
+				"INSERT into job_log_method (
+					job_log_id
+					, method_id
+				)
+				values (?, ?)
+				returning *";
 		}
 		return true;
 	}

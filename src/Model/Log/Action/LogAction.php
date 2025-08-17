@@ -23,26 +23,13 @@ class LogAction extends Record
 				$this->data['action_id'], 
 			];
 
-			if (empty($this->data[$this->key_name]))
-			{
-				$this->sql = 
-					"INSERT into job_log_action (
-						job_log_id
-						, action_id
-					)
-					values (?, ?)
-					returning *";
-			}
-			else
-			{
-				$this->sql = 
-					"UPDATE job_log_action
-					set job_log_id = ?
-						, action_id = ?
-					where job_log_action_id = ?
-					returning *";
-				$this->bind[] = $this->data[$this->key_name];
-			}
+			$this->sql = 
+				"INSERT into job_log_action (
+					job_log_id
+					, action_id
+				)
+				values (?, ?)
+				returning *";
 		}
 		return true;
 	}
