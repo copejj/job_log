@@ -1,9 +1,10 @@
 <?php
 namespace Jeff\Code\Model\Log;
 
-use Jeff\Code\Util\DB;
 use Jeff\Code\Model\Record;
 use Jeff\Code\Model\Records;
+
+use Jeff\Code\Util\DB;
 
 class Logs extends Records
 {
@@ -28,7 +29,7 @@ class Logs extends Records
 				, end_date
 			from job_logs
 				join weeks using (week_id) {$sql_cond}";
-		$results = DB::getInstance(true)->fetchAll($sql);
+		$results = DB::getInstance(true)->fetchAll($sql, $bind);
 		return new Logs($results);
 	}
 

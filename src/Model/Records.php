@@ -6,7 +6,7 @@ abstract class Records
 	protected array $data = [];
 	protected array $args = [];
 
-	public abstract static function init(): Records;
+	public abstract static function init(array $args=[]): Records;
 	public abstract static function getInstance(array $row): ?Record;
 
 	public function __construct(array $data)

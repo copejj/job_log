@@ -56,7 +56,6 @@ class Log extends Record
 					where job_log_id = ?
 					returning *";
 				$this->bind[] = $this->data[$this->key_name];
-				\Jeff\Code\Util\D::p('query', ['$sql' => $this->sql, 'bind' => $this->bind]);
 			}
 		}
 		return true;
