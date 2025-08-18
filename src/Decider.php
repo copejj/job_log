@@ -72,7 +72,7 @@ class Decider
 			'Home' => '/',
 			'Weeks' => '/?page=workweek',
 			'Logs' => '/?page=log',
-			'Companies' => '/?page=company',
+			'Company' => '/?page=company',
 		];
 		return $content;
 	}
