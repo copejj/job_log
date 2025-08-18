@@ -12,8 +12,8 @@ class Select extends Input
 	{
 		$this->name = $name;
 		$this->data = $data;
-		$this->default= $default;
 		$this->selected = $selected;
+		$this->default = $default;
 		$this->label = $label;
 		$this->option_label = $option_label;
 		$this->type = 'select';

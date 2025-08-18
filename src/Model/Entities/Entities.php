@@ -47,7 +47,7 @@ abstract class Entities
 			{
 				foreach ($rows as $row)
 				{
-					if (!empty($this->default))
+					if (!empty($row['default']))
 					{
 						$this->default = $row[$this->key];
 					}
