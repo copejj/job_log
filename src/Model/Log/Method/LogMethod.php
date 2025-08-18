@@ -30,7 +30,8 @@ class LogMethod extends Record
 					, method_id
 				)
 				values (?, ?)
-				returning * on conflict do nothing";
+				on conflict do nothing returning *";
+			\Jeff\Code\Util\D::p('query', [$this->sql, $this->bind]);
 		}
 		return true;
 	}

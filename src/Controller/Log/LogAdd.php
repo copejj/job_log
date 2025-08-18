@@ -3,6 +3,8 @@ namespace Jeff\Code\Controller\Log;
 
 use Exception;
 use Jeff\Code\Model\Log\Log;
+use Jeff\Code\Model\Log\Action\LogAction;
+use Jeff\Code\Model\Log\Method\LogMethod;
 
 use Jeff\Code\View\Display\Attributes;
 
@@ -47,11 +49,11 @@ class LogAdd extends Logs
 				else
 				{
 					$this->log = $log;
-					if ($this->saveActions($this->log->job_log_id, $this->post['actions']))
+					if ($this->saveActions($this->log->job_log_id, $this->post['actions'] ?? []))
 					{
 
 					}
-					if ($this->saveMethods($this->log->job_log_id, $this->post['methods']))
+					if ($this->saveMethods($this->log->job_log_id, $this->post['methods'] ?? []))
 					{
 
 					}
@@ -70,14 +72,32 @@ class LogAdd extends Logs
 
 	protected function saveActions(int $job_log_id, array $actions): bool
 	{
-		\Jeff\Code\Util\D::p(__FUNCTION__, func_get_args());
-		return false;
+		// clear the actions out of the way
+		LogAction::delete([Log::getKey() => $job_log_id]);
+		// walk through and create the new actions
+		if (!empty($actions))
+		{
+			foreach ($actions as $action_id => $val)
+			{
+				LogAction::create([Log::getKey() => $job_log_id, 'action_id' => $action_id]);
+			}
+		}
+		return true;
 	}
 
 	protected function saveMethods(int $job_log_id, array $methods): bool
 	{
-		\Jeff\Code\Util\D::p(__FUNCTION__, func_get_args());
-		return false;
+		// clear the actions out of the way
+		LogMethod::delete([Log::getKey() => $job_log_id]);
+		// walk through and create the new actions
+		if (!empty($methods))
+		{
+			foreach ($methods as $method_id => $val)
+			{
+				LogMethod::create([Log::getKey() => $job_log_id, 'method_id' => $method_id]);
+			}
+		}
+		return true;
 	}
 
 	public function getTitle(): string

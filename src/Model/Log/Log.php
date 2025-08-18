@@ -6,7 +6,7 @@ use Jeff\Code\Model\Record;
 
 class Log extends Record
 {
-	protected static function getKey(): string
+	public static function getKey(): string
 	{
 		return 'job_log_id';
 	}

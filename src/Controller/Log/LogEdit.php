@@ -38,6 +38,14 @@ class LogEdit extends LogAdd
 				{
 					$message = "This log updated successfully";
 					$this->acted = true;
+					if ($this->saveActions($this->log->job_log_id, $this->post['actions']))
+					{
+
+					}
+					if ($this->saveMethods($this->log->job_log_id, $this->post['methods']))
+					{
+
+					}
 				}
 			}
 			catch (Exception $e)

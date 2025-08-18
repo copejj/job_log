@@ -3,8 +3,6 @@ namespace Jeff\Code\Model\Log\Action;
 
 use Jeff\Code\Model\Record;
 
-use Jeff\Code\Util\DB;
-
 class LogAction extends Record
 {
 	protected static function getKey(): string
@@ -32,7 +30,9 @@ class LogAction extends Record
 					, action_id
 				)
 				values (?, ?)
-				returning * on conflict do nothing";
+				on conflict do nothing
+				returning *";
+			\Jeff\Code\Util\D::p('query', [$this->sql, $this->bind]);
 		}
 		return true;
 	}
