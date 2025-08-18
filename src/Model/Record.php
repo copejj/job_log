@@ -52,8 +52,14 @@ abstract class Record
 
 	public function save(): bool
 	{
-		$this->onSave();
-		$this->data = DB::getInstance()->fetchOne($this->sql, $this->bind);
+		if ($this->onSave())
+		{
+			$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
+			if (!empty($result))
+			{
+				$this->data = $result;
+			}
+		}
 		return !empty($this->data[static::getKey()]);
 	}
 
@@ -78,8 +84,11 @@ abstract class Record
 	{
 		if (array_key_exists($name, $this->data))
 		{
-			$this->data[$name] = $value;
-			$this->update_data = true;
+			if ($this->data[$name] != $value)
+			{
+				$this->data[$name] = $value;
+				$this->update_data = true;
+			}
 		}
 		else
 		{

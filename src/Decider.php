@@ -3,6 +3,9 @@ namespace Jeff\Code;
 
 use Jeff\Code\View\Content;
 use Jeff\Code\Controller\Index;
+use Jeff\Code\Controller\Company\Companies;
+use Jeff\Code\Controller\Company\CompanyAdd;
+use Jeff\Code\Controller\Company\CompanyEdit;
 use Jeff\Code\Controller\Log\Logs;
 use Jeff\Code\Controller\Log\LogAdd;
 use Jeff\Code\Controller\Log\LogEdit;
@@ -45,6 +48,19 @@ class Decider
 						$content = new Logs();
 				}
 				break;
+			case 'company':
+				switch ($action)
+				{
+					case 'add':
+						$content = new CompanyAdd();
+						break;
+					case 'edit':
+						$content = new CompanyEdit();
+						break;
+					default:
+						$content = new Companies();
+				}
+				break;
 			case 'index':
 			default:
 				$content = new Index();
@@ -56,6 +72,7 @@ class Decider
 			'Home' => '/',
 			'Weeks' => '/?page=workweek',
 			'Logs' => '/?page=log',
+			'Companies' => '/?page=company',
 		];
 		return $content;
 	}

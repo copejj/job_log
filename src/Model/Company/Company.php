@@ -1,15 +1,15 @@
 <?php
-namespace Jeff\Code\Model\Week;
+namespace Jeff\Code\Model\Company;
 
 use Jeff\Code\Model\Record;
 
 use Jeff\Code\Util\DB;
 
-class Week extends Record
+class Company extends Record
 {
 	protected static function getKey(): string
 	{
-		return 'week_id';
+		return 'company_id';
 	}
 
 	protected function onSave(): bool
@@ -22,29 +22,32 @@ class Week extends Record
 			}
 
 			$this->bind = [
-				$this->data['start_date'],
-				$this->data['end_date'],
+				$this->data['name'],
+				$this->data['email'] ?? '',
+				$this->data['website'] ?? '',
 			];
 
-			if (empty($this->data['week_id']))
+			if (empty($this->data['company_id']))
 			{
 				$this->sql = 
-					"INSERT into weeks (
-						start_date
-						, end_date
+					"INSERT into companies (
+						name
+						, email
+						, website
 					) 
-					values (?, ?) 
+					values (?, ?, ?) 
 					returning *";
 			}
 			else 
 			{
 				$this->sql = 
-					"UPDATE weeks 
-					set start_date = ?
-						, end_date = ? 
-					where week_id = ? 
+					"UPDATE companies 
+					set name = ?
+						, email = ?
+						, website = ?
+					where company_id = ? 
 					returning *";
-				$this->bind[] = $this->data['week_id'];
+				$this->bind[] = $this->data['company_id'];
 			}
 		}
 		return true;
@@ -54,16 +57,15 @@ class Week extends Record
 	{
 		switch (true)
 		{
-			case empty($data['start_date']):
-			case empty($data['end_date']):
+			case empty($data['name']):
 				return false;
 		}
 		return true;
 	}
 
-	public static function getInstance(array $data): Week
+	public static function getInstance(array $data): Company
 	{
-		return new Week($data);
+		return new Company($data);
 	}
 
 	public static function getSelect(array $args=[], array &$bind=[]): string
@@ -83,19 +85,19 @@ class Week extends Record
 		}
 		$sql = 
 			"WITH target as (
-				select week_id
-				from weeks {$sql_cond}
+				select company_id
+				from companies {$sql_cond}
 			), job_count as (
-				select count(job_log_id) job_count, week_id
+				select count(job_log_id) job_count, company_id
 				from job_logs
-					join target using (week_id)
-				group by week_id 
+					join target using (company_id)
+				group by company_id 
 			)
-			select week_id as id, weeks.*, coalesce(job_count, 0) as job_count
+			select company_id as id, companies.*, coalesce(job_count, 0) as job_count
 			from target
-				join weeks using (week_id)
-				left join job_count using (week_id)
-			order by start_date desc, end_date desc";
+				join companies using (company_id)
+				left join job_count using (company_id)
+			order by name";
 		return $sql;
 	}
 
@@ -103,6 +105,6 @@ class Week extends Record
 	{
 		$key = static::getKey();
 		$bind[] = $args[$key];
-		return "DELETE from week where {$key} = ?";
+		return "DELETE from companies where {$key} = ?";
 	}
 }
