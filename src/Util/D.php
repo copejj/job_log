@@ -37,11 +37,12 @@ class D
 
 	static public function backtrace($sep="\n")
 	{
+		$backtrace = []; 
 		foreach (debug_backtrace() as $line)
 		{
-			if ($line['function'] == __function__)
+			if ($line['function'] == __FUNCTION__)
 				continue;
-			$docroot = preg_quote($_SERVER['DOCUMENT_ROOT']);
+			$docroot = preg_quote($_SERVER['DOCUMENT_ROOT'] ?? '');
 			$file = preg_replace("@{$docroot}/@", '', $line['file']);
 			$function = $line['function'];
 			$linenum = $line['line'];

@@ -101,11 +101,48 @@ class Log extends Record
 			$sql_cond = 'where ' . implode(' and ', $conds);
 		}
 		$sql = 
-			"SELECT job_logs.*
-				, start_date
-				, end_date
+			"WITH job_logs as (
+				select job_log_id
+					, action_date
+					, company_id
+					, contact_id
+					, title
+					, job_number
+					, next_step
+					, week_id
+					, start_date
+					, end_date
+				from job_logs
+					join weeks using (week_id) {$sql_cond}
+			), actions as (
+				with data as (
+					select job_log_id, job_log_action_id, action_id, name
+					from job_logs
+						join job_log_actions using (job_log_id)
+						join actions using (action_id)
+				)
+				select job_log_id
+					, jsonb_agg(to_jsonb(data.*) - 'job_log_id') as actions_json
+				from data
+				group by job_log_id
+			), methods as (
+				with data as (
+					select job_log_id, job_log_method_id, method_id, name
+					from job_logs
+						join job_log_methods using (job_log_id)
+						join methods using (method_id)
+				)
+				select job_log_id
+					, jsonb_agg(to_jsonb(data.*) - 'job_log_id') as methods_json
+				from data
+				group by job_log_id
+			)
+			select job_logs.*
+				, actions_json
+				, methods_json
 			from job_logs
-				join weeks using (week_id) {$sql_cond}";
+				left join actions using (job_log_id)
+				left join methods using (job_log_id)";
 		return $sql;
 	}
 

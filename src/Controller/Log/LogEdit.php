@@ -22,7 +22,6 @@ class LogEdit extends LogAdd
 		$this->log = Log::load($this->post['job_log_id']);
 		if (!empty($this->post['save_job_log']))
 		{
-			\Jeff\Code\Util\D::p('post', $this->post);
 			$message = '';
 			try
 			{
@@ -33,19 +32,15 @@ class LogEdit extends LogAdd
 				$this->log->title = $this->post['title'] ?? null;
 				$this->log->job_number = $this->post['job_number'] ?? null;
 				$this->log->next_step = $this->post['next_step'] ?? null;
+
 				$has_saved = $this->log->save();
+				$this->saveActions($this->log->job_log_id, $this->post['actions'] ?? []);
+				$this->saveMethods($this->log->job_log_id, $this->post['methods'] ?? []);
 				if ($has_saved)
 				{
+					$this->log = Log::load($this->log->job_log_id);
 					$message = "This log updated successfully";
 					$this->acted = true;
-					if ($this->saveActions($this->log->job_log_id, $this->post['actions']))
-					{
-
-					}
-					if ($this->saveMethods($this->log->job_log_id, $this->post['methods']))
-					{
-
-					}
 				}
 			}
 			catch (Exception $e)

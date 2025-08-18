@@ -25,13 +25,12 @@ class LogMethod extends Record
 			];
 
 			$this->sql = 
-				"INSERT into job_log_method (
+				"INSERT into job_log_methods (
 					job_log_id
 					, method_id
 				)
 				values (?, ?)
 				on conflict do nothing returning *";
-			\Jeff\Code\Util\D::p('query', [$this->sql, $this->bind]);
 		}
 		return true;
 	}
@@ -57,7 +56,7 @@ class LogMethod extends Record
 
 		$sql = 
 			"SELECT *
-			from job_log_method {$sql_cond} ";
+			from job_log_methods {$sql_cond} ";
 		return $sql;
 	}
 
@@ -65,7 +64,7 @@ class LogMethod extends Record
 	{
 		$key = static::getKey();
 		$bind[] = $args[$key];
-		return "DELETE from job_log_method where {$key} = ?";
+		return "DELETE from job_log_methods where {$key} = ?";
 	}
 
 	public static function validate(array $data): bool

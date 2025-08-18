@@ -49,6 +49,7 @@ class LogAdd extends Logs
 				else
 				{
 					$this->log = $log;
+					\Jeff\Code\Util\D::p('log', $this->log);
 					if ($this->saveActions($this->log->job_log_id, $this->post['actions'] ?? []))
 					{
 
@@ -105,10 +106,30 @@ class LogAdd extends Logs
 		return "{$this->title} Log";
 	}
 
+	public function formatData(array $data)
+	{
+		foreach (['action', 'method'] as $type)
+		{
+			if (!empty($data["{$type}s_json"]))
+			{
+				$data_arr = [];
+				$targets = json_decode($data["{$type}s_json"], true);
+				foreach ($targets as $target)
+				{
+					$data_arr[$target["{$type}_id"]] = $target["job_log_{$type}_id"];
+				}
+				unset($data["{$type}s_json"]);
+				$data["{$type}s"] = $data_arr;
+			}
+		}
+		return $data;
+	}
+
 	public function content(): void
 	{
 		$data = $this->log->data ?? $this->post;
-		\Jeff\Code\Util\D::p('data', $data);
+		$data = $this->formatData($data);
+
 		?>
 		<script>
 			function save_form()

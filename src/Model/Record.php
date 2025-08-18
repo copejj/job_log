@@ -53,8 +53,8 @@ abstract class Record
 	public function save(): bool
 	{
 		$this->onSave();
-		$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
-		return !empty($result[static::getKey()]);
+		$this->data = DB::getInstance()->fetchOne($this->sql, $this->bind);
+		return !empty($this->data[static::getKey()]);
 	}
 
 	public static function load(int $id): ?Record

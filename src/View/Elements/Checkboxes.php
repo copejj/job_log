@@ -21,9 +21,9 @@ class Checkboxes extends Input
 		$this->selected = [];
 		if (!empty($selected))
 		{
-			foreach ($selected as $id)
+			foreach ($selected as $id => $aid)
 			{
-				$this->selected[$id] = $id;
+				$this->selected[$id] = $aid ?? '';
 			}
 		}
 	}
