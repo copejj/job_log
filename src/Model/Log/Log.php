@@ -136,7 +136,7 @@ class Log extends Record
 				from data
 				group by job_log_id
 			), company as (
-				select company_id
+				select distinct on (company_id) company_id
 					, name as company_name
 				from job_logs
 					join companies using (company_id)
