@@ -2,34 +2,62 @@
 namespace Jeff\Code\Controller\Company;
 
 use Exception;
-use Jeff\Code\Model\Company\Company;
+
+use Jeff\Code\Model\Company\Company as Service;
 
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Inputs;
+use Jeff\Code\View\HeaderedContent;
 
-class CompanyAdd extends Companies
+class Company extends HeaderedContent
 {
-	protected Company $company;
+	protected Service $company;
 
 	protected bool $acted = false;
 	protected string $mode = 'add';
 	protected string $title = 'Add';
 
+	public function init(): void
+	{
+		if (!empty($this->post['company_id']))
+		{
+			$this->company = Service::load($this->post['company_id']);
+			$this->mode = 'edit';
+			$this->title= 'Edit';
+		}
+	}
+
 	public function processing(): void
 	{
-		if (empty($post['save_company']))
+		if (!empty($this->post['save_company']))
 		{
 			$message = '';
 			try
 			{
-				$company = Company::create($this->post);
-				if (!empty($company))
+				if (empty($this->company))
 				{
-					$message = "This company created successfully";
-					$this->company = $company;
-					$this->acted = true;
+					$company = Service::create($this->post);
+					if (!empty($company))
+					{
+						$message = "This company created successfully";
+						$this->company = $company;
+						$this->acted = true;
+						$this->mode = 'edit';
+						$this->title= 'Edit';
+					}
+				}
+				else
+				{
+					$this->company->name = $this->post['name'];
+					$this->company->email = $this->post['email'];
+					$this->company->website = $this->post['website'];
+					if ($this->company->save())
+					{
+						$message = "This company updated successfully";
+						$this->acted = true;
+					}
 				}
 			}
 			catch (Exception $e)
@@ -49,6 +77,7 @@ class CompanyAdd extends Companies
 	public function content(): void
 	{
 		$data = $this->company->data ?? $this->post;
+		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()

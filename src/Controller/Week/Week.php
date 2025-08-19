@@ -31,15 +31,11 @@ class Week extends HeaderedContent
 
 	public function processing(): void
 	{
-		\Jeff\Code\Util\D::p(__FUNCTION__);
 		if (!empty($this->post['save_week']))
 		{
-		\Jeff\Code\Util\D::p('save_week');
 			$message = '';
 			if (!empty($this->week))
 			{
-		\Jeff\Code\Util\D::p('edit');
-
 				try
 				{
 					$this->week->start_date = $this->post['start_date'];
@@ -58,7 +54,6 @@ class Week extends HeaderedContent
 			}
 			else
 			{
-		\Jeff\Code\Util\D::p('new');
 				try
 				{
 					$week = Service::create($this->post);
@@ -89,7 +84,6 @@ class Week extends HeaderedContent
 	public function content(): void
 	{
 		$data = $this->week->data ?? $this->post;
-		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()

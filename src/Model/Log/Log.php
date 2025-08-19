@@ -119,7 +119,7 @@ class Log extends Record
 					, start_date
 					, end_date
 				from job_logs
-					join weeks using (week_id)
+					left join weeks using (week_id)
 			), actions as (
 				with data as (
 					select job_log_id, job_log_action_id, action_id, name

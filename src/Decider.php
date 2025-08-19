@@ -3,12 +3,10 @@ namespace Jeff\Code;
 
 use Jeff\Code\View\Content;
 use Jeff\Code\Controller\Index;
+use Jeff\Code\Controller\Company\Company;
 use Jeff\Code\Controller\Company\Companies;
-use Jeff\Code\Controller\Company\CompanyAdd;
-use Jeff\Code\Controller\Company\CompanyEdit;
+use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\Logs;
-use Jeff\Code\Controller\Log\LogAdd;
-use Jeff\Code\Controller\Log\LogEdit;
 use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
 
@@ -39,10 +37,8 @@ class Decider
 				switch ($action)
 				{
 					case 'add':
-						$content = new LogAdd();
-						break;
 					case 'edit':
-						$content = new LogEdit();
+						$content = new Log();
 						break;
 					default:
 						$content = new Logs();
@@ -55,10 +51,8 @@ class Decider
 						$content = new Logs();
 						break;
 					case 'add':
-						$content = new CompanyAdd();
-						break;
 					case 'edit':
-						$content = new CompanyEdit();
+						$content = new Company();
 						break;
 					default:
 						$content = new Companies();
