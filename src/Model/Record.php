@@ -35,17 +35,15 @@ abstract class Record
 
 	public static function create(array $data): ?Record
 	{
-		if (!static::validate($data))
+		if (static::validate($data))
 		{
-			return null;
-		}
-
-		$record = static::getInstance($data);
-		$record->update_data = true;
-		if ($record->save())
-		{
-			$record->update_data = false;
-			return $record;
+			$record = static::getInstance($data);
+			$record->update_data = true;
+			if ($record->save())
+			{
+				$record->update_data = false;
+				return $record;
+			}
 		}
 		return null;
 	}

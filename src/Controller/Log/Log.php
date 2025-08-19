@@ -173,7 +173,7 @@ class Log extends HeaderedContent
 			new Inputs([ 
 				new Input('job_log_id', 'hidden', $data['job_log_id'] ?? ''),
 				new Select('week_id', $this->weeks->data, $data['week_id'] ?? 0, $this->weeks->default, 'Week'),
-				new Select('company_id', $this->companies->data, $data['company_id'] ?? 0, $this->companies->default, 'Company', '[ Select a company ]'),
+				new Select('company_id', $this->companies->data, (int) ($data['company_id'] ?? 0), $this->companies->default, 'Company', '[ Select a company ]'),
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), 'Actions', 'actions'),

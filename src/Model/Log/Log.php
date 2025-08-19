@@ -69,6 +69,7 @@ class Log extends Record
 		switch (true)
 		{
 			case empty($data['week_id']):
+			case empty($data['company_id']):
 			case empty($data['action_date']):
 				return false;
 		}

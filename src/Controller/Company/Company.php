@@ -77,7 +77,6 @@ class Company extends HeaderedContent
 	public function content(): void
 	{
 		$data = $this->company->data ?? $this->post;
-		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()

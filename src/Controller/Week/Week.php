@@ -34,27 +34,9 @@ class Week extends HeaderedContent
 		if (!empty($this->post['save_week']))
 		{
 			$message = '';
-			if (!empty($this->week))
+			try
 			{
-				try
-				{
-					$this->week->start_date = $this->post['start_date'];
-					$this->week->end_date = $this->post['end_date'];
-					$has_saved = $this->week->save();
-					if ($has_saved)
-					{
-						$message = "This week updated successfully";
-						$this->acted = true;
-					}
-				}
-				catch (Exception $e)
-				{
-					$message = "This week already exists, use that or create a different range";
-				}
-			}
-			else
-			{
-				try
+				if (empty($this->week))
 				{
 					$week = Service::create($this->post);
 					if (!empty($week))
@@ -66,9 +48,28 @@ class Week extends HeaderedContent
 						$this->title= 'Edit';
 					}
 				}
-				catch (Exception $e)
+				else
 				{
-					$message = "This week already exists, use that or create a different range";
+					$this->week->start_date = $this->post['start_date'];
+					$this->week->end_date = $this->post['end_date'];
+					$has_saved = $this->week->save();
+					if ($has_saved)
+					{
+						$message = "This week updated successfully";
+						$this->acted = true;
+					}
+				}
+			}
+			catch (Exception $e)
+			{
+				$exception = $e->getMessage();
+				if (preg_match('/duplicate key value violates unique constraint/', $exception))
+				{
+					$message = "This week range already exists.";
+				}
+				else
+				{
+					$message = "Exception: '{$exception}'";
 				}
 			}
 
