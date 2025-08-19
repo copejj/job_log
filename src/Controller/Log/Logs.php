@@ -13,7 +13,7 @@ class Logs extends HeaderedContent
 
 	public function processing(): void
 	{
-		$this->service = Service::init();
+		$this->service = Service::init($this->post);
 	}
 
 	public function getTitle(): string

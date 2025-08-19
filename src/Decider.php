@@ -25,6 +25,9 @@ class Decider
 			case 'workweek':
 				switch ($action)
 				{
+					case 'view':
+						$content = new Logs();
+						break;
 					case 'add':
 						$content = new WeekAdd();
 						break;
@@ -51,6 +54,9 @@ class Decider
 			case 'company':
 				switch ($action)
 				{
+					case 'view':
+						$content = new Logs();
+						break;
 					case 'add':
 						$content = new CompanyAdd();
 						break;

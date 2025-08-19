@@ -1,20 +1,18 @@
 <?php
 namespace Jeff\Code\Controller\Log;
 
-use Jeff\Code\Model\Record;
 use Jeff\Code\View\Display\Metadata;
-use Jeff\Code\View\Format\Formatter;
-use Jeff\Code\View\Elements\Form;
-use Jeff\Code\View\Elements\Input;
 
-class LogMetadata extends Metadata implements Formatter
+use Jeff\Code\View\Elements\Format\EditButton;
+
+class LogMetadata extends Metadata
 {
 	public function init(): void
 	{
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Log\LogMetaData',
+				'format' => 'Jeff\Code\Controller\Log\LogEditButton',
 			],
 			'week_id' => [
 				'label' => 'Week',
@@ -37,26 +35,19 @@ class LogMetadata extends Metadata implements Formatter
 				'label' => 'Title',
 			],
 			'job_number' => [
-				'label' => 'job_number',
+				'label' => 'Job Number',
 			],
 			'next_step' => [
-				'label' => 'job_number',
+				'label' => 'Next Step',
 			],
 		];
 	}
+}
 
-	public static function format(string $key, Record $data): string
+class LogEditButton extends EditButton
+{
+	protected static function getType(): string
 	{
-		$id = $data->job_log_id;
-		if (empty($id))
-		{
-			return '';
-		}
-
-		return new Form([
-			new Input('action', 'hidden', 'edit'),
-			new Input('job_log_id', 'hidden', $id),
-			new Input('edit_week', 'submit', 'Edit'),
-		]);
+		return 'job_log';
 	}
 }

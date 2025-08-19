@@ -36,8 +36,8 @@ abstract class HeadlessContent extends Content
 		<?php
 		if (Config::get('ENVIRONMENT') !== 'prod' && !empty($_GET['debug']))
 		{
-			D::p('GET', $_GET);
-			D::p('POST', $_POST);
+			D::p('GET', $this->get);
+			D::p('POST', $this->post);
 		}
 	}
 }

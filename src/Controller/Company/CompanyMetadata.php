@@ -4,18 +4,16 @@ namespace Jeff\Code\Controller\Company;
 use Jeff\Code\Model\Record;
 
 use Jeff\Code\View\Display\Metadata;
-use Jeff\Code\View\Format\Formatter;
-use Jeff\Code\View\Elements\Form;
-use Jeff\Code\View\Elements\Input;
+use Jeff\Code\View\Elements\Format\EditButton;
 
-class CompanyMetadata extends Metadata implements Formatter
+class CompanyMetadata extends Metadata
 {
 	public function init(): void
 	{
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Company\CompanyMetaData',
+				'format' => 'Jeff\Code\Controller\Company\CompanyEditButton',
 			],
 			'name' => [
 				'label' => 'Name',
@@ -28,22 +26,30 @@ class CompanyMetadata extends Metadata implements Formatter
 			],
 			'job_count' => [
 				'label' => '#',
+				'format' => 'Jeff\Code\Controller\Company\CompanyViewButton',
 			],
 		];
 	}
+}
 
-	public static function format(string $key, Record $data): string
+class CompanyEditButton extends EditButton
+{
+	protected static function getType(): string
 	{
-		$id = $data->company_id;
-		if (empty($id))
-		{
-			return '';
-		}
+		return 'company';
+	}
+}
 
-		return new Form([
-			new Input('action', 'hidden', 'edit'),
-			new Input('company_id', 'hidden', $id),
-			new Input('edit_company', 'submit', 'Edit'),
-		]);
+class CompanyViewButton extends CompanyEditButton
+{
+	protected static function getAction(): string
+	{
+		return 'view';
+	}
+
+	protected static function getText(Record $data): string
+	{
+		$text = (int) $data->job_count;
+		return "View: {$text}";
 	}
 }

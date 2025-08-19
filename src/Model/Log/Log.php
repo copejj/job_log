@@ -87,11 +87,18 @@ class Log extends Record
 	public static function getSelect(array $args = [], array &$bind = []): string
 	{
 		$conds = [];
-		$key = static::getKey();
-		if (!empty($args[$key]))
+		$arguably = [
+			static::getKey(),
+			'week_id',
+			'company_id',
+		]; 
+		foreach ($arguably as $arg)
 		{
-			$conds[] = "{$key} = ?";
-			$bind[] = $args[$key];
+			if (!empty($args[$arg]))
+			{
+				$conds[] = "{$arg} = ?";
+				$bind[] = $args[$arg];
+			}
 		}
 
 		$sql_cond = '';
@@ -112,7 +119,7 @@ class Log extends Record
 					, start_date
 					, end_date
 				from job_logs
-					join weeks using (week_id) {$sql_cond}
+					join weeks using (week_id)
 			), actions as (
 				with data as (
 					select job_log_id, job_log_action_id, action_id, name
@@ -148,7 +155,7 @@ class Log extends Record
 			from job_logs
 				left join company using (company_id)
 				left join actions using (job_log_id)
-				left join methods using (job_log_id)";
+				left join methods using (job_log_id) {$sql_cond}";
 		return $sql;
 	}
 
