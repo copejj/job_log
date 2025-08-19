@@ -18,6 +18,7 @@ use Jeff\Code\View\Elements\Select;
 use Jeff\Code\Model\Entities\Actions;
 use Jeff\Code\Model\Entities\Methods;
 use Jeff\Code\Model\Entities\Weeks;
+use Jeff\Code\Model\Entities\Companies;
 
 class LogAdd extends Logs
 {
@@ -30,12 +31,18 @@ class LogAdd extends Logs
 	protected Actions $actions;
 	protected Methods $methods;
 	protected Weeks $weeks;
+	protected Companies $companies;
 
-	public function processing(): void
+	public function init(): void
 	{
 		$this->actions = new Actions();
 		$this->methods = new Methods();
 		$this->weeks = new Weeks();
+		$this->companies = new Companies();
+	}
+
+	public function processing(): void
+	{
 		if (!empty($this->post['save_job_log']))
 		{
 			$message = '';
@@ -49,14 +56,9 @@ class LogAdd extends Logs
 				else
 				{
 					$this->log = $log;
-					if ($this->saveActions($this->log->job_log_id, $this->post['actions'] ?? []))
-					{
+					$this->saveActions($this->log->job_log_id, $this->post['actions'] ?? []);
+					$this->saveMethods($this->log->job_log_id, $this->post['methods'] ?? []);
 
-					}
-					if ($this->saveMethods($this->log->job_log_id, $this->post['methods'] ?? []))
-					{
-
-					}
 					$message = "Log entry saved";
 					$this->acted = true;
 				}
@@ -142,6 +144,7 @@ class LogAdd extends Logs
 			new Inputs([ 
 				new Input('job_log_id', 'hidden', $data['job_log_id'] ?? ''),
 				new Select('week_id', $this->weeks->data, $data['week_id'] ?? 0, $this->weeks->default, 'Week', '[ Select a work week ]'),
+				new Select('company_id', $this->companies->data, $data['company_id'] ?? 0, $this->companies->default, 'Company', '[ Select a company ]'),
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), 'Actions', 'actions'),

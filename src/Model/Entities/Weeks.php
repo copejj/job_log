@@ -3,8 +3,9 @@ namespace Jeff\Code\Model\Entities;
 
 use Jeff\Code\Model\Record;
 use Jeff\Code\Model\Week\Week;
-use Jeff\Code\View\Format\Formatter;
+
 use Jeff\Code\View\Elements\Date;
+use Jeff\Code\View\Format\Formatter;
 
 use Jeff\Code\Util\DB;
 

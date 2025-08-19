@@ -20,15 +20,15 @@ class LogMetadata extends Metadata implements Formatter
 				'label' => 'Week',
 				'format' => 'Jeff\Code\Model\Entities\Weeks',
 			],
+			'company_name' => [
+				'label' => 'Company',
+			],
 			'title' => [
 				'label' => 'Title',
 			],
 			'action_date' => [
 				'label' => 'Action Date',
 				'format' => 'Jeff\Code\View\Elements\Date',
-			],
-			'company_id' => [
-				'label' => 'Company',
 			],
 			'contact_id' => [
 				'label' => 'Contact',

@@ -1,7 +1,6 @@
 <?php
 namespace Jeff\Code\Model\Log;
 
-use Jeff\Code\Util\DB;
 use Jeff\Code\Model\Record;
 
 class Log extends Record
@@ -136,11 +135,18 @@ class Log extends Record
 					, jsonb_agg(to_jsonb(data.*) - 'job_log_id') as methods_json
 				from data
 				group by job_log_id
+			), company as (
+				select company_id
+					, name as company_name
+				from job_logs
+					join companies using (company_id)
 			)
 			select job_logs.*
+				, company_name
 				, actions_json
 				, methods_json
 			from job_logs
+				left join company using (company_id)
 				left join actions using (job_log_id)
 				left join methods using (job_log_id)";
 		return $sql;

@@ -13,6 +13,7 @@ abstract class Content
 		'update_data' => false,
 	];
 
+	protected function init(): void { }
 	protected function processing(): void { }
 	protected function header(): void { }
 	protected function links(): void { }
@@ -25,6 +26,7 @@ abstract class Content
 
 	public function display(): void
 	{
+		$this->init();
 		$this->processing();
 		$this->header();
 		$this->links();

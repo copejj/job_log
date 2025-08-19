@@ -2,7 +2,6 @@
 namespace Jeff\Code\Controller\Log;
 
 use Jeff\Code\Model\Log\Logs as Service;
-use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Table;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;

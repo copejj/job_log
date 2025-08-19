@@ -4,21 +4,18 @@ namespace Jeff\Code\Controller\Log;
 use Exception;
 use Jeff\Code\Model\Log\Log;
 
-use Jeff\Code\Model\Entities\Actions;
-use Jeff\Code\Model\Entities\Methods;
-use Jeff\Code\Model\Entities\Weeks;
-
 class LogEdit extends LogAdd
 {
-	public function processing(): void
+	public function init(): void
 	{
+		parent::init();
+
 		$this->mode = 'edit';
 		$this->title = 'Edit';
+	}
 
-		$this->actions = new Actions();
-		$this->methods = new Methods();
-		$this->weeks = new Weeks();
-
+	public function processing(): void
+	{
 		$this->log = Log::load($this->post['job_log_id']);
 		if (!empty($this->post['save_job_log']))
 		{
