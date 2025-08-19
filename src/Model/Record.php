@@ -52,8 +52,9 @@ abstract class Record
 
 	public function save(): bool
 	{
-		if ($this->onSave())
+		if ($this->update_data)
 		{
+			$this->onSave();
 			$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
 			if (!empty($result))
 			{

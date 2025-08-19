@@ -2,40 +2,79 @@
 namespace Jeff\Code\Controller\Week;
 
 use Exception;
-use Jeff\Code\Model\Week\Week;
+use Jeff\Code\Model\Week\Week as Service;
 
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Date;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Inputs;
+use Jeff\Code\View\HeaderedContent;
 
-class WeekAdd extends Weeks
+class Week extends HeaderedContent
 {
-	protected Week $week;
+	protected Service $week;
 
 	protected bool $acted = false;
 	protected string $mode = 'add';
 	protected string $title = 'Add';
 
+	public function init(): void
+	{
+		if (!empty($this->post['week_id']))
+		{
+			$this->week = Service::load($this->post['week_id']);
+			$this->mode = 'edit';
+			$this->title= 'Edit';
+		}
+	}
+
 	public function processing(): void
 	{
-		if (empty($post['save_week']))
+		\Jeff\Code\Util\D::p(__FUNCTION__);
+		if (!empty($this->post['save_week']))
 		{
+		\Jeff\Code\Util\D::p('save_week');
 			$message = '';
-			try
+			if (!empty($this->week))
 			{
-				$week = Week::create($this->post);
-				if (!empty($week))
+		\Jeff\Code\Util\D::p('edit');
+
+				try
 				{
-					$message = "This week created successfully";
-					$this->week = $week;
-					$this->acted = true;
+					$this->week->start_date = $this->post['start_date'];
+					$this->week->end_date = $this->post['end_date'];
+					$has_saved = $this->week->save();
+					if ($has_saved)
+					{
+						$message = "This week updated successfully";
+						$this->acted = true;
+					}
+				}
+				catch (Exception $e)
+				{
+					$message = "This week already exists, use that or create a different range";
 				}
 			}
-			catch (Exception $e)
+			else
 			{
-				$message = "This week already exists, use that or create a different range";
+		\Jeff\Code\Util\D::p('new');
+				try
+				{
+					$week = Service::create($this->post);
+					if (!empty($week))
+					{
+						$message = "This week created successfully";
+						$this->week = $week;
+						$this->acted = true;
+						$this->mode = 'edit';
+						$this->title= 'Edit';
+					}
+				}
+				catch (Exception $e)
+				{
+					$message = "This week already exists, use that or create a different range";
+				}
 			}
 
 			$this->message = $message;
@@ -50,6 +89,7 @@ class WeekAdd extends Weeks
 	public function content(): void
 	{
 		$data = $this->week->data ?? $this->post;
+		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()

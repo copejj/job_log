@@ -9,9 +9,8 @@ use Jeff\Code\Controller\Company\CompanyEdit;
 use Jeff\Code\Controller\Log\Logs;
 use Jeff\Code\Controller\Log\LogAdd;
 use Jeff\Code\Controller\Log\LogEdit;
+use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
-use Jeff\Code\Controller\Week\WeekAdd;
-use Jeff\Code\Controller\Week\WeekEdit;
 
 class Decider
 {
@@ -29,10 +28,8 @@ class Decider
 						$content = new Logs();
 						break;
 					case 'add':
-						$content = new WeekAdd();
-						break;
 					case 'edit':
-						$content = new WeekEdit();
+						$content = new Week();
 						break;
 					default:
 						$content = new Weeks();
