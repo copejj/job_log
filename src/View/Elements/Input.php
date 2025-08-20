@@ -19,7 +19,7 @@ class Input
 		$this->value = (empty($value)) ? $default : $value;
 		$this->attr = new Attributes([
 			'class' => "input {$this->type}-input",
-			'id' => "{$this->type}_{$this->name}",
+			'id' => "{$this->type}-{$this->name}",
 		]);
 		if (!empty($attr))
 		{
@@ -31,7 +31,7 @@ class Input
 	{
 		if (!empty($this->label))
 		{
-			return "<label for='{$this->type}_{$this->name}' class='input-label'>{$this->label}</label>";
+			return "<label for='{$this->type}-{$this->name}' class='input-label'>{$this->label}</label>";
 		}
 		return "";
 	}

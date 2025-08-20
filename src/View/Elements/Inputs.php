@@ -2,14 +2,16 @@
 namespace Jeff\Code\View\Elements;
 
 use Exception;
+use Jeff\Code\View\Display\Attributes;
 
 class Inputs extends Input
 {
 	protected string $name;
 	protected array $inputs;
 	protected string $type = 'group';
+	protected Attributes $attr;
 
-	public function __construct(Input|array $inputs, string $label='', ?string $name=null, ?string $type=null)
+	public function __construct(Input|array $inputs, string $label='', ?string $name=null, ?string $type=null, ?Attributes $attr=null)
 	{
 		if (empty($inputs))
 		{
@@ -36,6 +38,13 @@ class Inputs extends Input
 			}
 		}
 		$this->label = $label;
+		$this->attr = new Attributes([
+			'class' => "input-cont {$this->type}-input-cont",
+		]);
+		if (!empty($attr))
+		{
+			$this->attr->merge($attr);
+		}
 	}
 
 	public function getLabel() 
@@ -54,6 +63,6 @@ class Inputs extends Input
 		{
 			$inputs[] = $input->getLabel() . $input;
 		}
-		return "<div id='{$this->name}_group' class='input-cont {$this->type}-input-cont'>" . implode($inputs) . "</div>";
+		return "<div {$this->attr}>" . implode($inputs) . "</div>";
 	}
 }

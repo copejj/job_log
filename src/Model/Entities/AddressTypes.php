@@ -7,4 +7,9 @@ class AddressTypes extends Entities
 	{
 		parent::__construct('address_types', 'address_type_id', 'name');
 	}
+
+	public function name(array $row): string
+	{
+		return "{$row['name']} Address";
+	}
 }

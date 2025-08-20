@@ -50,6 +50,7 @@ class Attributes implements Printable
 
 	public function set(array $attrs): void
 	{
+		$this->attrs = [];
 		if (!empty($attrs))
 		{
 			foreach ($attrs as $key => $values)

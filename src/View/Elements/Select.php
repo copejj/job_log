@@ -40,7 +40,7 @@ class Select extends Input
 					$labelOption = "<option value=''>{$this->option_label}</option>";
 				}
 
-				$result = "<select class='input select-input' id='select_{$this->name}' name='{$this->name}'>{$labelOption}" . implode($options) . "</select>";
+				$result = "<select class='input select-input' id='select-{$this->name}' name='{$this->name}'>{$labelOption}" . implode($options) . "</select>";
 			}
 		}
 		return $result;

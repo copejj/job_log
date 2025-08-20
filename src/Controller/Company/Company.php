@@ -84,9 +84,30 @@ class Company extends HeaderedContent
 		return "{$this->title} Company";
 	}
 
+	public function formatData(array $data)
+	{
+		foreach (['address_type'] as $type)
+		{
+			if (!empty($data["{$type}s_json"]))
+			{
+				$data_arr = [];
+				$targets = json_decode($data["{$type}s_json"], true);
+				foreach ($targets as $target)
+				{
+					$data_arr[$target["{$type}_id"]] = $target["job_log_{$type}_id"];
+				}
+				unset($data["{$type}s_json"]);
+				$data["{$type}s"] = $data_arr;
+			}
+		}
+		return $data;
+	}
+
 	public function content(): void
 	{
 		$data = $this->company->data ?? $this->post;
+		$data = $this->formatData($data);
+		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()
@@ -108,7 +129,7 @@ class Company extends HeaderedContent
 				new Input("address[{$id}][city]", 'text', '', '', $type . ' City'),
 				new Select("address[{$id}][state_id]", $this->states->data, 0, 0, $type . ' State', "[ Selected a state ]"),
 				new Input("address[{$id}][zip]", 'text', '', '', $type . ' Zip'),
-			], '', "address_type_" . strtolower($type));
+			], '', "address-type-" . strtolower($type), 'address-group', new Attributes(['class' => 'inputs-address-group']));
 		}
 		echo new Form([
 			new Inputs([ 
@@ -116,8 +137,8 @@ class Company extends HeaderedContent
 				new Input('name', 'text', $data['name'] ?? '', '', 'Company Name'),
 				new Input('email', 'text', $data['email'] ?? '', '', 'Email'),
 				new Input('website', 'text', $data['website'] ?? '', '', 'Website'),
-				new Select('address_types', $this->address_types->data, $data['address_type_id'] ?? 0, $this->address_types->default, 'Address Type'),
-				new Inputs($address_inputs),
+				new Select('address_types', $this->address_types->data, $data['address_type_id'] ?? 0, $this->address_types->default ?? 0, 'Address Type', '[ Select an address type ]'),
+				new Inputs($address_inputs, '', 'addresses', 'addresses'),
 			], 'date', 'date'),
 			new Input('save_company', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_company', 'submit', ($this->acted) ? 'Done' : 'Cancel'),

@@ -7,4 +7,9 @@ class States extends Entities
 	{
 		parent::__construct('states', 'state_id', 'abbr');
 	}
+
+	public function name(array $row): string
+	{
+		return "{$row['abbr']} - {$row['name']}";
+	}
 }
