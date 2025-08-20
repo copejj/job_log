@@ -3,8 +3,6 @@ namespace Jeff\Code\Model\Company;
 
 use Jeff\Code\Model\Record;
 
-use Jeff\Code\Util\DB;
-
 class Company extends Record
 {
 	protected static function getKey(): string

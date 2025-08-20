@@ -56,7 +56,17 @@ abstract class Record
 			$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
 			if (!empty($result))
 			{
-				$this->data = $result;
+				if (empty($this->data))
+				{
+					$this->data = $result;
+				}
+				else
+				{
+					foreach ($result as $key => $value)
+					{
+						$this->data[$key] = $value;
+					}
+				}
 			}
 		}
 		return !empty($this->data[static::getKey()]);
