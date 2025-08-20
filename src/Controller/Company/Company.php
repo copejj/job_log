@@ -124,12 +124,12 @@ class Company extends HeaderedContent
 				new Input("address[{$id}][company_id]", 'hidden', $data['company_id']),
 				new Input("address[{$id}][address_type_id]", 'hidden', $id),
 				new Input("address[{$id}][address_id]", 'hidden', $data['address_id'] ?? ''),
-				new Input("address[{$id}][street]", 'text', '', '', $type . ' Street'),
-				new Input("address[{$id}][street_ext]", 'text', '', '', $type . ' Street Ext'),
-				new Input("address[{$id}][city]", 'text', '', '', $type . ' City'),
-				new Select("address[{$id}][state_id]", $this->states->data, 0, 0, $type . ' State', "[ Selected a state ]"),
-				new Input("address[{$id}][zip]", 'text', '', '', $type . ' Zip'),
-			], '', "address-type-" . strtolower($type), 'address-group', new Attributes(['class' => 'inputs-address-group']));
+				new Input("address[{$id}][street]", 'text', '', '', 'Street'),
+				new Input("address[{$id}][street_ext]", 'text', '', '', 'Street Ext'),
+				new Input("address[{$id}][city]", 'text', '', '', 'City'),
+				new Select("address[{$id}][state_id]", $this->states->data, 0, 0, 'State', "[ Selected a state ]"),
+				new Input("address[{$id}][zip]", 'text', '', '', 'Zip'),
+			], $type, "address-type-" . strtolower($type), 'address-group', new Attributes(['class' => 'inputs-address-group']));
 		}
 		echo new Form([
 			new Inputs([ 
@@ -137,7 +137,6 @@ class Company extends HeaderedContent
 				new Input('name', 'text', $data['name'] ?? '', '', 'Company Name'),
 				new Input('email', 'text', $data['email'] ?? '', '', 'Email'),
 				new Input('website', 'text', $data['website'] ?? '', '', 'Website'),
-				new Select('address_types', $this->address_types->data, $data['address_type_id'] ?? 0, $this->address_types->default ?? 0, 'Address Type', '[ Select an address type ]'),
 				new Inputs($address_inputs, '', 'addresses', 'addresses'),
 			], 'date', 'date'),
 			new Input('save_company', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
