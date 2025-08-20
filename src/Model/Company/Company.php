@@ -85,15 +85,29 @@ class Company extends Record
 			"WITH target as (
 				select company_id
 				from companies {$sql_cond}
+			), addresses as (
+				with data as (
+					select *
+					from company_addresses
+						join addresses using (address_id)
+				)
+				select company_id
+					, jsonb_agg(to_jsonb(data.*) - 'company_id') as addresses_json
+				from data
+				group by company_id
 			), job_count as (
 				select count(job_log_id) job_count, company_id
 				from job_logs
 					join target using (company_id)
 				group by company_id 
 			)
-			select company_id as id, companies.*, coalesce(job_count, 0) as job_count
+			select company_id as id
+				, companies.*
+				, addresses_json
+				, coalesce(job_count, 0) as job_count
 			from target
 				join companies using (company_id)
+				left join addresses using (company_id)
 				left join job_count using (company_id)
 			order by name";
 		return $sql;

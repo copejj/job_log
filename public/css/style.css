@@ -83,7 +83,7 @@
 div#logs_group {
     width: 90%;
 }
-div#actions_group, div#methods_group {
+.checkboxes-input-cont {
     display:flex;
     flex-wrap: wrap;
     justify-content: space-between;

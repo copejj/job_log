@@ -20,12 +20,17 @@ class Address extends Record
 			}
 
 			$this->bind = [
+				$this->data['street'],
+				$this->data['street_ext'],
+				$this->data['city'],
+				$this->data['state_id'],
+				$this->data['zip'],
 			];
 
 			if (empty($this->data['address_id']))
 			{
 				$this->sql = 
-					"INSERT into address (
+					"INSERT into addresses (
 						street
 						, street_ext
 						, city
@@ -38,7 +43,7 @@ class Address extends Record
 			else 
 			{
 				$this->sql = 
-					"UPDATE address
+					"UPDATE addresses
 					set street = ?
 						, street_ext = ?
 						, city = ?
@@ -83,15 +88,16 @@ class Address extends Record
 		$sql = 
 			"SELECT *
 			from company_addresses
-				join address using (address_id)
+				join addresses using (address_id)
 				left join states using (state_id) {$sql_cond}";
 		return $sql;
 	}
 
 	public static function getDelete(array $args=[], array &$bind=[]): string 
 	{
+		$bind = [];
 		$key = static::getKey();
 		$bind[] = $args[$key];
-		return "DELETE from company_addresses where {$key} = ?";
+		return "DELETE from addresses where {$key} = ?";
 	}
 }

@@ -48,8 +48,9 @@ abstract class Record
 		return null;
 	}
 
-	public function save(): bool
+	public function save(bool $force_save=false): bool
 	{
+		$this->update_data |= $force_save;
 		if ($this->update_data)
 		{
 			$this->onSave();

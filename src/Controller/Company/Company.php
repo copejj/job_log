@@ -12,6 +12,8 @@ use Jeff\Code\View\Elements\Inputs;
 use Jeff\Code\View\Elements\Select;
 use Jeff\Code\View\HeaderedContent;
 
+use Jeff\Code\Model\Address\Address;
+use Jeff\Code\Model\Company\Address\CompanyAddress;
 use Jeff\Code\Model\Entities\AddressTypes;
 use Jeff\Code\Model\Entities\States;
 
@@ -55,7 +57,7 @@ class Company extends HeaderedContent
 						$this->company = $company;
 						$this->acted = true;
 						$this->mode = 'edit';
-						$this->title= 'Edit';
+						$this->title = 'Edit';
 					}
 				}
 				else
@@ -68,6 +70,26 @@ class Company extends HeaderedContent
 						$message = "This company updated successfully";
 						$this->acted = true;
 					}
+				}
+
+				if (!empty($this->company))
+				{
+					if (!empty($this->post['addresses']))
+					{
+						foreach ($this->post['addresses'] as $address)
+						{
+							$company_address = CompanyAddress::getInstance($address);
+							if ($company_address->save(true))
+							{
+								$this->acted = true;
+							}
+						}
+					}
+				}
+
+				if ($this->acted)
+				{
+					$this->company = Service::load($this->post['company_id']);
 				}
 			}
 			catch (Exception $e)
@@ -86,19 +108,15 @@ class Company extends HeaderedContent
 
 	public function formatData(array $data)
 	{
-		foreach (['address_type'] as $type)
+		if (!empty($data["addresses_json"]))
 		{
-			if (!empty($data["{$type}s_json"]))
+			$targets = json_decode($data["addresses_json"], true);
+			foreach ($targets as $target)
 			{
-				$data_arr = [];
-				$targets = json_decode($data["{$type}s_json"], true);
-				foreach ($targets as $target)
-				{
-					$data_arr[$target["{$type}_id"]] = $target["job_log_{$type}_id"];
-				}
-				unset($data["{$type}s_json"]);
-				$data["{$type}s"] = $data_arr;
+				$data['addresses'][$target['address_type_id']] = $target;
 			}
+
+			unset($data['addresses_json']);
 		}
 		return $data;
 	}
@@ -107,7 +125,6 @@ class Company extends HeaderedContent
 	{
 		$data = $this->company->data ?? $this->post;
 		$data = $this->formatData($data);
-		\Jeff\Code\Util\D::p('data', $data);
 		?>
 		<script>
 			function save_form()
@@ -121,14 +138,15 @@ class Company extends HeaderedContent
 		foreach ($this->address_types->data as $id => $type)
 		{
 			$address_inputs[] = new Inputs([
-				new Input("address[{$id}][company_id]", 'hidden', $data['company_id']),
-				new Input("address[{$id}][address_type_id]", 'hidden', $id),
-				new Input("address[{$id}][address_id]", 'hidden', $data['address_id'] ?? ''),
-				new Input("address[{$id}][street]", 'text', '', '', 'Street'),
-				new Input("address[{$id}][street_ext]", 'text', '', '', 'Street Ext'),
-				new Input("address[{$id}][city]", 'text', '', '', 'City'),
-				new Select("address[{$id}][state_id]", $this->states->data, 0, 0, 'State', "[ Selected a state ]"),
-				new Input("address[{$id}][zip]", 'text', '', '', 'Zip'),
+				new Input("addresses[{$id}][company_address_id]", 'hidden', $data['addresses'][$id]['company_address_id'] ?? 0),
+				new Input("addresses[{$id}][company_id]", 'hidden', $data['addresses'][$id]['company_id'] ?? $data['company_id']),
+				new Input("addresses[{$id}][address_type_id]", 'hidden', $data['addresses'][$id]['address_type_id'] ?? $id),
+				new Input("addresses[{$id}][address_id]", 'hidden', $data['addresses'][$id]['address_id'] ?? ''),
+				new Input("addresses[{$id}][street]", 'text', '', $data['addresses'][$id]['street'] ?? '', 'Street'),
+				new Input("addresses[{$id}][street_ext]", 'text', '', $data['addresses'][$id]['street_ext'] ?? '', 'Street Ext'),
+				new Input("addresses[{$id}][city]", 'text', '', $data['addresses'][$id]['city'] ?? '', 'City'),
+				new Select("addresses[{$id}][state_id]", $this->states->data, 0, $data['addresses'][$id]['state_id'] ?? 0, 'State', "[ Selected a state ]"),
+				new Input("addresses[{$id}][zip]", 'text', '', $data['addresses'][$id]['zip'] ?? '', 'Zip'),
 			], $type, "address-type-" . strtolower($type), 'address-group', new Attributes(['class' => 'inputs-address-group']));
 		}
 		echo new Form([

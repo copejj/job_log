@@ -3,6 +3,8 @@ namespace Jeff\Code\Model\Company\Address;
 
 use Jeff\Code\Model\Address\Address;
 
+use Jeff\Code\Util\DB;
+
 class CompanyAddress extends Address
 {
 	protected static function getKey(): string
@@ -14,10 +16,22 @@ class CompanyAddress extends Address
 	{
 		if ($this->update_data)
 		{
-			if (empty($this->data->address_id))
+			if (empty($this->data['address_id']))
 			{
-				parent::create($this->data);
+				$address = Address::create($this->data);
+				$this->data['address_id'] = $address->address_id;
 			}
+			else
+			{
+				$address = Address::load($this->data['address_id']);
+				$address->street = $this->data['street'];
+				$address->street_ext = $this->data['street_ext'];
+				$address->city = $this->data['city'];
+				$address->state_id = $this->data['state_id'];
+				$address->zip = $this->data['zip'];
+				$address->save();
+			}
+
 
 			if (!static::validate($this->data))
 			{
@@ -61,7 +75,6 @@ class CompanyAddress extends Address
 		switch (true)
 		{
 			case empty($data['company_id']):
-			case empty($data['address_id']):
 			case empty($data['address_type_id']):
 				return false;
 		}
@@ -94,15 +107,18 @@ class CompanyAddress extends Address
 		$sql = 
 			"SELECT *
 			from company_addresses
-				join address using (address_id)
+				join addresses using (address_id)
 				left join states using (state_id) {$sql_cond}";
 		return $sql;
 	}
 
 	public static function getDelete(array $args=[], array &$bind=[]): string 
 	{
+		$sql = parent::getDelete($args, $bind = []);
+		DB::getInstance()->perform($sql, $bind);
+
 		$key = static::getKey();
-		$bind[] = $args[$key];
+		$bind = [$args[$key]];
 		return "DELETE from company_addresses where {$key} = ?";
 	}
 }
