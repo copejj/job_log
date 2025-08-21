@@ -21,6 +21,8 @@ use Jeff\Code\Model\Entities\Weeks;
 use Jeff\Code\Model\Entities\Companies;
 use Jeff\Code\View\HeaderedContent;
 
+use Jeff\Code\Model\Week\Week;
+
 class Log extends HeaderedContent
 {
 	protected bool $acted = false;
@@ -53,12 +55,22 @@ class Log extends HeaderedContent
 	{
 		if (!empty($this->post['save_job_log']))
 		{
+			$post = $this->post;
 			$message = '';
 			try
 			{
+				$week = Week::get($post);
+				$week_id = $week->week_id ?? 0;
+				if (empty($week_id))
+				{
+					$week = Week::create($post);
+					$week_id = $week->week_id;
+				}
+				$post['week_id'] = $week_id;
+
 				if (empty($this->log))
 				{
-					$log = Service::create($this->post);
+					$log = Service::create($post);
 					if (!empty($log))
 					{
 						$this->log = $log;
@@ -71,13 +83,13 @@ class Log extends HeaderedContent
 				}
 				else
 				{
-					$this->log->week_id = $this->post['week_id'];
-					$this->log->action_date = $this->post['action_date'];
-					$this->log->company_id = $this->post['company_id'] ?? null;
-					$this->log->contact_id = $this->post['contact_id'] ?? null;
-					$this->log->title = $this->post['title'] ?? null;
-					$this->log->job_number = $this->post['job_number'] ?? null;
-					$this->log->next_step = $this->post['next_step'] ?? null;
+					$this->log->week_id = $post['week_id'];
+					$this->log->action_date = $post['action_date'];
+					$this->log->company_id = $post['company_id'] ?? null;
+					$this->log->contact_id = $post['contact_id'] ?? null;
+					$this->log->title = $post['title'] ?? null;
+					$this->log->job_number = $post['job_number'] ?? null;
+					$this->log->next_step = $post['next_step'] ?? null;
 
 					if ($this->log->save())
 					{
@@ -89,11 +101,13 @@ class Log extends HeaderedContent
 				$job_log_id = $this->log->job_log_id;
 				if (!empty($job_log_id))
 				{
-					switch (true)
+					if ($this->saveActions($job_log_id, $this->post['actions'] ?? []))
 					{
-						case $this->saveActions($job_log_id, $this->post['actions'] ?? []):
-						case $this->saveMethods($job_log_id, $this->post['methods'] ?? []):
-							$this->acted = true;
+						$this->acted = true;
+					}
+					if ($this->saveMethods($job_log_id, $this->post['methods'] ?? []))
+					{
+						$this->acted = true;
 					}
 				}
 
@@ -182,7 +196,6 @@ class Log extends HeaderedContent
 		echo new Form([
 			new Inputs([ 
 				new Input('job_log_id', 'hidden', $data['job_log_id'] ?? ''),
-				new Select('week_id', $this->weeks->data, $data['week_id'] ?? 0, $this->weeks->default, 'Week'),
 				new Select('company_id', $this->companies->data, (int) ($data['company_id'] ?? 0), $this->companies->default, 'Company', '[ Select a company ]'),
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),

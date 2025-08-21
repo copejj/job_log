@@ -80,6 +80,9 @@
 .input-cont.address-group-input-cont.inputs-address-group {
     padding-left: 2rem;
 }
+form.inline-form {
+    display: inline-block;
+}
 div#logs_group {
     width: 90%;
 }

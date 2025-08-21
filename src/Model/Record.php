@@ -73,6 +73,19 @@ abstract class Record
 		return !empty($this->data[static::getKey()]);
 	}
 
+	public static function get(array $args): ?Record
+	{
+		$bind = [];
+		$sql = static::getSelect($args, $bind);
+		$data = DB::getInstance(true)->fetchOne($sql, $bind);
+		\Jeff\Code\Util\D::p('get', [$sql, $bind, $data]);
+		if (empty($data))
+		{
+			return null;
+		}
+		return static::getInstance($data);
+	}
+
 	public static function load(int $id): ?Record
 	{
 		$bind = [];

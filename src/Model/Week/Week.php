@@ -3,8 +3,6 @@ namespace Jeff\Code\Model\Week;
 
 use Jeff\Code\Model\Record;
 
-use Jeff\Code\Util\DB;
-
 class Week extends Record
 {
 	protected static function getKey(): string
@@ -21,30 +19,56 @@ class Week extends Record
 				return false;
 			}
 
-			$this->bind = [
-				$this->data['start_date'],
-				$this->data['end_date'],
-			];
+			if (empty($this->data['action_date']))
+			{
+				$this->bind = [
+					$this->data['start_date'],
+					$this->data['end_date'],
+				];
 
-			if (empty($this->data['week_id']))
-			{
-				$this->sql = 
-					"INSERT into weeks (
-						start_date
-						, end_date
-					) 
-					values (?, ?) 
-					returning *";
+				if (empty($this->data['week_id']))
+				{
+					$this->sql = 
+						"INSERT into weeks (
+							start_date
+							, end_date
+						) 
+						values (?, ?) 
+						on conflict do nothing
+						returning *";
+				}
+				else 
+				{
+					$this->sql = 
+						"UPDATE weeks 
+						set start_date = ?
+							, end_date = ? 
+						where week_id = ? 
+						on conflict do nothing
+						returning *";
+					$this->bind[] = $this->data['week_id'];
+				}
 			}
-			else 
+			else
 			{
+				$this->bind = [
+					$this->data['action_date'],
+				];
+
 				$this->sql = 
-					"UPDATE weeks 
-					set start_date = ?
-						, end_date = ? 
-					where week_id = ? 
+					"WITH target as (
+						select ?::date as action_date
+					), week_days as (
+						SELECT action_date - EXTRACT(DOW FROM action_date)::integer as start_date
+							, action_date
+							, action_date + 6 - EXTRACT(DOW FROM action_date)::integer as end_date
+						from target
+					)
+					insert into weeks(start_date, end_date)
+					select start_date, end_date
+					from week_days
+					on conflict do nothing
 					returning *";
-				$this->bind[] = $this->data['week_id'];
 			}
 		}
 		return true;
@@ -52,13 +76,16 @@ class Week extends Record
 
 	protected static function validate(array $data): bool
 	{
-		switch (true)
+		if (!(empty($data['start_date']) && empty($data['end_date'])))
 		{
-			case empty($data['start_date']):
-			case empty($data['end_date']):
-				return false;
+			return true;
 		}
-		return true;
+
+		if (!(empty($data['action_date'])))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public static function getInstance(array $data): Week
@@ -69,11 +96,20 @@ class Week extends Record
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
 		$conds = [];
-		$key = static::getKey();
-		if (!empty($args[$key]))
+		$arguably = [static::getKey()];
+		foreach ($arguably as $arg)
 		{
-			$conds[] = "{$key} = ?";
-			$bind[] = $args[$key];
+			if (!empty($args[$arg]))
+			{
+				$conds[] = "{$arg} = ?";
+				$bind[] = $args[$arg];
+			}
+		}
+
+		if (!empty($args['action_date']))
+		{
+			$conds[] = "?::date between start_date and end_date"; 
+			$bind[] = $args['action_date'];
 		}
 
 		$sql_cond = '';
