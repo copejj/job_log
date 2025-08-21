@@ -20,14 +20,20 @@ class Logs extends HeaderedContent
 	public function processing(): void
 	{
 		$this->weeks = new Weeks();
+
+		$args = [];
 		if (empty($this->post['action']))
 		{
-			$this->service = Service::init();
+			$args = [
+				'action' => 'view',
+				'week_id' => $this->weeks->default,
+			];
 		}
-		else
+		else if (!empty($this->post['week_id']))
 		{
-			$this->service = Service::init($this->post);
+			$args = $this->post;
 		}
+		$this->service = Service::init($args);
 	}
 
 	public function getTitle(): string
@@ -45,6 +51,7 @@ class Logs extends HeaderedContent
 			}
 		</script>
 		<?php
+		$week_default = (empty($this->post['action'])) ? $this->weeks->default : 0;
 		$attrs = new Attributes(['class' => 'inline-form']);
 		echo new Form([
 			new Input('action', 'hidden', 'add'),
@@ -52,7 +59,7 @@ class Logs extends HeaderedContent
 		], 'post', $attrs);
 		echo new Form([
 			new Input('action', 'hidden', 'view'),
-			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), 0, 'Week', '[ Filter on a week ]', new Attributes(['onchange' => 'filter_week(this)'])),
+			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ View All ]', new Attributes(['onchange' => 'filter_week(this)'])),
 		], 'post', $attrs);
 		echo new Table(new LogMetadata(), $this->service->getAll());
 	}
