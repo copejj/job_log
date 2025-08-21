@@ -23,6 +23,7 @@ class Company extends Record
 				$this->data['name'],
 				$this->data['email'] ?? '',
 				$this->data['website'] ?? '',
+				$this->data['phone'] ?? '',
 			];
 
 			if (empty($this->data['company_id']))
@@ -32,8 +33,9 @@ class Company extends Record
 						name
 						, email
 						, website
+						, phone 
 					) 
-					values (?, ?, ?) 
+					values (?, ?, ?, ?) 
 					returning *";
 			}
 			else 
@@ -43,6 +45,7 @@ class Company extends Record
 					set name = ?
 						, email = ?
 						, website = ?
+						, phone = ?
 					where company_id = ? 
 					returning *";
 				$this->bind[] = $this->data['company_id'];

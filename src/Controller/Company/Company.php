@@ -65,6 +65,7 @@ class Company extends HeaderedContent
 					$this->company->name = $this->post['name'];
 					$this->company->email = $this->post['email'];
 					$this->company->website = $this->post['website'];
+					$this->company->phone = $this->post['phone'];
 					if ($this->company->save())
 					{
 						$message = "This company updated successfully";
@@ -157,6 +158,7 @@ class Company extends HeaderedContent
 				new Input('name', 'text', $data['name'] ?? '', '', 'Company Name'),
 				new Input('email', 'text', $data['email'] ?? '', '', 'Email'),
 				new Input('website', 'text', $data['website'] ?? '', '', 'Website'),
+				new Input('phone', 'text', $data['phone'] ?? '', '', 'Phone'),
 				new Inputs($address_inputs, '', 'addresses', 'addresses'),
 			], 'date', 'date'),
 			new Input('save_company', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),

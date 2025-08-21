@@ -58,6 +58,9 @@ class CompanyMetadata extends Metadata
 				'label' => 'Website',
 				'format' => 'Jeff\Code\Controller\Company\CompanyNewTab',
 			],
+			'phone' => [
+				'label' => 'Phone',
+			],
 			'job_count' => [
 				'label' => '#',
 				'format' => 'Jeff\Code\Controller\Company\CompanyViewButton',

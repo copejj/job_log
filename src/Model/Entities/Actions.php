@@ -5,6 +5,6 @@ class Actions extends Entities
 {
 	public function __construct()
 	{
-		parent::__construct('actions', 'action_id', 'name');
+		parent::__construct('actions', 'action_id', 'name', 'action_id');
 	}
 }
