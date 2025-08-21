@@ -89,8 +89,17 @@ class Log extends HeaderedContent
 				$job_log_id = $this->log->job_log_id;
 				if (!empty($job_log_id))
 				{
-					$this->saveActions($job_log_id, $this->post['actions'] ?? []);
-					$this->saveMethods($job_log_id, $this->post['methods'] ?? []);
+					switch (true)
+					{
+						case $this->saveActions($job_log_id, $this->post['actions'] ?? []):
+						case $this->saveMethods($job_log_id, $this->post['methods'] ?? []):
+							$this->acted = true;
+					}
+				}
+
+				if ($this->acted)
+				{
+					$this->log = Service::load($this->log->job_log_id);
 				}
 			}
 			catch (Exception $e)
