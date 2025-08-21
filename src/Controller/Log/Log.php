@@ -86,10 +86,11 @@ class Log extends HeaderedContent
 					}
 				}
 
-				if (!empty($this->job_log_id))
+				$job_log_id = $this->log->job_log_id;
+				if (!empty($job_log_id))
 				{
-					$this->saveActions($this->log->job_log_id, $this->post['actions'] ?? []);
-					$this->saveMethods($this->log->job_log_id, $this->post['methods'] ?? []);
+					$this->saveActions($job_log_id, $this->post['actions'] ?? []);
+					$this->saveMethods($job_log_id, $this->post['methods'] ?? []);
 				}
 			}
 			catch (Exception $e)

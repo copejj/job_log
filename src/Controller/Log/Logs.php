@@ -64,9 +64,6 @@ class LogMetadata extends Metadata
 				'label' => 'Action Date',
 				'format' => 'Jeff\Code\View\Elements\Date',
 			],
-			'contact_id' => [
-				'label' => 'Contact',
-			],
 			'title' => [
 				'label' => 'Title',
 			],
