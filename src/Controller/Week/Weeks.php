@@ -72,6 +72,13 @@ class WeekEditButton extends EditButton
 
 class WeekViewButton extends WeekEditButton
 {
+	protected static function getAttributes(): Attributes
+	{
+		return new Attributes([
+			'action' => '/?page=log',
+		]);
+	}
+
 	protected static function getAction(): string
 	{
 		return 'view';

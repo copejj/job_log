@@ -4,6 +4,7 @@ namespace Jeff\Code\View\Elements\Format;
 use Exception;
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Format\Formatter;
@@ -12,6 +13,11 @@ abstract class ActionButton implements Formatter
 {
 	protected abstract static function getType(): string;
 	protected abstract static function getAction(): string;
+
+	protected static function getAttributes(): Attributes
+	{
+		return new Attributes();
+	}
 
 	protected static function getText(Record $data): string
 	{
@@ -42,6 +48,6 @@ abstract class ActionButton implements Formatter
 			new Input('action', 'hidden', $action),
 			new Input("{$type}_id", 'hidden', $id),
 			new Input("{$action}_{$type}", 'submit', static::getText($data)),
-		]);
+		], 'post', static::getAttributes());
 	}
 }

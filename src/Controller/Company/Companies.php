@@ -74,6 +74,13 @@ class CompanyEditButton extends EditButton
 
 class CompanyViewButton extends CompanyEditButton
 {
+	protected static function getAttributes(): Attributes
+	{
+		return new Attributes([
+			'action' => '/?page=log',
+		]);
+	}
+
 	protected static function getAction(): string
 	{
 		return 'view';
