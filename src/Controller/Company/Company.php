@@ -78,6 +78,7 @@ class Company extends HeaderedContent
 					{
 						foreach ($this->post['addresses'] as $address)
 						{
+							$address['company_id'] = empty($address['company_id']) ? $this->company->company_id : $address['company_id'];
 							$company_address = CompanyAddress::getInstance($address);
 							if ($company_address->save(true))
 							{
@@ -89,11 +90,12 @@ class Company extends HeaderedContent
 
 				if ($this->acted)
 				{
-					$this->company = Service::load($this->post['company_id']);
+					$this->company = Service::load($this->company->company_id);
 				}
 			}
 			catch (Exception $e)
 			{
+				\Jeff\Code\Util\D::p('exception', $e);
 				$message = "Exception: " . $e->getMessage();
 			}
 
@@ -139,13 +141,13 @@ class Company extends HeaderedContent
 		{
 			$address_inputs[] = new Inputs([
 				new Input("addresses[{$id}][company_address_id]", 'hidden', $data['addresses'][$id]['company_address_id'] ?? 0),
-				new Input("addresses[{$id}][company_id]", 'hidden', $data['addresses'][$id]['company_id'] ?? $data['company_id']),
+				new Input("addresses[{$id}][company_id]", 'hidden', $data['addresses'][$id]['company_id'] ?? $data['company_id'] ?? 0),
 				new Input("addresses[{$id}][address_type_id]", 'hidden', $data['addresses'][$id]['address_type_id'] ?? $id),
 				new Input("addresses[{$id}][address_id]", 'hidden', $data['addresses'][$id]['address_id'] ?? ''),
 				new Input("addresses[{$id}][street]", 'text', '', $data['addresses'][$id]['street'] ?? '', 'Street'),
 				new Input("addresses[{$id}][street_ext]", 'text', '', $data['addresses'][$id]['street_ext'] ?? '', 'Street Ext'),
 				new Input("addresses[{$id}][city]", 'text', '', $data['addresses'][$id]['city'] ?? '', 'City'),
-				new Select("addresses[{$id}][state_id]", $this->states->data, 0, $data['addresses'][$id]['state_id'] ?? 0, 'State', "[ Selected a state ]"),
+				new Select("addresses[{$id}][state_id]", $this->states->data, 0, (int) ($data['addresses'][$id]['state_id'] ?? 0), 'State', "[ Selected a state ]"),
 				new Input("addresses[{$id}][zip]", 'text', '', $data['addresses'][$id]['zip'] ?? '', 'Zip'),
 			], $type, "address-type-" . strtolower($type), 'address-group', new Attributes(['class' => 'inputs-address-group']));
 		}

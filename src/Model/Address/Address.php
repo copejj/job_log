@@ -23,7 +23,7 @@ class Address extends Record
 				$this->data['street'],
 				$this->data['street_ext'],
 				$this->data['city'],
-				$this->data['state_id'],
+				(int) $this->data['state_id'],
 				$this->data['zip'],
 			];
 

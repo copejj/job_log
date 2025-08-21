@@ -31,7 +31,7 @@ abstract class Entities
 			case 'data':
 			case 'default':
 				$this->init();
-				return $this->$name;
+				return $this->$name ?? [];
 		}
 		return null;
 	}

@@ -13,6 +13,7 @@ use Jeff\Code\View\HeaderedContent;
 
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\View\Format\Formatter;
 
 class Companies extends HeaderedContent
 {
@@ -55,12 +56,26 @@ class CompanyMetadata extends Metadata
 			],
 			'website' => [
 				'label' => 'Website',
+				'format' => 'Jeff\Code\Controller\Company\CompanyNewTab',
 			],
 			'job_count' => [
 				'label' => '#',
 				'format' => 'Jeff\Code\Controller\Company\CompanyViewButton',
 			],
 		];
+	}
+}
+
+class CompanyNewTab implements Formatter
+{
+	public static function format(string $key, Record $data): string
+	{
+		$ref = $data->$key ?? '';
+		if (empty($ref))
+		{
+			return $ref;
+		}
+		return "<a href='{$ref}' target=_blank>{$ref}</a>";
 	}
 }
 

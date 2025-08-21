@@ -21,28 +21,27 @@ class Select extends Input
 
 	public function __toString()
 	{
-		$result = '';
+		$options = [];
+		if (!empty($this->option_label))
+		{
+			$options[] = "<option value=''>{$this->option_label}</option>";
+		}
+
 		if (!empty($this->data))
 		{
-			$options = [];
 			$selected = (empty($this->selected)) ? $this->default : $this->selected;
 			foreach ($this->data as $id => $text)
 			{
 				$selector = ($id == $selected) ? " selected='selected'" : "";
 				$options[] = "<option value='{$id}'{$selector}>{$text}</option>";
 			}
-
-			if (!empty($options))
-			{
-				$labelOption = '';
-				if (!empty($this->option_label))
-				{
-					$labelOption = "<option value=''>{$this->option_label}</option>";
-				}
-
-				$result = "<select class='input select-input' id='select-{$this->name}' name='{$this->name}'>{$labelOption}" . implode($options) . "</select>";
-			}
 		}
-		return $result;
+
+		$select = '';
+		if (!empty($options))
+		{
+			$select = "<select class='input select-input' id='select-{$this->name}' name='{$this->name}'>" . implode($options) . "</select>";
+		}
+		return $select;
 	}
 }
