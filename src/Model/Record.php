@@ -78,7 +78,6 @@ abstract class Record
 		$bind = [];
 		$sql = static::getSelect($args, $bind);
 		$data = DB::getInstance(true)->fetchOne($sql, $bind);
-		\Jeff\Code\Util\D::p('get', [$sql, $bind, $data]);
 		if (empty($data))
 		{
 			return null;

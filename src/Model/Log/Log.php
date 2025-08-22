@@ -28,6 +28,7 @@ class Log extends Record
 				$this->data['title'] ?? null, 
 				$this->data['job_number'] ?? null, 
 				$this->data['next_step'] ?? null, 
+				$this->data['notes'] ?? null, 
 			];
 
 			if (empty($this->data[$key]))
@@ -41,8 +42,9 @@ class Log extends Record
 						, title
 						, job_number
 						, next_step
+						, notes
 					)
-					values (?, ?, ?, ?, ?, ?, ?)
+					values (?, ?, ?, ?, ?, ?, ?, ?)
 					returning *";
 			}
 			else
@@ -56,6 +58,7 @@ class Log extends Record
 						, title = ?
 						, job_number = ?
 						, next_step = ?
+						, notes = ?
 					where job_log_id = ?
 					returning *";
 				$this->bind[] = $this->data[$key];
@@ -116,6 +119,7 @@ class Log extends Record
 					, title
 					, job_number
 					, next_step
+					, notes
 					, week_id
 					, start_date
 					, end_date

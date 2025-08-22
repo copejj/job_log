@@ -80,6 +80,10 @@
 .input-cont.address-group-input-cont.inputs-address-group {
     padding-left: 2rem;
 }
+.text-area-input {
+    width: 50%;
+	height: auto;
+}
 form.inline-form {
     display: inline-block;
 }

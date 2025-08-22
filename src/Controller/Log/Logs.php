@@ -68,11 +68,8 @@ class Logs extends HeaderedContent
 		], 'post', $attrs);
 		echo new Form([
 			new Input('action', 'hidden', 'view'),
-			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ View all weeks ]', new Attributes(['onchange' => 'set_filter(this)'])),
-		], 'post', $attrs);
-		echo new Form([
-			new Input('action', 'hidden', 'view'),
-			new Select('company_id', $this->companies->data, (int) ($this->post['company_id'] ?? 0), $week_default, 'Company', '[ View all companies ]', new Attributes(['onchange' => 'set_filter(this)'])),
+			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ All weeks ]', new Attributes(['onchange' => 'set_filter(this)'])),
+			new Select('company_id', $this->companies->data, (int) ($this->post['company_id'] ?? 0), $week_default, 'Company', '[ All companies ]', new Attributes(['onchange' => 'set_filter(this)'])),
 		], 'post', $attrs);
 		echo new Table(new LogMetadata(), $this->service->getAll());
 	}
@@ -100,9 +97,6 @@ class LogMetadata extends Metadata
 			],
 			'job_number' => [
 				'label' => 'Job Number',
-			],
-			'next_step' => [
-				'label' => 'Next Step',
 			],
 		];
 	}

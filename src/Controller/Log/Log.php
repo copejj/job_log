@@ -14,6 +14,7 @@ use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Inputs;
 use Jeff\Code\View\Elements\Select;
+use Jeff\Code\View\Elements\TextArea;
 
 use Jeff\Code\Model\Entities\Actions;
 use Jeff\Code\Model\Entities\Methods;
@@ -90,6 +91,7 @@ class Log extends HeaderedContent
 					$this->log->title = $post['title'] ?? null;
 					$this->log->job_number = $post['job_number'] ?? null;
 					$this->log->next_step = $post['next_step'] ?? null;
+					$this->log->notes = $post['notes'] ?? null;
 
 					if ($this->log->save())
 					{
@@ -203,6 +205,7 @@ class Log extends HeaderedContent
 				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), 'Methods', 'methods', null, new Attributes(['id' => 'methods_group'])),
 				new Input('job_number', 'text', $data['job_number'] ?? '', '', 'Job Number'),
 				new Input('next_step', 'text', $data['next_step'] ?? '', '', 'Next Step'),
+				new TextArea('notes', $data['notes'] ?? '', '', 'Notes'),
 			], 'logs', 'logs'),
 			new Input('save_job_log', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_job', 'submit', ($this->acted) ? 'Done' : 'Cancel'),
