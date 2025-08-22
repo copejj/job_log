@@ -2,7 +2,9 @@
 namespace Jeff\Code\Controller\Log;
 
 use Jeff\Code\Model\Log\Logs as Service;
+use Jeff\Code\Model\Entities\Companies;
 use Jeff\Code\Model\Entities\Weeks;
+
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Table;
@@ -16,10 +18,12 @@ class Logs extends HeaderedContent
 {
 	protected Service $service;
 	protected Weeks $weeks;
+	protected Companies $companies;
 
 	public function processing(): void
 	{
 		$this->weeks = new Weeks();
+		$this->companies = new Companies();
 
 		$args = [];
 		if (empty($this->post['action']))
@@ -29,9 +33,14 @@ class Logs extends HeaderedContent
 				'week_id' => $this->weeks->default,
 			];
 		}
-		else if (!empty($this->post['week_id']))
+		else 
 		{
-			$args = $this->post;
+			switch (true)
+			{
+				case !empty($this->post['week_id']):
+				case !empty($this->post['company_id']):
+					$args = $this->post;
+			}
 		}
 		$this->service = Service::init($args);
 	}
@@ -45,7 +54,7 @@ class Logs extends HeaderedContent
 	{
 		?>
 		<script>
-			function filter_week(select)
+			function set_filter(select)
 			{
 				$(select).closest('form').submit();
 			}
@@ -59,7 +68,11 @@ class Logs extends HeaderedContent
 		], 'post', $attrs);
 		echo new Form([
 			new Input('action', 'hidden', 'view'),
-			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ View All ]', new Attributes(['onchange' => 'filter_week(this)'])),
+			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ View all weeks ]', new Attributes(['onchange' => 'set_filter(this)'])),
+		], 'post', $attrs);
+		echo new Form([
+			new Input('action', 'hidden', 'view'),
+			new Select('company_id', $this->companies->data, (int) ($this->post['company_id'] ?? 0), $week_default, 'Company', '[ View all companies ]', new Attributes(['onchange' => 'set_filter(this)'])),
 		], 'post', $attrs);
 		echo new Table(new LogMetadata(), $this->service->getAll());
 	}
