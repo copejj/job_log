@@ -67,8 +67,8 @@ class Decider
 		$content->post = $post;
 		$content->links = [
 			'Home' => '/',
-			'Weeks' => '/?page=workweek',
 			'Logs' => '/?page=log',
+			'Weeks' => '/?page=workweek',
 			'Company' => '/?page=company',
 		];
 		return $content;

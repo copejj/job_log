@@ -76,9 +76,15 @@ class CompanyNewTab implements Formatter
 		$ref = $data->$key ?? '';
 		if (empty($ref))
 		{
-			return $ref;
+			return '';
 		}
-		return "<a href='{$ref}' target=_blank>{$ref}</a>";
+		$display = $ref;
+		$index = strpos($display, '?');
+		if ($index !== false)
+		{
+			$display = substr($display, 0, $index);
+		}
+		return "<a href='{$ref}' target=_blank>{$display}</a>";
 	}
 }
 
