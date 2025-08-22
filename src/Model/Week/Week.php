@@ -112,6 +112,11 @@ class Week extends Record
 			$bind[] = $args['action_date'];
 		}
 
+		if (empty($conds))
+		{
+			$conds[] = "job_count > 0";
+		}
+
 		$sql_cond = '';
 		if (!empty($conds))
 		{
@@ -120,7 +125,7 @@ class Week extends Record
 		$sql = 
 			"WITH target as (
 				select week_id
-				from weeks {$sql_cond}
+				from weeks
 			), job_count as (
 				select count(job_log_id) job_count, week_id
 				from job_logs
@@ -130,7 +135,7 @@ class Week extends Record
 			select week_id as id, weeks.*, coalesce(job_count, 0) as job_count
 			from target
 				join weeks using (week_id)
-				left join job_count using (week_id)
+				left join job_count using (week_id) {$sql_cond}
 			order by start_date desc, end_date desc";
 		return $sql;
 	}

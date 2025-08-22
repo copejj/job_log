@@ -16,11 +16,22 @@ class Weeks extends Entities implements Formatter
 		$sql = 
 			"SELECT week_id
 			from weeks
-			where start_date <= now()::date and now()::date <= end_date
+			where now()::date between start_date and end_date
 			order by start_date desc, end_date asc
 			limit 1";
 		$default = DB::getInstance(true)->fetchOne($sql);
-		parent::__construct('weeks', 'week_id', 'name', 'start_date desc, end_date desc', $default['week_id'] ?? '');
+		$table = "(
+			with job_count as (
+				select week_id, count(1) as job_count
+				from weeks
+					join job_logs using (week_id)
+				group by week_id
+			)
+			select *
+			from weeks
+				join job_count using (week_id)
+		) weeks";
+		parent::__construct($table, 'week_id', 'name', 'start_date desc, end_date desc', $default['week_id'] ?? '');
 	}
 
 	public function name(array $row): string
