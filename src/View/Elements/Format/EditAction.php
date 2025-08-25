@@ -1,10 +1,10 @@
 <?php
 namespace Jeff\Code\View\Elements\Format;
 
-abstract class AddButton extends ActionButton
+abstract class EditAction extends Action
 {
 	protected static function getAction(): string
 	{
-		return 'new';
+		return 'edit';
 	}
 }

@@ -7,7 +7,7 @@ use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Table;
 use Jeff\Code\View\Elements\Form;
-use Jeff\Code\View\Elements\Format\EditButton;
+use Jeff\Code\View\Elements\Format\EditAction;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\HeaderedContent;
 
@@ -46,7 +46,13 @@ class CompanyMetadata extends Metadata
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Company\CompanyEditButton',
+				'format' => 'Jeff\Code\Controller\Company\CompanyEditAction',
+				'class' => 'fit-width',
+			],
+			'job_count' => [
+				'label' => '# Logs',
+				'format' => 'Jeff\Code\Controller\Company\CompanyViewAction',
+				'class' => 'fit-width',
 			],
 			'name' => [
 				'label' => 'Name',
@@ -60,10 +66,6 @@ class CompanyMetadata extends Metadata
 			],
 			'phone' => [
 				'label' => 'Phone',
-			],
-			'job_count' => [
-				'label' => '#',
-				'format' => 'Jeff\Code\Controller\Company\CompanyViewButton',
 			],
 		];
 	}
@@ -88,7 +90,7 @@ class CompanyNewTab implements Formatter
 	}
 }
 
-class CompanyEditButton extends EditButton
+class CompanyEditAction extends EditAction
 {
 	protected static function getType(): string
 	{
@@ -96,7 +98,7 @@ class CompanyEditButton extends EditButton
 	}
 }
 
-class CompanyViewButton extends CompanyEditButton
+class CompanyViewAction extends CompanyEditAction
 {
 	protected static function getAttributes(): Attributes
 	{

@@ -7,7 +7,7 @@ use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Table;
 use Jeff\Code\View\Elements\Form;
-use Jeff\Code\View\Elements\Format\EditButton;
+use Jeff\Code\View\Elements\Format\EditAction;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\HeaderedContent;
 
@@ -44,7 +44,13 @@ class WeekMetadata extends Metadata
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Week\WeekEditButton',
+				'format' => 'Jeff\Code\Controller\Week\WeekEditAction',
+				'class' => 'fit-width',
+			],
+			'job_count' => [
+				'label' => '# Logs',
+				'format' => 'Jeff\Code\Controller\Week\WeekViewAction',
+				'class' => 'fit-width',
 			],
 			'start_date' => [
 				'label' => 'Start Date',
@@ -54,15 +60,11 @@ class WeekMetadata extends Metadata
 				'label' => 'End Date',
 				'format' => 'Jeff\Code\View\Elements\Date',
 			],
-			'job_count' => [
-				'label' => '# Logs',
-				'format' => 'Jeff\Code\Controller\Week\WeekViewButton',
-			]
 		];
 	}
 }
 
-class WeekEditButton extends EditButton
+class WeekEditAction extends EditAction
 {
 	protected static function getType(): string
 	{
@@ -70,7 +72,7 @@ class WeekEditButton extends EditButton
 	}
 }
 
-class WeekViewButton extends WeekEditButton
+class WeekViewAction extends WeekEditAction
 {
 	protected static function getAttributes(): Attributes
 	{

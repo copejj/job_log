@@ -27,7 +27,12 @@ class Table
 		$cells = [];
 		foreach ($metadata as $meta)
 		{
-			$cells[] = "<th>" . ($meta['label'] ?? '') . "</th>";
+			$class = '';
+			if (!empty($meta['class']))
+			{
+				$class = " class='{$meta['class']}'";
+			}
+			$cells[] = "<th{$class}>" . ($meta['label'] ?? '') . "</th>";
 		}
 		$headers = "<tr>" . implode($cells) . "</tr>";
 
@@ -37,6 +42,12 @@ class Table
 			$cells = [];
 			foreach ($metadata as $key => $meta)
 			{
+				$class = '';
+				if (!empty($meta['class']))
+				{
+					$class = " class='{$meta['class']}'";
+				}
+
 				if (empty($meta['format']))
 				{
 					$text = $row->$key;
@@ -46,7 +57,7 @@ class Table
 					$text = $meta['format']::format($key, $row);
 				}
 
-				$cells[] = "<td>{$text}</td>";
+				$cells[] = "<td{$class}>{$text}</td>";
 			}
 			$rows[] = "<tr>" . implode($cells) . "</tr>";
 		}

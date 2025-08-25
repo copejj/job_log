@@ -1,9 +1,7 @@
 <?php
 namespace Jeff\Code\View\Elements\Format;
 
-use Jeff\Code\View\Display\Attributes;
-
-abstract class ViewButton extends ActionButton
+abstract class ViewAction extends Action
 {
 	protected static function getAction(): string
 	{

@@ -2,6 +2,7 @@
 namespace Jeff\Code\Controller\Log;
 
 use Jeff\Code\Model\Log\Logs as Service;
+use Jeff\Code\Model\Record;
 use Jeff\Code\Model\Entities\Companies;
 use Jeff\Code\Model\Entities\Weeks;
 
@@ -9,7 +10,8 @@ use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Table;
 use Jeff\Code\View\Elements\Form;
-use Jeff\Code\View\Elements\Format\EditButton;
+use Jeff\Code\View\Elements\Format\EditAction;
+use Jeff\Code\View\Elements\Format\ModalAction;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Select;
 use Jeff\Code\View\HeaderedContent;
@@ -83,7 +85,8 @@ class LogMetadata extends Metadata
 		$this->metadata = [
 			'edit_col' => [
 				'label' => '',
-				'format' => 'Jeff\Code\Controller\Log\LogEditButton',
+				'format' => 'Jeff\Code\Controller\Log\LogAction',
+				'class' => 'fit-width',
 			],
 			'title' => [
 				'label' => 'Job Title',
@@ -102,8 +105,25 @@ class LogMetadata extends Metadata
 	}
 }
 
-class LogEditButton extends EditButton
+class LogAction extends EditAction
 {
+	protected static function getForm(string $action, string $type, Record $data): string
+	{
+		$type_id = "job_log_id";
+		$id = $data->$type_id;
+		if (empty($id))
+		{
+			return '';
+		}
+
+		return new Form([
+			new Input('action', 'hidden', $action),
+			new Input($type_id, 'hidden', $id),
+			new Input("edit_{$type}", 'submit', 'Edit'),
+			new Input("detail_{$type}", 'button', 'Details', '', '', new Attributes(['onclick' => 'openModal()'])),
+		], 'post', static::getAttributes());
+	}
+
 	protected static function getType(): string
 	{
 		return 'job_log';

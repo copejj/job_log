@@ -33,6 +33,13 @@ abstract class HeadlessContent extends Content
 	{
 		?>
 		</div>
+		<dialog id="myDialog">
+			<h2>Dialog Title</h2>
+			<p>This is a native dialog.</p>
+			<button id="closeDialog">Close</button>
+		</dialog>
+		<button id="openDialog">Open Dialog</button>
+		<script src="js/main.js"></script>
 		<?php
 		if (Config::get('ENVIRONMENT') !== 'prod' && !empty($_GET['debug']))
 		{
