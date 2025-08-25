@@ -6,11 +6,12 @@ use Jeff\Code\Controller\Index;
 use Jeff\Code\Controller\Company\Company;
 use Jeff\Code\Controller\Company\Companies;
 use Jeff\Code\Controller\Log\Log;
+use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
 use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
 
-class Decider
+class Driver
 {
 	public static function getContent(array $get, array $post): Content
 	{
@@ -36,6 +37,9 @@ class Decider
 			case 'log':
 				switch ($action)
 				{
+					case 'details':
+						$content = new LogDetails();
+						break;
 					case 'add':
 					case 'edit':
 						$content = new Log();

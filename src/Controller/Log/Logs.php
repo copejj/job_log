@@ -116,11 +116,16 @@ class LogAction extends EditAction
 			return '';
 		}
 
+		$query = '/?' . http_build_query([
+			'page' => 'log',
+			'action' => 'details',
+			'job_log_id' => $data->job_log_id, 
+		]);
 		return new Form([
 			new Input('action', 'hidden', $action),
 			new Input($type_id, 'hidden', $id),
 			new Input("edit_{$type}", 'submit', 'Edit'),
-			new Input("detail_{$type}", 'button', 'Details', '', '', new Attributes(['onclick' => 'openModal()'])),
+			new Input("detail_{$type}", 'button', 'Details', '', '', new Attributes(['onclick' => "openModal(\"" . htmlentities($query) . "\")"])),
 		], 'post', static::getAttributes());
 	}
 

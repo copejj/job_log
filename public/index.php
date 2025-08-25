@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use Jeff\Code\Decider;
+use Jeff\Code\Driver;
 use Jeff\Code\Util\Config;
 
 if (Config::get('ENVIRONMENT') !== 'prod')
@@ -11,5 +11,5 @@ if (Config::get('ENVIRONMENT') !== 'prod')
 	error_reporting(E_ALL);
 }
 
-$content = Decider::getContent($_GET, $_POST);
+$content = Driver::getContent($_GET, $_POST);
 $content->display();

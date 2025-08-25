@@ -12,8 +12,8 @@ myModal.addEventListener('click', (event) => {
 	}
 });
 
-function openModal() {
-	$('#dialogContainer').load('/?page=company', function() {
+function openModal(url) {
+	$('#dialogContainer').load(url, function() {
 		$('#dialogContainer').dialog({
 			modal: true, // Makes it a modal dialog
 			autoOpen: true // Opens on page load
