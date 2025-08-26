@@ -2,7 +2,9 @@
 namespace Jeff\Code\Controller\Log;
 
 use Jeff\Code\Model\Log\Logs;
+use Jeff\Code\Model\Meta\Labels;
 use Jeff\Code\View\Display\Attributes;
+use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Inputs;
 use Jeff\Code\View\HeadlessContent;
@@ -23,15 +25,40 @@ class LogDetails extends HeadlessContent
 
 	protected function content(): void
 	{
-		\Jeff\Code\Util\D::p('request', ['get' => $this->get, 'post' => $this->post]);
 		$readonly_attr = new Attributes(['readonly' => '']);
+		$inputs = [];
+		$md = new LogDetailsMetadata();
+		$metadata = $md->get();
+		$labels = new Labels(array_keys($metadata));
+	
 		foreach ($this->logs->getAll() as $log)
 		{
+			$input = [];
 			\Jeff\Code\Util\D::p('log', $log);
-			echo new Inputs([
-				new Input('company_name', 'text', $log->company_name, '', 'Company Name', $readonly_attr),
-			]);
+			foreach ($metadata as $key => $meta)
+			{
+				$input[] = new Input($key, 'text', $log->$key ?? '', '', $labels->$key, $readonly_attr);
+			}
+			$inputs[] = new Inputs($input);
 		}
+		echo new Inputs($inputs);
+	}
+}
 
+class LogDetailsMetadata extends Metadata
+{
+	public function init(): void
+	{
+		$this->metadata = [
+			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date', ],
+			'title' => [ ],
+			'company_name' => [ ],
+			'street' => [ ],
+			'street_ext' => [ ],
+			'city' => [ ],
+			'state' => [ ],
+			'zip' => [ ],
+			'website' => [ ],
+		];
 	}
 }

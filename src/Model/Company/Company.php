@@ -72,11 +72,14 @@ class Company extends Record
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
 		$conds = [];
-		$key = static::getKey();
-		if (!empty($args[$key]))
+		$arguably = [ static::getKey() ];
+		foreach ($arguably as $arg)
 		{
-			$conds[] = "{$key} = ?";
-			$bind[] = $args[$key];
+			if (!empty($args[$arg]))
+			{
+				$conds[] = "{$arg} = ?";
+				$bind[] = $args[$arg];
+			}
 		}
 
 		$sql_cond = '';
@@ -104,8 +107,11 @@ class Company extends Record
 					join target using (company_id)
 				group by company_id 
 			)
-			select company_id as id
-				, companies.*
+			select company_id
+				, companies.name as company_name
+				, email
+				, website
+				, phone
 				, addresses_json
 				, coalesce(job_count, 0) as job_count
 			from target

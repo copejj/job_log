@@ -45,28 +45,19 @@ class CompanyMetadata extends Metadata
 	{
 		$this->metadata = [
 			'edit_col' => [
-				'label' => '',
 				'format' => 'Jeff\Code\Controller\Company\CompanyEditAction',
 				'class' => 'fit-width',
 			],
 			'job_count' => [
-				'label' => '# Logs',
 				'format' => 'Jeff\Code\Controller\Company\CompanyViewAction',
 				'class' => 'fit-width',
 			],
-			'name' => [
-				'label' => 'Name',
+			'company_name' => [ ],
+			'website' => [ 
+				'format' => 'Jeff\Code\Controller\Company\CompanyNewTab' 
 			],
-			'email' => [
-				'label' => 'Email',
-			],
-			'website' => [
-				'label' => 'Website',
-				'format' => 'Jeff\Code\Controller\Company\CompanyNewTab',
-			],
-			'phone' => [
-				'label' => 'Phone',
-			],
+			'email' => [ ],
+			'phone' => [ ],
 		];
 	}
 }

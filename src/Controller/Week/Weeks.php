@@ -43,21 +43,17 @@ class WeekMetadata extends Metadata
 	{
 		$this->metadata = [
 			'edit_col' => [
-				'label' => '',
 				'format' => 'Jeff\Code\Controller\Week\WeekEditAction',
 				'class' => 'fit-width',
 			],
 			'job_count' => [
-				'label' => '# Logs',
 				'format' => 'Jeff\Code\Controller\Week\WeekViewAction',
 				'class' => 'fit-width',
 			],
 			'start_date' => [
-				'label' => 'Start Date',
 				'format' => 'Jeff\Code\View\Elements\Date',
 			],
 			'end_date' => [
-				'label' => 'End Date',
 				'format' => 'Jeff\Code\View\Elements\Date',
 			],
 		];

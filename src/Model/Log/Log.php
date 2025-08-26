@@ -123,6 +123,7 @@ class Log extends Record
 					, end_date
 					, company_id
 					, name as company_name
+					, website
 				from job_logs
 					left join weeks using (week_id)
 					left join companies using (company_id) {$sql_cond}

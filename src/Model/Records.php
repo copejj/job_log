@@ -44,4 +44,9 @@ abstract class Records
 	{
 		return $this->data;
 	}
+
+	public function getKeys(): array
+	{
+		return array_keys($this->data);
+	}
 }

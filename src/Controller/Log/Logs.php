@@ -17,9 +17,9 @@ use Jeff\Code\View\HeaderedContent;
 
 class Logs extends HeaderedContent
 {
+	protected Companies $companies;
 	protected Service $service;
 	protected Weeks $weeks;
-	protected Companies $companies;
 
 	public function processing(): void
 	{
@@ -83,23 +83,13 @@ class LogMetadata extends Metadata
 	{
 		$this->metadata = [
 			'edit_col' => [
-				'label' => '',
 				'format' => 'Jeff\Code\Controller\Log\LogAction',
 				'class' => 'fit-width',
 			],
-			'title' => [
-				'label' => 'Job Title',
-			],
-			'company_name' => [
-				'label' => 'Employer',
-			],
-			'action_date' => [
-				'label' => 'Contact Date',
-				'format' => 'Jeff\Code\View\Elements\Date',
-			],
-			'job_number' => [
-				'label' => 'Job Number',
-			],
+			'title' => [ ],
+			'company_name' => [ ],
+			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date', ],
+			'job_number' => [ ],
 		];
 	}
 }
