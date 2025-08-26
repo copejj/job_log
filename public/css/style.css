@@ -148,3 +148,23 @@ dialog {
     /* Center the modal */
     margin: auto;
 }
+dialog.page-modal table {
+    width: 100%;
+}
+dialog.page-modal table th {
+    width: 25%;
+    padding: .25rem 1rem 0 0;
+    text-align: right;
+}
+dialog.page-modal table td {
+    width: 75%;
+}
+dialog.page-modal table td input {
+    width: 100%;
+}
+button#closeModal {
+    color:white;
+    background: #0e17bf;
+    border-radius: 5px;
+    float:right;
+}

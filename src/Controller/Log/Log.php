@@ -87,7 +87,6 @@ class Log extends HeaderedContent
 					$this->log->week_id = $post['week_id'];
 					$this->log->action_date = $post['action_date'];
 					$this->log->company_id = $post['company_id'] ?? null;
-					$this->log->contact_id = $post['contact_id'] ?? null;
 					$this->log->title = $post['title'] ?? null;
 					$this->log->job_number = $post['job_number'] ?? null;
 					$this->log->next_step = $post['next_step'] ?? null;

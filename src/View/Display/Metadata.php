@@ -18,4 +18,9 @@ abstract class Metadata
 		}
 		return $this->metadata;
 	}
+
+	public function keys(): array
+	{
+		return array_keys($this->get());
+	}
 }
