@@ -13,68 +13,78 @@ use Jeff\Code\Controller\Week\Weeks;
 
 class Driver
 {
-	public static function getContent(array $get, array $post): Content
+	protected ?Content $content;
+	protected array $get;
+	protected array $post;
+
+	public function __construct(array $get, array $post)
 	{
-		$page = $get['page'] ?? 'index';
-		$action = $post['action'] ?? $get['action'] ?? '';
-		$content = null;
+		$this->get = $get;
+		$this->post= $post;
+	}
+
+	public function getContent(): Content
+	{
+		$page = $this->get['page'] ?? 'index';
+		$action = $this->post['action'] ?? $this->get['action'] ?? '';
+		$this->content = null;
 		switch ($page)
 		{
 			case 'workweek':
 				switch ($action)
 				{
 					case 'view':
-						$content = new Logs();
+						$this->content = new Logs();
 						break;
 					case 'add':
 					case 'edit':
-						$content = new Week();
+						$this->content = new Week();
 						break;
 					default:
-						$content = new Weeks();
+						$this->content = new Weeks();
 				}
 				break;
 			case 'log':
 				switch ($action)
 				{
 					case 'details':
-						$content = new LogDetails();
+						$this->content = new LogDetails();
 						break;
 					case 'add':
 					case 'edit':
-						$content = new Log();
+						$this->content = new Log();
 						break;
 					default:
-						$content = new Logs();
+						$this->content = new Logs();
 				}
 				break;
 			case 'company':
 				switch ($action)
 				{
 					case 'view':
-						$content = new Logs();
+						$this->content = new Logs();
 						break;
 					case 'add':
 					case 'edit':
-						$content = new Company();
+						$this->content = new Company();
 						break;
 					default:
-						$content = new Companies();
+						$this->content = new Companies();
 				}
 				break;
 			case 'index':
 			default:
-				$content = new Index();
+				$this->content = new Index();
 		}
 
-		$content->get = $get;
-		$content->post = $post;
-		$content->links = [
+		$this->content->get = $this->get;
+		$this->content->post = $this->post;
+		$this->content->links = [
 			'Home' => '/',
 			'Logs' => '/?page=log',
 			'Weeks' => '/?page=workweek',
 			'Company' => '/?page=company',
 		];
-		return $content;
+		return $this->content;
 	}
 }

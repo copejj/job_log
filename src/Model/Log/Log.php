@@ -114,8 +114,6 @@ class Log extends Record
 			"WITH job_logs as (
 				select job_log_id
 					, action_date
-					, company_id
-					, contact_id
 					, title
 					, job_number
 					, next_step
@@ -123,8 +121,11 @@ class Log extends Record
 					, week_id
 					, start_date
 					, end_date
+					, company_id
+					, name as company_name
 				from job_logs
 					left join weeks using (week_id)
+					left join companies using (company_id) {$sql_cond}
 			), actions as (
 				with data as (
 					select job_log_id, job_log_action_id, action_id, name
@@ -147,20 +148,28 @@ class Log extends Record
 					, jsonb_agg(to_jsonb(data.*) - 'job_log_id') as methods_json
 				from data
 				group by job_log_id
-			), company as (
+			), address as (
 				select distinct on (company_id) company_id
-					, name as company_name
+					, street
+					, street_ext
+					, city
+					, abbr as state
+					, zip
 				from job_logs
-					join companies using (company_id)
+					join company_addresses using (company_id)
+					join addresses using (address_id)
+					left join states using (state_id)
+				where coalesce(street, '') != ''
+				order by company_id, addresses.created_date desc, address_id
 			)
 			select job_logs.*
-				, company_name
 				, actions_json
 				, methods_json
+				, address.*
 			from job_logs
-				left join company using (company_id)
 				left join actions using (job_log_id)
-				left join methods using (job_log_id) {$sql_cond}";
+				left join methods using (job_log_id) 
+				left join address using (company_id)";
 		return $sql;
 	}
 

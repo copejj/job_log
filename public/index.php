@@ -11,5 +11,5 @@ if (Config::get('ENVIRONMENT') !== 'prod')
 	error_reporting(E_ALL);
 }
 
-$content = Driver::getContent($_GET, $_POST);
-$content->display();
+$driver = new Driver($_GET, $_POST);
+$driver->getContent()->display();

@@ -43,9 +43,9 @@ abstract class HeaderedContent extends HeadlessContent
 	{
 		?>
 				<div class='footer-cont'> &copy; 2025 Jeff Cope, All Rights Reserved. </div>
-				<dialog id="myModal">
+				<dialog id="pageModal">
 					<button id="closeModal"> X </button>
-					<div id="dialogContainer"></div>
+					<div id="pageContent"></div>
 				</dialog>
 				<script src="js/main.js"></script>
 			</body>

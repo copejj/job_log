@@ -72,40 +72,42 @@ class D
 				}
 			</style>
 			<script type="text/javascript">
-				function show_debug(index, rand)
-				{
-					toggle(document.querySelectorAll('.debug_'+rand+'_'+index));
-				}
-				function toggle(elements, specifiedDisplay)
-				{
-					var element, index;
-
-					elements = elements.length ? elements : [elements];
-					for (index = 0; index < elements.length; index++)
-					{
-						element = elements[index];
-
-						if (isElementHidden(element))
+				window.onload = function() {
+					if (typeof showDebug !== 'function') {
+						function showDebug(index, rand)
 						{
-							element.style.display = '';
+							toggle(document.querySelectorAll('.debug_'+rand+'_'+index));
+						}
+					}
 
-							// If the element is still hidden after removing the inline display
-							if (isElementHidden(element))
-							{
-								element.style.display = specifiedDisplay || 'block';
+					if (typeof toggle !== 'function') {
+						function toggle(elements, specifiedDisplay) {
+							var element, index;
+
+							elements = elements.length ? elements : [elements];
+							for (index = 0; index < elements.length; index++) {
+								element = elements[index];
+
+								if (isElementHidden(element)) {
+									element.style.display = '';
+
+									// If the element is still hidden after removing the inline display
+									if (isElementHidden(element)) {
+										element.style.display = specifiedDisplay || 'block';
+									}
+								}
+								else
+								{
+									element.style.display = 'none';
+								}
+							}
+
+							function isElementHidden (element) {
+								return window.getComputedStyle(element, null).getPropertyValue('display') === 'none';
 							}
 						}
-						else
-						{
-							element.style.display = 'none';
-						}
 					}
-
-					function isElementHidden (element)
-					{
-						return window.getComputedStyle(element, null).getPropertyValue('display') === 'none';
-					}
-				}
+				};
 			</script>
 		<?php
 		$output = ob_get_contents();
