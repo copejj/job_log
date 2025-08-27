@@ -87,7 +87,7 @@ class LogMetadata extends Metadata
 				'class' => 'fit-width',
 			],
 			'title' => [ ],
-			'company_name' => [ ],
+			'name' => [ ],
 			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date', ],
 			'job_number' => [ ],
 		];
