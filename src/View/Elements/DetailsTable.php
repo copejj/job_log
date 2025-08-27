@@ -18,7 +18,7 @@ class DetailsTable
 	{
 		$this->metadata = $metadata;
 		$this->data = $data;
-		$this->attrs = new Attributes(['class' => 'table table-details']);
+		$this->attrs = new Attributes(['class' => 'detail-input']);
 		if (!empty($attrs))
 		{
 			$this->attrs->merge($attrs);
@@ -49,8 +49,24 @@ class DetailsTable
 				{
 					$text = $meta['format']::format($key, $row);
 				}
-				$input = new Input($key, 'text', $text, '', '', $this->attrs);
-				$rows[] = "<tr{$class}><th>{$this->labels->$key}</th><td>{$input}</td></tr>";
+
+				$type = $meta['type'] ?? 'text';
+
+				switch ($type)
+				{
+					case 'textarea':
+						$input = new TextArea($key, $text, '', '', $this->attrs);
+						break;
+					case 'text':
+					default:
+						$input = new Input($key, 'text', $text, '', '', $this->attrs);
+				}
+				$rows[] = 
+					"<tr{$class}>
+						<th class='detail-header'>{$this->labels->$key}</th>
+						<td class='detail-data'>{$input}</td>
+						<td class='detail-control'><i class='fa fa-copy' onclick='copy_detail_data(this)'></i></td>
+					</tr>";
 			}
 		}
 		$body = implode($rows);
@@ -58,7 +74,7 @@ class DetailsTable
 		ob_start();
 		$table_name = 'detailtable_' . sprintf('%s', random_int(100000, 999999));
 		?>
-			<div <?=$this->attrs?>>
+			<div class='table details-table'>
 				<table id='<?=$table_name?>'>
 					<tbody><?=$body?></tbody>
 				</table>

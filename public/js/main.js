@@ -68,3 +68,18 @@ function toggle(elements, specifiedDisplay)
 		return window.getComputedStyle(element, null).getPropertyValue('display') === 'none';
 	}
 }
+
+async function copy_detail_data(btn)
+{
+	const container = $(btn).closest('tr').find('.detail-control');
+	const text = $(btn).closest('tr').find('.detail-input').val();
+
+	$('.detail-control').removeClass('copied');
+	try {
+		await navigator.clipboard.writeText(text);
+		$(container).addClass('copied');
+	} catch (err) {
+		console.error('failed to copy text: ', err);
+		$(container).addClass('error');
+	}
+}
