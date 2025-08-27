@@ -35,7 +35,7 @@ class LogDetailsMetadata extends Metadata
 			'week_id' => [ 'format' => 'Jeff\Code\Model\Entities\Weeks' ],
 			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ],
 			'title' => [ ],
-			'company_name' => [ ],
+			'name' => [ ],
 			'street' => [ ],
 			'street_ext' => [ ],
 			'city' => [ ],

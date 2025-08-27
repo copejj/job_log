@@ -126,8 +126,8 @@ class Company extends HeaderedContent
 
 	public function content(): void
 	{
-		$data = $this->company->data ?? $this->post;
-		$data = $this->formatData($data);
+		$data = $this->formatData($this->company->data ?? $this->post);
+
 		?>
 		<script>
 			function save_form()

@@ -122,14 +122,14 @@ class Log extends Record
 					, start_date
 					, end_date
 					, company_id
-					, name as company_name
+					, name
 					, website
 				from job_logs
 					left join weeks using (week_id)
 					left join companies using (company_id) {$sql_cond}
 			), actions as (
 				with data as (
-					select job_log_id, job_log_action_id, action_id, name
+					select job_log_id, job_log_action_id, action_id, actions.name as action_name
 					from job_logs
 						join job_log_actions using (job_log_id)
 						join actions using (action_id)
@@ -140,7 +140,7 @@ class Log extends Record
 				group by job_log_id
 			), methods as (
 				with data as (
-					select job_log_id, job_log_method_id, method_id, name
+					select job_log_id, job_log_method_id, method_id, methods.name as method_name
 					from job_logs
 						join job_log_methods using (job_log_id)
 						join methods using (method_id)
@@ -166,7 +166,11 @@ class Log extends Record
 			select job_logs.*
 				, actions_json
 				, methods_json
-				, address.*
+				, street
+				, street_ext
+				, city
+				, state
+				, zip
 			from job_logs
 				left join actions using (job_log_id)
 				left join methods using (job_log_id) 

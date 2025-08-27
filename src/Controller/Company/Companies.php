@@ -52,7 +52,7 @@ class CompanyMetadata extends Metadata
 				'format' => 'Jeff\Code\Controller\Company\CompanyViewAction',
 				'class' => 'fit-width',
 			],
-			'company_name' => [ ],
+			'name' => [ ],
 			'website' => [ 
 				'format' => 'Jeff\Code\Controller\Company\CompanyNewTab' 
 			],

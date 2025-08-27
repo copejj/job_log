@@ -108,7 +108,7 @@ class Company extends Record
 				group by company_id 
 			)
 			select company_id
-				, companies.name as company_name
+				, name
 				, email
 				, website
 				, phone

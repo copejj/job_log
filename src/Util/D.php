@@ -31,7 +31,7 @@ class D
 			$expander = '+';
 			$exportdata = "<div class='debug_body debug_{$rand}_{$count}' style='display:none'><pre>".print_r($data, true)."</pre></div>";
 		}
-		$titledata = "<div class='debug_head' onclick='show_debug({$count}, {$rand})'>".date("Y-m-d H:i:s")." <span class='debug_title'><i> {$title} </i> {$expander} </span> </div>";
+		$titledata = "<div class='debug_head' onclick='showDebug({$count}, {$rand})'>".date("Y-m-d H:i:s")." <span class='debug_title'><i> {$title} </i> {$expander} </span> </div>";
 		return "{$helper_html}<div class='debug_func' title='{$backtrace}' >{$titledata}{$exportdata}</div>";
 	}
 
@@ -72,42 +72,36 @@ class D
 				}
 			</style>
 			<script type="text/javascript">
-				window.onload = function() {
-					if (typeof showDebug !== 'function') {
-						function showDebug(index, rand)
+				function showDebug(index, rand) {
+					console.log('showDebug called');
+					toggle(document.querySelectorAll('.debug_'+rand+'_'+index));
+				}
+
+				function toggle(elements, specifiedDisplay) {
+					var element, index;
+
+					elements = elements.length ? elements : [elements];
+					for (index = 0; index < elements.length; index++) {
+						element = elements[index];
+
+						if (isElementHidden(element)) {
+							element.style.display = '';
+
+							// If the element is still hidden after removing the inline display
+							if (isElementHidden(element)) {
+								element.style.display = specifiedDisplay || 'block';
+							}
+						}
+						else
 						{
-							toggle(document.querySelectorAll('.debug_'+rand+'_'+index));
+							element.style.display = 'none';
 						}
 					}
 
-					if (typeof toggle !== 'function') {
-						function toggle(elements, specifiedDisplay) {
-							var element, index;
-
-							elements = elements.length ? elements : [elements];
-							for (index = 0; index < elements.length; index++) {
-								element = elements[index];
-
-								if (isElementHidden(element)) {
-									element.style.display = '';
-
-									// If the element is still hidden after removing the inline display
-									if (isElementHidden(element)) {
-										element.style.display = specifiedDisplay || 'block';
-									}
-								}
-								else
-								{
-									element.style.display = 'none';
-								}
-							}
-
-							function isElementHidden (element) {
-								return window.getComputedStyle(element, null).getPropertyValue('display') === 'none';
-							}
-						}
+					function isElementHidden (element) {
+						return window.getComputedStyle(element, null).getPropertyValue('display') === 'none';
 					}
-				};
+				}
 			</script>
 		<?php
 		$output = ob_get_contents();
