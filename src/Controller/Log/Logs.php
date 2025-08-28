@@ -88,7 +88,7 @@ class LogMetadata extends Metadata
 			],
 			'title' => [ ],
 			'name' => [ ],
-			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date', ],
+			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ],
 			'job_number' => [ ],
 		];
 	}
@@ -108,7 +108,7 @@ class LogAction extends EditAction
 		$query = '/?' . http_build_query([
 			'page' => 'log',
 			'action' => 'details',
-			'job_log_id' => $data->job_log_id, 
+			$type_id => $id, 
 		]);
 		return new Form([
 			new Input('action', 'hidden', $action),

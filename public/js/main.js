@@ -33,7 +33,7 @@ function openModal(url) {
 	pageModal.showModal();
 }
 
-function show_debug(index, rand)
+function showDebug(index, rand)
 {
 	toggle(document.querySelectorAll('.debug_'+rand+'_'+index));
 }

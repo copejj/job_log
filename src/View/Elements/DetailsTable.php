@@ -33,6 +33,12 @@ class DetailsTable
 		$rows = [];
 		foreach ($this->data as $row)
 		{
+			$title = $this->metadata->getRowHeader($row) ?? '';
+			if (!empty($title))
+			{
+				$rows[] = "<tr><td colspan='20'>{$title}</td></tr>";
+			}
+
 			foreach ($metadata as $key => $meta)
 			{
 				$class = '';

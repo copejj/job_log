@@ -195,3 +195,15 @@ dialog.page-modal table td.detail-control.error .fa-copy {
     color: white;
     background-color: #4b0a0a;
 }
+.details-header-name {
+    margin: 1rem 0rem .25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #0e17bf;
+}
+.details-header-title {
+    font-size: 1.15rem;
+    color: #1e26c8;
+    font-style: italic;
+    padding-left: 1rem;
+}

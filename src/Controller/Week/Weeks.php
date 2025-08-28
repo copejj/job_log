@@ -43,33 +43,56 @@ class WeekMetadata extends Metadata
 	{
 		$this->metadata = [
 			'edit_col' => [
-				'format' => 'Jeff\Code\Controller\Week\WeekEditAction',
+				'format' => 'Jeff\Code\Controller\Week\WeekAction',
 				'class' => 'fit-width',
 			],
 			'job_count' => [
 				'format' => 'Jeff\Code\Controller\Week\WeekViewAction',
 				'class' => 'fit-width',
 			],
-			'start_date' => [
-				'format' => 'Jeff\Code\View\Elements\Date',
-			],
-			'end_date' => [
-				'format' => 'Jeff\Code\View\Elements\Date',
-			],
+			'start_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ], 
+			'end_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ],
 		];
 	}
 }
 
-class WeekEditAction extends EditAction
+class WeekAction extends EditAction
 {
+	protected static function getForm(string $action, string $type, Record $data): string
+	{
+		$type_id = "week_id";
+		$id = $data->$type_id;
+		if (empty($id))
+		{
+			return '';
+		}
+
+		$query = '/?' . http_build_query([
+			'page' => 'log',
+			'action' => 'details',
+			$type_id => $id, 
+		]);
+		return new Form([
+			new Input('action', 'hidden', $action),
+			new Input($type_id, 'hidden', $id),
+			new Input("edit_{$type}", 'submit', 'Edit'),
+			new Input("detail_{$type}", 'button', 'Details', '', '', new Attributes(['onclick' => "openModal(\"" . htmlentities($query) . "\")"])),
+		], 'post', static::getAttributes());
+	}
+
 	protected static function getType(): string
 	{
 		return 'week';
 	}
 }
 
-class WeekViewAction extends WeekEditAction
+class WeekViewAction extends EditAction
 {
+	protected static function getType(): string
+	{
+		return 'week';
+	}
+
 	protected static function getAttributes(): Attributes
 	{
 		return new Attributes([

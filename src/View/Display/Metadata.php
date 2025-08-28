@@ -3,11 +3,18 @@ namespace Jeff\Code\View\Display;
 
 use Exception;
 
+use Jeff\Code\Model\Record;
+
 abstract class Metadata
 {
 	protected array $metadata = [];
 
-	public abstract function init(): void;
+	protected abstract function init(): void;
+
+	public function getRowHeader(Record $row): string
+	{
+		return '';
+	}
 
 	public function get(): array
 	{
