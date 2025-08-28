@@ -45,7 +45,7 @@ class CompanyMetadata extends Metadata
 	{
 		$this->metadata = [
 			'edit_col' => [
-				'format' => 'Jeff\Code\Controller\Company\CompanyEditAction',
+				'format' => 'Jeff\Code\Controller\Company\CompanyAction',
 				'class' => 'fit-width',
 			],
 			'job_count' => [
@@ -81,16 +81,43 @@ class CompanyNewTab implements Formatter
 	}
 }
 
-class CompanyEditAction extends EditAction
+class CompanyAction extends EditAction
 {
+	protected static function getForm(string $action, string $type, Record $data): string
+	{
+		$type_id = "company_id";
+		$id = $data->$type_id;
+		if (empty($id))
+		{
+			return '';
+		}
+
+		$query = '/?' . http_build_query([
+			'page' => 'log',
+			'action' => 'details',
+			$type_id => $id, 
+		]);
+		return new Form([
+			new Input('action', 'hidden', $action),
+			new Input($type_id, 'hidden', $id),
+			new Input("edit_{$type}", 'submit', 'Edit'),
+			new Input("detail_{$type}", 'button', 'Details', '', '', new Attributes(['onclick' => "openModal(\"" . htmlentities($query) . "\")"])),
+		], 'post', static::getAttributes());
+	}
+
 	protected static function getType(): string
 	{
 		return 'company';
 	}
 }
 
-class CompanyViewAction extends CompanyEditAction
+class CompanyViewAction extends EditAction
 {
+	protected static function getType(): string
+	{
+		return 'company';
+	}
+
 	protected static function getAttributes(): Attributes
 	{
 		return new Attributes([
