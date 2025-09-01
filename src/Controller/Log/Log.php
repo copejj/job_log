@@ -20,6 +20,7 @@ use Jeff\Code\Model\Entities\Actions;
 use Jeff\Code\Model\Entities\Methods;
 use Jeff\Code\Model\Entities\Weeks;
 use Jeff\Code\Model\Entities\Companies;
+use Jeff\Code\Model\Meta\Labels;
 use Jeff\Code\View\HeaderedContent;
 
 use Jeff\Code\Model\Week\Week;
@@ -36,6 +37,7 @@ class Log extends HeaderedContent
 	protected Methods $methods;
 	protected Weeks $weeks;
 	protected Companies $companies;
+	protected Labels $labels;
 
 	public function init(): void
 	{
@@ -43,6 +45,7 @@ class Log extends HeaderedContent
 		$this->methods = new Methods();
 		$this->weeks = new Weeks();
 		$this->companies = new Companies();
+		$this->labels = new Labels();
 
 		if (!empty($this->post['job_log_id']))
 		{
@@ -91,6 +94,9 @@ class Log extends HeaderedContent
 					$this->log->job_number = $post['job_number'] ?? null;
 					$this->log->next_step = $post['next_step'] ?? null;
 					$this->log->notes = $post['notes'] ?? null;
+					$this->log->confirmation = $post['confirmation'] ?? null;
+					$this->log->contact = $post['contact'] ?? null;
+					$this->log->contact_number = $post['contact_number'] ?? null;
 
 					if ($this->log->save())
 					{
@@ -197,14 +203,17 @@ class Log extends HeaderedContent
 		echo new Form([
 			new Inputs([ 
 				new Input('job_log_id', 'hidden', $data['job_log_id'] ?? ''),
-				new Select('company_id', $this->companies->data, (int) ($data['company_id'] ?? 0), $this->companies->default, 'Company', '[ Select a company ]'),
-				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Date('action_date', $data['action_date'] ?? '', date('Y-m-d'), 'Action Date'),
-				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), 'Actions', 'actions', null, new Attributes(['id' => 'actions_group'])),
-				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), 'Methods', 'methods', null, new Attributes(['id' => 'methods_group'])),
-				new Input('job_number', 'text', $data['job_number'] ?? '', '', 'Job Number'),
-				new Input('next_step', 'text', $data['next_step'] ?? '', '', 'Next Step'),
-				new TextArea('notes', $data['notes'] ?? '', '', 'Notes'),
+				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
+				new Select('company_id', $this->companies->data, (int) ($data['company_id'] ?? 0), $this->companies->default, $this->labels->company_id, '[ Select a company ]'),
+				new Input('job_number', 'text', $data['job_number'] ?? '', '', $this->labels->job_number),
+				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), $this->labels->actions, 'actions', null, new Attributes(['id' => 'actions_group'])),
+				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), $this->labels->methods, 'methods', null, new Attributes(['id' => 'methods_group'])),
+				new Input('contact', 'text', $data['contact'] ?? '', '', $this->labels->contact),
+				new Input('contact_number', 'text', $data['contact_number'] ?? '', '', $this->labels->contact_number),
+				new Input('confirmation', 'text', $data['confirmation'] ?? '', '', $this->labels->confirmation),
+				new Input('next_step', 'text', $data['next_step'] ?? '', '', $this->labels->next_step),
+				new TextArea('notes', $data['notes'] ?? '', '', $this->labels->notes),
 			], 'logs', 'logs'),
 			new Input('save_job_log', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
 			new Input('cancel_job', 'submit', ($this->acted) ? 'Done' : 'Cancel'),

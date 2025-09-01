@@ -24,11 +24,13 @@ class Log extends Record
 				$this->data['week_id'],
 				$this->data['action_date'], 
 				$this->data['company_id'] ?? null, 
-				$this->data['contact_id'] ?? null, 
 				$this->data['title'] ?? null, 
 				$this->data['job_number'] ?? null, 
 				$this->data['next_step'] ?? null, 
 				$this->data['notes'] ?? null, 
+				$this->data['confirmation'] ?? null, 
+				$this->data['contact'] ?? null, 
+				$this->data['contact_number'] ?? null, 
 			];
 
 			if (empty($this->data[$key]))
@@ -38,13 +40,15 @@ class Log extends Record
 						week_id
 						, action_date
 						, company_id
-						, contact_id
 						, title
 						, job_number
 						, next_step
 						, notes
+						, confirmation
+						, contact
+						, contact_number
 					)
-					values (?, ?, ?, ?, ?, ?, ?, ?)
+					values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 					returning *";
 			}
 			else
@@ -54,11 +58,13 @@ class Log extends Record
 					set week_id = ?
 						, action_date = ?
 						, company_id = ?
-						, contact_id = ?
 						, title = ?
 						, job_number = ?
 						, next_step = ?
 						, notes = ?
+						, confirmation = ?
+						, contact = ?
+						, contact_number = ?
 					where job_log_id = ?
 					returning *";
 				$this->bind[] = $this->data[$key];
@@ -118,6 +124,9 @@ class Log extends Record
 					, job_number
 					, next_step
 					, notes
+					, confirmation
+					, contact
+					, contact_number
 					, week_id
 					, start_date
 					, end_date
