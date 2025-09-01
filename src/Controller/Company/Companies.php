@@ -20,6 +20,14 @@ class Companies extends HeaderedContent
 {
 	protected Service $service;
 
+	public static function getLink(): array 
+	{
+		return [
+			'page' => 'company',
+			'label' => 'Company',
+		];
+	}
+
 	public function processing(): void
 	{
 		$this->service = Service::init();

@@ -3,6 +3,8 @@ namespace Jeff\Code\View;
 
 abstract class HeaderedContent extends HeadlessContent
 {
+	public abstract static function getLink(): array;
+
 	protected function header(): void
 	{
 		?>
@@ -18,7 +20,8 @@ abstract class HeaderedContent extends HeadlessContent
 				<title>Jeff's Work Log Page</title>
 			</head>
 			<body>
-				<div class='header-cont'> Jeff's Work Log Page </div>
+				<div class='full-page-content'>
+					<div class='header-cont'> Jeff's Work Log Page </div>
 		<?php
 	}
 
@@ -28,9 +31,12 @@ abstract class HeaderedContent extends HeadlessContent
 		if (!empty($links))
 		{
 			$refs = [];
-			foreach ($links as $label => $ref)
+			$current_page = $this->get['page'] ?? '';
+			foreach ($links as $data)
 			{
-				$refs[] = "<a href='{$ref}'>{$label}</a>";
+				$selected = ($current_page == ($data['page'] ?? '')) ? ' link-selected' : '';
+				$ref = (empty($data['page'])) ? '' : "?page={$data['page']}";
+				$refs[] = "<div class='link{$selected}'><a href='/{$ref}'>{$data['label']}</a></div>";
 			}
 			?>
 				<div class='links-cont'>
@@ -43,12 +49,13 @@ abstract class HeaderedContent extends HeadlessContent
 	protected function footer(): void 
 	{
 		?>
-				<div class='footer-cont'> &copy; 2025 Jeff Cope, All Rights Reserved. </div>
-				<dialog id="pageModal" class='page-modal'>
-					<button id="closeModal"> X </button>
-					<div id="pageContent" class='page-content'></div>
-				</dialog>
-				<script src="js/main.js"></script>
+					<div class='footer-cont'> &copy; 2025 Jeff Cope, All Rights Reserved. </div>
+					<dialog id="pageModal" class='page-modal'>
+						<button id="closeModal"> X </button>
+						<div id="pageContent" class='page-content'></div>
+					</dialog>
+					<script src="js/main.js"></script>
+				</div>
 			</body>
 		</html>
 		<?php

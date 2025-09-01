@@ -5,6 +5,14 @@ use Jeff\Code\View\HeaderedContent;
 
 class Index extends HeaderedContent
 {
+	public static function getLink(): array 
+	{
+		return [
+			'page' => '',
+			'label' => 'Home',
+		];
+	}
+
 	protected function getTitle(): string
 	{
 		return "Hi There";

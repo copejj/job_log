@@ -39,6 +39,14 @@ class Log extends HeaderedContent
 	protected Companies $companies;
 	protected Labels $labels;
 
+	public static function getLink(): array 
+	{
+		return [
+			'page' => 'log',
+			'label' => 'Logs',
+		];
+	}
+
 	public function init(): void
 	{
 		$this->actions = new Actions();

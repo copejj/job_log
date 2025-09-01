@@ -19,6 +19,14 @@ class Week extends HeaderedContent
 	protected string $mode = 'add';
 	protected string $title = 'Add';
 
+	public static function getLink(): array 
+	{
+		return [
+			'page' => 'workweek',
+			'label' => 'Weeks',
+		];
+	}
+
 	public function init(): void
 	{
 		if (!empty($this->post['week_id']))

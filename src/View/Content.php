@@ -10,6 +10,7 @@ abstract class Content
 		'post' => null,
 		'message' => '',
 		'links' => null,
+		'selected' => null,
 		'update_data' => false,
 	];
 

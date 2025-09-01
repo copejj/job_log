@@ -75,15 +75,16 @@ class Driver
 			case 'index':
 			default:
 				$this->content = new Index();
+				$this->content->selected = 'Home';
 		}
 
 		$this->content->get = $this->get;
 		$this->content->post = $this->post;
 		$this->content->links = [
-			'Home' => '/',
-			'Logs' => '/?page=log',
-			'Weeks' => '/?page=workweek',
-			'Company' => '/?page=company',
+			Index::getLink($this->get), // '/',
+			Logs::getLink($this->get), // '/?page=log',
+			Weeks::getLink($this->get), // '/?page=workweek',
+			Companies::getLink($this->get), // '/?page=company',
 		];
 		return $this->content;
 	}

@@ -13,6 +13,14 @@ class LogDetails extends HeadlessContent
 {
 	protected Logs $logs;
 
+	public static function getLink(): array 
+	{
+		return [
+			'page' => 'log',
+			'label' => 'Logs',
+		];
+	}
+
 	protected function processing(): void
 	{
 		$this->logs = Logs::init($this->get);
