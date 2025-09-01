@@ -24,6 +24,7 @@ class Company extends Record
 				$this->data['email'] ?? '',
 				$this->data['website'] ?? '',
 				$this->data['phone'] ?? '',
+				$this->data['fax'] ?? '',
 			];
 
 			if (empty($this->data['company_id']))
@@ -34,8 +35,9 @@ class Company extends Record
 						, email
 						, website
 						, phone 
+						, fax
 					) 
-					values (?, ?, ?, ?) 
+					values (?, ?, ?, ?, ?) 
 					returning *";
 			}
 			else 
@@ -46,6 +48,7 @@ class Company extends Record
 						, email = ?
 						, website = ?
 						, phone = ?
+						, fax = ?
 					where company_id = ? 
 					returning *";
 				$this->bind[] = $this->data['company_id'];
@@ -112,6 +115,7 @@ class Company extends Record
 				, email
 				, website
 				, phone
+				, fax
 				, addresses_json
 				, coalesce(job_count, 0) as job_count
 			from target

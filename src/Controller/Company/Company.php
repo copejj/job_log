@@ -12,10 +12,10 @@ use Jeff\Code\View\Elements\Inputs;
 use Jeff\Code\View\Elements\Select;
 use Jeff\Code\View\HeaderedContent;
 
-use Jeff\Code\Model\Address\Address;
 use Jeff\Code\Model\Company\Address\CompanyAddress;
 use Jeff\Code\Model\Entities\AddressTypes;
 use Jeff\Code\Model\Entities\States;
+use Jeff\Code\Model\Meta\Labels;
 
 class Company extends HeaderedContent
 {
@@ -27,11 +27,13 @@ class Company extends HeaderedContent
 
 	protected AddressTypes $address_types;
 	protected States $states;
+	protected Labels $labels;
 
 	public function init(): void
 	{
 		$this->address_types = new AddressTypes();
 		$this->states = new States();
+		$this->labels = new Labels();
 
 		if (!empty($this->post['company_id']))
 		{
@@ -66,6 +68,7 @@ class Company extends HeaderedContent
 					$this->company->email = $this->post['email'];
 					$this->company->website = $this->post['website'];
 					$this->company->phone = $this->post['phone'];
+					$this->company->fax = $this->post['fax'];
 					if ($this->company->save())
 					{
 						$message = "This company updated successfully";
@@ -145,20 +148,21 @@ class Company extends HeaderedContent
 				new Input("addresses[{$id}][company_id]", 'hidden', $data['addresses'][$id]['company_id'] ?? $data['company_id'] ?? 0),
 				new Input("addresses[{$id}][address_type_id]", 'hidden', $data['addresses'][$id]['address_type_id'] ?? $id),
 				new Input("addresses[{$id}][address_id]", 'hidden', $data['addresses'][$id]['address_id'] ?? ''),
-				new Input("addresses[{$id}][street]", 'text', '', $data['addresses'][$id]['street'] ?? '', 'Street'),
-				new Input("addresses[{$id}][street_ext]", 'text', '', $data['addresses'][$id]['street_ext'] ?? '', 'Street Ext'),
-				new Input("addresses[{$id}][city]", 'text', '', $data['addresses'][$id]['city'] ?? '', 'City'),
-				new Select("addresses[{$id}][state_id]", $this->states->data, 0, (int) ($data['addresses'][$id]['state_id'] ?? 0), 'State', "[ Selected a state ]"),
-				new Input("addresses[{$id}][zip]", 'text', '', $data['addresses'][$id]['zip'] ?? '', 'Zip'),
+				new Input("addresses[{$id}][street]", 'text', '', $data['addresses'][$id]['street'] ?? '', $this->labels->street),
+				new Input("addresses[{$id}][street_ext]", 'text', '', $data['addresses'][$id]['street_ext'] ?? '', $this->labels->street_ext),
+				new Input("addresses[{$id}][city]", 'text', '', $data['addresses'][$id]['city'] ?? '', $this->labels->city),
+				new Select("addresses[{$id}][state_id]", $this->states->data, 0, (int) ($data['addresses'][$id]['state_id'] ?? 0), $this->labels->state, "[ Selected a state ]"),
+				new Input("addresses[{$id}][zip]", 'text', '', $data['addresses'][$id]['zip'] ?? '', $this->labels->zip),
 			], $type, "address-type-" . strtolower($type), 'address-group', new Attributes(['class' => 'inputs-address-group']));
 		}
 		echo new Form([
 			new Inputs([ 
 				new Input('company_id', 'hidden', $data['company_id'] ?? ''),
-				new Input('name', 'text', $data['name'] ?? '', '', 'Company Name'),
-				new Input('email', 'text', $data['email'] ?? '', '', 'Email'),
-				new Input('website', 'text', $data['website'] ?? '', '', 'Website'),
-				new Input('phone', 'text', $data['phone'] ?? '', '', 'Phone'),
+				new Input('name', 'text', $data['name'] ?? '', '', $this->labels->name),
+				new Input('email', 'text', $data['email'] ?? '', '', $this->labels->email),
+				new Input('website', 'text', $data['website'] ?? '', '', $this->labels->website),
+				new Input('phone', 'text', $data['phone'] ?? '', '', $this->labels->phone),
+				new Input('fax', 'text', $data['fax'] ?? '', '', $this->labels->fax),
 				new Inputs($address_inputs, '', 'addresses', 'addresses'),
 			], 'date', 'date'),
 			new Input('save_company', 'submit', 'Submit', '', '', new Attributes(['onclick' => 'return save_form()'])),
