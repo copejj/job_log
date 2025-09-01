@@ -3,24 +3,44 @@ namespace Jeff\Code\View\Elements;
 
 use Jeff\Code\Model\Meta\Labels;
 use Jeff\Code\View\Display\Attributes;
+use Jeff\Code\View\Display\DataTableAttributes;
 use Jeff\Code\View\Display\Metadata;
 
 class Table
 {
-	protected Attributes $attrs;
 	protected Labels $labels;
 	protected Metadata $metadata;
 
+	protected Attributes $attrs;
+	protected DataTableAttributes $dt_attrs;
+
 	protected array $data;
 
-	public function __construct(Metadata $metadata, array $data, ?Attributes $attrs=null)
+	public function __construct(Metadata $metadata, array $data, ?Attributes $table_attrs=null, ?DataTableAttributes $datatable_attrs=null)
 	{
 		$this->metadata = $metadata;
 		$this->data = $data;
+
 		$this->attrs = new Attributes(['class' => 'table table-striped table-bordered']);
-		if (!empty($attrs))
+		if (!empty($table_attrs))
 		{
-			$this->attrs->merge($attrs);
+			$this->attrs->merge($table_attrs);
+		}
+
+		$this->dt_attrs = new DataTableAttributes(
+		[
+			'paging' => 'true',
+			'searching' => 'true',
+			'info' => 'true',
+			'order' => '[[1, "asc"]]',
+			'columnDefs' => "[{
+				'orderable': false,
+				'targets': 0 
+			}]"
+		]);
+		if (!empty($datatable_attrs))
+		{
+			$this->dt_attrs->merge($datatable_attrs);
 		}
 	}
 
@@ -72,17 +92,7 @@ class Table
 		?>
 			<script>
 				$(document).ready(function() {
-					$('#<?=$table_name?>').DataTable({
-						"paging": true,
-						"searching": true,
-						"info": true,
-						"order": [[1, 'asc']],
-						"columnDefs": [
-						{
-							"orderable": false,
-							"targets": 0 // Disable sorting on the first column (index 0)
-						}],
-					});
+					$('#<?=$table_name?>').DataTable({<?=$this->dt_attrs?>});
 				});
 			</script>
 			<div <?=$this->attrs?>>

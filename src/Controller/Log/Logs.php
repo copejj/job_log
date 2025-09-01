@@ -7,6 +7,7 @@ use Jeff\Code\Model\Entities\Companies;
 use Jeff\Code\Model\Entities\Weeks;
 
 use Jeff\Code\View\Display\Attributes;
+use Jeff\Code\View\Display\DataTableAttributes;
 use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Table;
 use Jeff\Code\View\Elements\Form;
@@ -72,7 +73,7 @@ class Logs extends HeaderedContent
 			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ All weeks ]', new Attributes(['onchange' => 'set_filter(this)'])),
 			new Select('company_id', $this->companies->data, (int) ($this->post['company_id'] ?? 0), 0, 'Company', '[ All companies ]', new Attributes(['onchange' => 'set_filter(this)'])),
 		], 'post', $attrs);
-		echo new Table(new LogMetadata(), $this->service->getAll());
+		echo new Table(new LogMetadata(), $this->service->getAll(), null, new DataTableAttributes(['order' => '[[3, "desc"], [1, "asc"]]']));
 	}
 }
 

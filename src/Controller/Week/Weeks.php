@@ -4,6 +4,7 @@ namespace Jeff\Code\Controller\Week;
 use Jeff\Code\Model\Week\Weeks as Service;
 
 use Jeff\Code\View\Display\Attributes;
+use Jeff\Code\View\Display\DataTableAttributes;
 use Jeff\Code\View\Display\Metadata;
 use Jeff\Code\View\Elements\Table;
 use Jeff\Code\View\Elements\Form;
@@ -33,7 +34,7 @@ class Weeks extends HeaderedContent
 			new Input('action', 'hidden', 'add'),
 			new Input('add_week', 'submit', 'New'),
 		]);
-		echo new Table(new WeekMetadata(), $this->service->getAll(), new Attributes(['class' => 'half-width']));
+		echo new Table(new WeekMetadata(), $this->service->getAll(), new Attributes([]), new DataTableAttributes(['order' => '[[2, "desc"], [3, "desc"]]']));
 	}
 }
 

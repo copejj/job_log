@@ -13,6 +13,7 @@ use Jeff\Code\View\HeaderedContent;
 
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\View\Display\DataTableAttributes;
 use Jeff\Code\View\Format\Formatter;
 
 class Companies extends HeaderedContent
@@ -35,7 +36,7 @@ class Companies extends HeaderedContent
 			new Input('action', 'hidden', 'add'),
 			new Input('add_company', 'submit', 'New'),
 		]);
-		echo new Table(new CompanyMetadata(), $this->service->getAll(), new Attributes([]));
+		echo new Table(new CompanyMetadata(), $this->service->getAll(), null, new DataTableAttributes(['order' => '[[2, "asc"]]']));
 	}
 }
 
