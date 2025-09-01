@@ -22,7 +22,7 @@ pre {
 }
 
 .header-cont, .footer-cont {
-    background-image: linear-gradient(to right, #0e17bf, #9192a7, #9192a7, #9192a7);
+    background-image: linear-gradient(to right, #0e17bf, #9192a7, #9192a7);
 	color: white;
 	padding: 1rem;
 }
@@ -36,7 +36,7 @@ pre {
 }
 
 .link.link-selected {
-    background-image: linear-gradient(to right, #70717a00, #9192a7, #9192a7, #70717a00);
+    background-image: linear-gradient(to right, #70717a00, #bbbde1, #a2a3bb, #bbbde1, #70717a00);
 }
 
 .link {
