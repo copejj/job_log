@@ -21,7 +21,9 @@ pre {
     box-sizing: border-box;
 }
 
-.header-cont, .footer-cont {
+.header-cont, 
+.footer-cont,
+div#pageContent .sub-header-cont {
     background-image: linear-gradient(to right, #0e17bf, #9192a7, #a4a4a8);
 	color: white;
 	padding: 1rem;
@@ -52,6 +54,12 @@ pre {
 .header-cont {
     height: 5vh;
     font-size: 2.5rem;
+    font-style: italic;
+}
+
+.sub-header-cont {
+    height: 4vh;
+    font-size: 2rem;
     font-style: italic;
 }
 
@@ -222,10 +230,14 @@ dialog.page-modal table td.detail-control {
     padding-top: .8rem;
 }
 button#closeModal {
-    color:white;
-    background: #0e17bf;
+    color: #2028bb87;
+    background: #6f76ff1a;
     border-radius: 5px;
-    float:right;
+    border-width: 0;
+    float: right;
+    margin: .5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 dialog.page-modal table td.detail-control {
     vertical-align: top;
@@ -259,11 +271,16 @@ dialog.page-modal table td.detail-control.error .fa-copy {
     padding-left: 1rem;
 }
 div#pageContent .content-cont {
-    height: 86vh;
+    height: 90vh;
+    margin: 0;
 }
 .table.details-table {
-    height: 82vh;
+    height: 80vh;
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
+}
+div#pageContent .sub-header-cont {
+    border-radius: 5px 0;
+    margin-bottom: .5rem;
 }

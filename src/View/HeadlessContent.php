@@ -17,7 +17,7 @@ abstract class HeadlessContent extends Content
 	protected function title(): void
 	{
 		?>
-		<h2><?=$this->getTitle()?></h2>
+		<div class='sub-header-cont'><?=$this->getTitle()?></div>
 		<?php
 	}
 
