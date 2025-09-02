@@ -3,8 +3,6 @@ namespace Jeff\Code\View;
 
 abstract class HeaderedContent extends HeadlessContent
 {
-	public abstract static function getLink(): array;
-
 	protected function header(): void
 	{
 		?>
@@ -27,23 +25,11 @@ abstract class HeaderedContent extends HeadlessContent
 
 	protected function links(): void
 	{
-		$links = $this->links;
-		if (!empty($links))
-		{
-			$refs = [];
-			$current_page = $this->get['page'] ?? '';
-			foreach ($links as $data)
-			{
-				$selected = ($current_page == ($data['page'] ?? '')) ? ' link-selected' : '';
-				$ref = (empty($data['page'])) ? '' : "?page={$data['page']}";
-				$refs[] = "<div class='link{$selected}'><a href='/{$ref}'>{$data['label']}</a></div>";
-			}
-			?>
-				<div class='links-cont'>
-					<?=implode($refs)?>
-				</div>
-			<?php
-		}
+		?>
+			<div class='links-cont'>
+				<?=$this->links?>
+			</div>
+		<?php
 	}
 
 	protected function footer(): void 

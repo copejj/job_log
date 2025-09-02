@@ -22,13 +22,13 @@ pre {
 }
 
 .header-cont, .footer-cont {
-    background-image: linear-gradient(to right, #0e17bf, #9192a7, #9192a7);
+    background-image: linear-gradient(to right, #0e17bf, #9192a7, #a4a4a8);
 	color: white;
 	padding: 1rem;
 }
 
 .links-cont {
-    background-image: linear-gradient(to right, #70717a, #9192a7, #9192a7);
+    background-image: linear-gradient(to right, #ffffff, #9192a7, #a4a4a8);
 	margin-bottom: 1rem;
     display: inline-flex;
     width: 100%;
@@ -36,7 +36,7 @@ pre {
 }
 
 .link.link-selected {
-    background-image: linear-gradient(to right, #70717a00, #bbbde1, #a2a3bb, #bbbde1, #70717a00);
+    background-image: linear-gradient(to right, #70717a00, #bbbde1, #c5c7ee, #bbbde1, #70717a00);
 }
 
 .link {
@@ -63,7 +63,7 @@ pre {
 
 .content-cont {
 	margin: 1rem;
-    height: 77vh;
+    min-height: 77vh;
     box-sizing: border-box;
 }
 
@@ -108,6 +108,11 @@ pre {
 }
 .text-input, .select-input, .date-input {
 	max-width: 20rem;
+}
+dialog.page-modal .text-input, 
+dialog.page-modal .select-input, 
+dialog.page-modal .date-input {
+    max-width: none;
 }
 .submit-input, .button-input {
     margin: .5rem .5rem .1rem 0rem;

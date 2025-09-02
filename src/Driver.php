@@ -1,15 +1,17 @@
 <?php
 namespace Jeff\Code;
 
-use Jeff\Code\View\Content;
 use Jeff\Code\Controller\Index;
 use Jeff\Code\Controller\Company\Company;
 use Jeff\Code\Controller\Company\Companies;
+use Jeff\Code\Controller\Links;
 use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
 use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
+
+use Jeff\Code\View\Content;
 
 class Driver
 {
@@ -25,7 +27,7 @@ class Driver
 
 	public function getContent(): Content
 	{
-		$page = $this->get['page'] ?? 'index';
+		$page = $this->get['page'] ?? '';
 		$action = $this->post['action'] ?? $this->get['action'] ?? '';
 		$this->content = null;
 		switch ($page)
@@ -72,20 +74,14 @@ class Driver
 						$this->content = new Companies();
 				}
 				break;
-			case 'index':
+			case '':
 			default:
 				$this->content = new Index();
-				$this->content->selected = 'Home';
 		}
 
 		$this->content->get = $this->get;
 		$this->content->post = $this->post;
-		$this->content->links = [
-			Index::getLink($this->get), // '/',
-			Logs::getLink($this->get), // '/?page=log',
-			Weeks::getLink($this->get), // '/?page=workweek',
-			Companies::getLink($this->get), // '/?page=company',
-		];
+		$this->content->links = new Links($page ?? '');
 		return $this->content;
 	}
 }

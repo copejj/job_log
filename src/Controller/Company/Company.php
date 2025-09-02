@@ -29,14 +29,6 @@ class Company extends HeaderedContent
 	protected States $states;
 	protected Labels $labels;
 
-	public static function getLink(): array 
-	{
-		return [
-			'page' => 'company',
-			'label' => 'Company',
-		];
-	}
-
 	public function init(): void
 	{
 		$this->address_types = new AddressTypes();

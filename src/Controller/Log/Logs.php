@@ -22,14 +22,6 @@ class Logs extends HeaderedContent
 	protected Service $service;
 	protected Weeks $weeks;
 
-	public static function getLink(): array 
-	{
-		return [
-			'page' => 'log',
-			'label' => 'Logs',
-		];
-	}
-
 	public function processing(): void
 	{
 		$this->weeks = new Weeks();

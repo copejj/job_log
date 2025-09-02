@@ -18,14 +18,6 @@ class Weeks extends HeaderedContent
 {
 	protected Service $service;
 
-	public static function getLink(): array 
-	{
-		return [
-			'page' => 'workweek',
-			'label' => 'Weeks',
-		];
-	}
-
 	public function processing(): void
 	{
 		$this->service = Service::init();

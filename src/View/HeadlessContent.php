@@ -13,13 +13,6 @@ abstract class HeadlessContent extends Content
 		<?php
 	}
 
-	protected function messages(): void
-	{
-		?>
-		<div class='message-cont'><?=$this->message?></div>
-		<?php
-	}
-
 	protected abstract function getTitle(): string;
 	protected function title(): void
 	{
@@ -28,6 +21,12 @@ abstract class HeadlessContent extends Content
 		<?php
 	}
 
+	protected function messages(): void
+	{
+		?>
+		<div class='message-cont'><?=$this->message?></div>
+		<?php
+	}
 
 	protected function bottom(): void
 	{
