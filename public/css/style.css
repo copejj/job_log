@@ -230,14 +230,14 @@ dialog.page-modal table td.detail-control {
     padding-top: .8rem;
 }
 button#closeModal {
-    color: #2028bb87;
-    background: #6f76ff1a;
+    color: #0c0c0c7a;
+    background-image: linear-gradient(to right, #a4a4a8, #9192a7);
     border-radius: 5px;
     border-width: 0;
     float: right;
     margin: .5rem;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 dialog.page-modal table td.detail-control {
     vertical-align: top;
