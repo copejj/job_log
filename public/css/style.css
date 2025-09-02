@@ -122,6 +122,9 @@ dialog.page-modal .date-input {
 .half-width {
 	width: 40%;
 }
+.check-input {
+    accent-color: #a9aac3d4;
+}
 .centered {
 	margin: auto;
 }
