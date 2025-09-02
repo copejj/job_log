@@ -59,7 +59,7 @@ div#pageContent .sub-header-cont {
 
 .sub-header-cont {
     height: 4vh;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-style: italic;
 }
 
@@ -283,4 +283,5 @@ div#pageContent .content-cont {
 div#pageContent .sub-header-cont {
     border-radius: 5px 0;
     margin-bottom: .5rem;
+    font-size: 1.75rem;
 }
