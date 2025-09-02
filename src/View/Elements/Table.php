@@ -33,10 +33,9 @@ class Table
 			'searching' => 'true',
 			'info' => 'true',
 			'order' => '[[1, "asc"]]',
-			'columnDefs' => "[{
-				'orderable': false,
-				'targets': 0 
-			}]"
+			'lengthMenu' => '[[10, 25, 50, -1], [10, 25, 50, "All"]]',
+			'pageLength' => '-1',
+			'columnDefs' => "[{ 'orderable': false, 'targets': 0 }]",
 		]);
 		if (!empty($datatable_attrs))
 		{

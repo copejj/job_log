@@ -258,3 +258,12 @@ dialog.page-modal table td.detail-control.error .fa-copy {
     font-style: italic;
     padding-left: 1rem;
 }
+div#pageContent .content-cont {
+    height: 86vh;
+}
+.table.details-table {
+    height: 82vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
