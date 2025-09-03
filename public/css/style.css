@@ -231,7 +231,7 @@ dialog.page-modal table td.detail-control {
 }
 button#closeModal {
     color: #0c0c0c7a;
-    background-image: linear-gradient(to right, #a4a4a8, #9192a7);
+    background-image: linear-gradient(to right, #9a9a9d, #8c8da7);
     border-radius: 5px;
     border-width: 0;
     float: right;
