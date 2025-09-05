@@ -1,0 +1,362 @@
+# PDO Connection
+
+## Installation
+
+This package is installable and autoloadable via [Composer]
+(https://getcomposer.org/) as [atlas/pdo]
+(https://packagist.org/packages/atlas/pdo).
+
+```
+composer require atlas/pdo ^2.0
+```
+
+
+## Instantiation
+
+The easiest way to create a _Connection_ is to use its static  `new()` method,
+either with _PDO_ connection arguments, or with an actual _PDO_ instance:
+
+```php
+use Atlas\Pdo\Connection;
+
+// pass PDO constructor arguments ...
+$connection = Connection::new(
+    'mysql:host=localhost;dbname=testdb',
+    'username',
+    'password'
+);
+
+// ... or a PDO instance.
+$connection = Connection::new($pdo);
+```
+
+If you need a callable factory to create a _Connection_ and its PDO instance at
+a later time, such as in a service container, you can use the
+`Connection::factory()` method:
+
+```php
+use Atlas\Pdo\Connection;
+
+// get a callable factory that creates a Connection
+$factory = Connection::factory('sqlite::memory:');
+
+// later, call the factory to instantiate the Connection
+$connection = $factory();
+```
+
+If you want to make sure certain SQL queries are run at connection time, you can
+create your own callable factory:
+
+```php
+use Atlas\Pdo\Connection;
+
+// define a callable factory that creates a Connection and executes a query
+$factory = function () {
+    $connection = Connection::new('sqlite::memory:');
+    $connection->exec('...');
+    return $connection;
+}
+
+// later, call the factory to instantiate the Connection
+$connection = $factory();
+```
+
+## Calling PDO Methods
+
+The _Connection_ acts as a proxy to the decorated PDO instance, so you can call
+any method on the _Connection_ that you would normally call on PDO.
+
+## Performing Queries
+
+Instead of issuing `prepare()`, a series of `bindValue()` calls, and then
+`execute()`, you can bind values and get back a _PDOStatement_ result in one
+call using the _Connection_ `perform()` method:
+
+```php
+$stm  = 'SELECT * FROM test WHERE foo = :foo AND bar = :bar';
+$bind = ['foo' => 'baz', 'bar' => 'dib'];
+
+$sth = $connection->perform($stm, $bind);
+```
+
+## Fetching Results
+
+The _Connection_ provides several `fetch*()` methods to help reduce boilerplate
+code; these all use `perform()` internally.
+
+### fetchAffected()
+
+The `fetchAffected()` method returns the number of affected rows.
+
+```php
+$stm = "UPDATE test SET incr = incr + 1 WHERE foo = :foo AND bar = :bar";
+$bind = ['foo' => 'baz', 'bar' => 'dib'];
+$rowCount = $connection->fetchAffected($stm, $bind);
+```
+
+### fetchAll()
+
+The `fetchAll()` method returns a sequential array of all rows; each row is an
+associative array where the keys are the column names.
+
+```php
+$stm  = 'SELECT * FROM test WHERE foo = :foo AND bar = :bar';
+$bind = ['foo' => 'baz', 'bar' => 'dib'];
+
+$result = $connection->fetchAll($stm, $bind);
+```
+
+### fetchColumn()
+
+The `fetchColumn()` method returns a sequential array of the first column from
+all rows.
+
+```php
+$result = $connection->fetchColumn($stm, $bind);
+```
+
+You can choose another column number with an optional third argument (columns
+are zero-indexed):
+
+```php
+// use column 3 (i.e. the 4th column)
+$result = $connection->fetchColumn($stm, $bind, 3);
+```
+
+### fetchGroup()
+
+The `fetchGroup()` method is like `fetchUnique()` except that the values aren't
+wrapped in arrays. Instead, single column values are returned as a single
+dimensional array and multiple columns are returned as an array of arrays.
+
+```php
+$result = $connection->fetchGroup($stm, $bind, $style = PDO::FETCH_COLUMN)
+```
+
+Set `$style` to `PDO::FETCH_NAMED` when values are an array (i.e. there are more
+than two columns in the select).
+
+### fetchKeyPair()
+
+The `fetchKeyPair()` method returns an associative array where each key is the
+first column and each value is the second column
+
+```php
+$result = $connection->fetchKeyPair($stm, $bind);
+```
+
+### fetchObject()
+
+The `fetchObject()` method returns the first row as an object of your choosing;
+the columns are mapped to object properties. An optional 4th parameter array
+provides constructor arguments when instantiating the object.
+
+```php
+$result = $connection->fetchObject($stm, $bind, 'ClassName', ['ctor_arg_1']);
+```
+
+### fetchObjects()
+
+The `fetchObjects()` method returns an array of objects of your choosing; the
+columns are mapped to object properties. An optional 4th parameter array
+provides constructor arguments when instantiating the object.
+
+```php
+$result = $connection->fetchObjects($stm, $bind, 'ClassName', ['ctor_arg_1']);
+```
+
+### fetchOne()
+
+The `fetchOne()` method returns the first row as an associative array where the
+keys are the column names.
+
+```php
+$result = $connection->fetchOne($stm, $bind);
+```
+
+### fetchUnique()
+
+The `fetchUnique()` method returns an associative array of all rows where the
+key is the value of the first column, and the row arrays are keyed on the
+remaining column names.
+
+```php
+$result = $connection->fetchUnique($stm, $bind);
+```
+
+### fetchValue()
+
+The `fetchValue()` method returns the value of the first row in the first
+column.
+
+```php
+$result = $connection->fetchValue($stm, $bind);
+```
+
+## Yielding Results
+
+The _Connection_ provides several `yield*()` methods to help reduce memory
+usage.
+
+Whereas `fetch*()` methods may collect all the query result rows before
+returning them all at once, the equivalent `yield*()` methods generate one
+result row at a time.
+
+### yieldAll()
+
+This is the yielding equivalent of `fetchAll()`.
+
+```php
+foreach ($connection->yieldAll($stm, $bind) as $row) {
+    // ...
+}
+```
+
+### yieldColumn()
+
+This is the yielding equivalent of `fetchColumn()`.
+
+```php
+
+foreach ($connection->yieldColumn($stm, $bind) as $val) {
+    // ...
+}
+```
+
+### yieldKeyPair()
+
+This is the yielding equivalent of `fetchKeyPair()`.
+
+```php
+foreach ($connection->yieldKeyPair($stm, $bind) as $key => $val) {
+    // ...
+}
+```
+
+### yieldObjects()
+
+This is the yielding equivalent of `fetchObjects()`.
+
+```php
+$class = 'ClassName';
+$args = ['arg0', 'arg1', 'arg2'];
+foreach ($connection->yieldObjects($stm, $bind, $class, $args) as $object) {
+    // ...
+}
+```
+
+### yieldUnique()
+
+This is the yielding equivalent of `fetchUnique()`.
+
+```php
+foreach ($connection->yieldUnique($stm, $bind) as $key => $row) {
+    // ...
+}
+```
+
+## Explicit Bind Value Types
+
+When binding values on a `perform()`-based query (which includes all `fetch*()`
+and `yield*()` queries), the _Connection_ will use `PDO::PARAM_STR` as the value
+type by default.
+
+If you want to override the default type, pass the value as an array where
+the first element is the value and the second element is the PDO param type.
+For example:
+
+```php
+// PDO::PARAM_STR by default
+$bind['foo'] = 1;
+
+// force to PDO::PARAM_INT
+$bind['foo'] = [1, PDO::PARAM_INT]
+```
+
+> **Note:**
+>
+> If you pass a boolean value and force the type to `PDO::PARAM_BOOL`, the
+> _Connection_ will store the value as a string '0' for `false` or string '1'
+> for `true`. This addresses issues with a long-standing behavior in PDO.
+
+
+## Query Logging
+
+It is sometimes useful to see a log of all queries passing through a
+_Connection_. To do so, call its `logQueries()` method, issue your queries, and
+then call `getQueries()`.
+
+```php
+// start logging
+$connection->logQueries(true);
+
+// at this point, all query(), exec(), perform(), fetch*(), and yield*()
+// queries will be logged.
+
+// get the query log entries
+$queries = $connection->getQueries();
+
+// stop logging
+$connection->logQueries(false);
+```
+
+Each query log entry will be an array with these keys:
+
+- `start`: when the query started
+- `finish`: when the query finished
+- `duration`: how long the query took
+- `performed`: whether or not the query was actually perfomed; useful
+  for seeing if a `COMMIT` actually occurred
+- `statement`: the query statement string
+- `values`: the array of bound values
+- `trace`: an exception trace showing where the query was issued
+
+### Logged Statements
+
+When queries are not being logged, `Connection::prepare()` will return a normal
+_PDOStatement_. However, when queries *are* being logged, `Connection::prepare()`
+will return an _Atlas\Pdo\LoggedStatement_ instance instead.
+
+The _LoggedStatement_ is an extension of _PDOStatement_, so it works the same
+way, but it has the added behavior of recording to the log when its `execute()`
+method is called.
+
+### Custom Loggers
+
+You may wish to set a custom logger on the _Connection_. To do so, call
+`setQueryLogger()` and pass a callable with the signature
+`function (array $entry) : void`.
+
+```php
+class CustomDebugger
+{
+    public function __invoke(array $entry) : void
+    {
+        // call an injected logger to record the entry
+    }
+}
+
+$customDebugger = new CustomDebugger();
+$connection->setQueryLogger($customDebugger);
+$connection->logQueries(true);
+
+// now the Connection will send query log entries to the CustomDebugger
+```
+
+> **Note:**
+>
+> If you set a custom logger, the _Connection_ will no longer retain its own
+> query log entries; they will all go to the custom logger. This means that
+> `getQueries()` on the _Connection_ not show any new entries.
+
+## Persistent Connections
+
+**Unlogged** persistent _Connection_ instances are fully supported, via the
+[`PDO::ATTR_PERSISTENT`](https://www.php.net/manual/en/pdo.connections.php)
+option at construction time.
+
+**Logged** persistent _Connection_ instances are *almost* fully supported. The
+only exception to full support is that, on calling `Connection::prepare()`, the
+returned statement instance (_PersistentLoggedStatement_) does not honor the
+`PDOStatement::bindColumn()` method. All other methods and behaviors are fully
+supported.

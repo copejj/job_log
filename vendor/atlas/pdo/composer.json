@@ -1,0 +1,41 @@
+{
+    "name": "atlas/pdo",
+    "type": "library",
+    "description": "Provides a PDO instance decorator with convenience methods, and a connection manager.",
+    "keywords": [
+        "pdo",
+        "sql",
+        "database",
+        "connection"
+    ],
+    "homepage": "https://github.com/atlasphp/Atlas.Pdo",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Atlas.Pdo Contributors",
+            "homepage": "https://github.com/atlasphp/Atlas.Pdo/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Atlas\\Pdo\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pds/skeleton": "^1.0",
+        "phpunit/phpunit": "^9.0",
+        "phpstan/phpstan": "^0.12.82"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Atlas\\Pdo\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit",
+        "stan": "./vendor/bin/phpstan analyze -c phpstan.neon src"
+    }
+}
