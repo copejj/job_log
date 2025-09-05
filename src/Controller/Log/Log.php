@@ -5,6 +5,7 @@ use Exception;
 use Jeff\Code\Model\Log\Log as Service;
 use Jeff\Code\Model\Log\Action\LogAction;
 use Jeff\Code\Model\Log\Method\LogMethod;
+use Jeff\Code\Model\Log\Status\LogStatus;
 
 use Jeff\Code\View\Display\Attributes;
 
@@ -20,6 +21,7 @@ use Jeff\Code\Model\Entities\Actions;
 use Jeff\Code\Model\Entities\Methods;
 use Jeff\Code\Model\Entities\Weeks;
 use Jeff\Code\Model\Entities\Companies;
+use Jeff\Code\Model\Entities\Status;
 use Jeff\Code\Model\Meta\Labels;
 use Jeff\Code\View\HeaderedContent;
 
@@ -35,6 +37,7 @@ class Log extends HeaderedContent
 
 	protected Actions $actions;
 	protected Methods $methods;
+	protected Status $status;
 	protected Weeks $weeks;
 	protected Companies $companies;
 	protected Labels $labels;
@@ -43,6 +46,7 @@ class Log extends HeaderedContent
 	{
 		$this->actions = new Actions();
 		$this->methods = new Methods();
+		$this->status = new Status();
 		$this->weeks = new Weeks();
 		$this->companies = new Companies();
 		$this->labels = new Labels();
@@ -112,7 +116,13 @@ class Log extends HeaderedContent
 					{
 						$this->acted = true;
 					}
+
 					if ($this->saveMethods($job_log_id, $this->post['methods'] ?? []))
+					{
+						$this->acted = true;
+					}
+
+					if ($this->saveStatus($job_log_id, $this->post['status_id'] ?? 0))
 					{
 						$this->acted = true;
 					}
@@ -162,6 +172,15 @@ class Log extends HeaderedContent
 		return true;
 	}
 
+	protected function saveStatus(int $job_log_id, int $status_id): bool
+	{
+		if (!empty($status_id))
+		{
+			LogStatus::create([Service::getKey() => $job_log_id, 'status_id' => $status_id]);
+		}
+		return false;
+	}
+
 	public function getTitle(): string
 	{
 		return "{$this->title} Log";
@@ -209,6 +228,7 @@ class Log extends HeaderedContent
 				new Input('job_number', 'text', $data['job_number'] ?? '', '', $this->labels->job_number),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), $this->labels->actions, 'actions', null, new Attributes(['id' => 'actions_group'])),
 				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), $this->labels->methods, 'methods', null, new Attributes(['id' => 'methods_group'])),
+				new Select('status_id', $this->status->data, (int) ($data['status_id'] ?? 0), $this->status->default, $this->labels->status_id),
 				new Input('contact', 'text', $data['contact'] ?? '', '', $this->labels->contact),
 				new Input('contact_number', 'text', $data['contact_number'] ?? '', '', $this->labels->contact_number),
 				new Input('confirmation', 'text', $data['confirmation'] ?? '', '', $this->labels->confirmation),

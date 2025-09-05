@@ -158,6 +158,12 @@ class Log extends Record
 					, jsonb_agg(to_jsonb(data.*) - 'job_log_id') as methods_json
 				from data
 				group by job_log_id
+			), statuses as (
+				select distinct on (job_log_id) job_log_id, status_id, status, status_date
+				from job_logs
+					join job_log_statuses using (job_log_id)
+					join statuses using (status_id)
+				order by job_log_id, job_log_statuses.status_date desc
 			), address as (
 				select distinct on (company_id) company_id
 					, street
@@ -180,9 +186,11 @@ class Log extends Record
 				, city
 				, state
 				, zip
+				, status, status_id, status_date
 			from job_logs
 				left join actions using (job_log_id)
 				left join methods using (job_log_id) 
+				left join statuses using (job_log_id)
 				left join address using (company_id)";
 		return $sql;
 	}

@@ -90,6 +90,7 @@ class LogMetadata extends Metadata
 			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ],
 			'name' => [ ],
 			'title' => [ ],
+			'status' => [ ],
 			'job_number' => [ ],
 		];
 	}
