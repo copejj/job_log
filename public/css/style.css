@@ -1,0 +1,287 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: "Roboto", Arial, sans-serif; /* Roboto as primary, Arial as fallback, then any generic sans-serif */
+}
+
+h1 {
+  font-family: "Playfair Display", Georgia, serif; /* Playfair Display for headings, then Georgia, then any generic serif */
+}
+
+pre {
+  font-family: "Fira Code", "Courier New", monospace; /* Fira Code for code blocks, then Courier New, then any generic monospace */
+}
+
+.full-page-content {
+    background-color: #f0f0f0;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.header-cont, 
+.footer-cont,
+div#pageContent .sub-header-cont {
+    background-image: linear-gradient(to right, #0e17bf, #9192a7, #a4a4a8);
+	color: white;
+	padding: 1rem;
+}
+
+.links-cont {
+    background-image: linear-gradient(to right, #ffffff, #9192a7, #a4a4a8);
+	margin-bottom: 1rem;
+    display: inline-flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.link.link-selected {
+    background-image: linear-gradient(to right, #70717a00, #bbbde1, #c5c7ee, #bbbde1, #70717a00);
+}
+
+.link {
+    padding: 0.5rem;
+    width: 5rem;
+    text-align: center;
+}
+
+.link a {
+    text-decoration: none;
+}
+
+.header-cont {
+    height: 5vh;
+    font-size: 2.5rem;
+    font-style: italic;
+}
+
+.sub-header-cont {
+    height: 4vh;
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.footer-cont {
+	margin-top: 1rem;
+	font-size: .75rem;
+	font-style: italic;
+}
+
+.content-cont {
+    margin: 1rem;
+    min-height: 77.4vh;
+    box-sizing: border-box;
+}
+
+.select-input {
+    min-width: 20rem;
+    height: 2rem;
+	margin-right: 1rem;
+}
+
+.check-span {
+    width: 33%;
+    display: inline-table;
+}
+
+.input-label {
+	font-size: 1.1rem;
+	font-weight: bold;
+}
+
+.input-cont {
+	margin-bottom: 1rem;
+}
+
+.table-cont {
+	padding: 1rem;
+}
+
+.input-cont {
+    display: grid;
+	width: 90%;
+}
+.input-cont label {
+    margin: .6rem 0rem .15rem 0rem;
+}
+.input-cont input {
+    min-height: 1.5rem;
+}
+.input {
+    margin: .5rem .5rem .1rem 0rem;
+    min-width: 4rem;
+    height: 1.5rem;
+}
+.text-input, .select-input, .date-input {
+	max-width: 20rem;
+}
+dialog.page-modal .text-input, 
+dialog.page-modal .select-input, 
+dialog.page-modal .date-input {
+    max-width: none;
+}
+.submit-input, .button-input {
+    margin: .5rem .5rem .1rem 0rem;
+    min-width: 4rem;
+    height: 1.5rem;
+}
+.half-width {
+	width: 40%;
+}
+.check-input {
+    accent-color: #a9aac3d4;
+}
+.centered {
+	margin: auto;
+}
+.input-cont.address-group-input-cont.inputs-address-group {
+    padding-left: 2rem;
+} 
+.text-area-input {
+    width: 50%;
+	height: auto;
+}
+.table-details .text-area-input {
+    width: 100%;
+}
+form.inline-form {
+    display: inline-block;
+}
+div#logs_group {
+    width: 90%;
+}
+div#actions_group, div#methods_group {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    gap: 0rem 1rem;
+}
+div.check-div {
+	display: grid;
+	grid-template-columns: auto 1fr;
+}
+div#actions_group div.check-div {
+    width: 22%;
+}
+div#methods_group div.check-div {
+    width: 10%;
+}
+div.table table.dataTable th.dt-type-numeric,
+div.table table.dataTable th.dt-type-date,
+div.table table.dataTable td.dt-type-numeric,
+div.table table.dataTable td.dt-type-date {
+	text-align: left;
+}
+div.table table.dataTable th.dt-type-numeric div.dt-column-header,
+div.table table.dataTable th.dt-type-numeric div.dt-column-footer,
+div.table table.dataTable th.dt-type-date div.dt-column-header,
+div.table table.dataTable th.dt-type-date div.dt-column-footer,
+div.table table.dataTable td.dt-type-numeric div.dt-column-header,
+div.table table.dataTable td.dt-type-numeric div.dt-column-footer,
+div.table table.dataTable td.dt-type-date div.dt-column-header,
+div.table table.dataTable td.dt-type-date div.dt-column-footer {
+	flex-direction: row;
+}
+div.table table.dataTable th.dt-type-numeric,
+div.table table.dataTable th.dt-type-date,
+div.table table.dataTable td.dt-type-numeric,
+div.table table.dataTable td.dt-type-date {
+	text-align: left;
+}
+td.fit-width {
+    width: 1%;
+    white-space: nowrap;
+}
+/* Styling for the backdrop */
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+}
+
+/* Styling for the modal content */
+dialog {
+    border: none;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Center the modal */
+    margin: auto;
+}
+dialog.page-modal table {
+    width: 100%;
+}
+dialog.page-modal table th {
+    width: 25%;
+    padding: .25rem 1rem 0 0;
+    text-align: right;
+}
+dialog.page-modal table td.detail-data {
+    width: 65%;
+}
+dialog.page-modal table td.detail-data input,
+dialog.page-modal table td.detail-data textarea {
+    width: 95%;
+}
+dialog.page-modal table td.detail-control {
+    vertical-align: top;
+    padding-top: .8rem;
+}
+button#closeModal {
+    color: #0c0c0c7a;
+    background-image: linear-gradient(to right, #9a9a9d, #8c8da7);
+    border-radius: 5px;
+    border-width: 0;
+    float: right;
+    margin: .5rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+dialog.page-modal table td.detail-control {
+    vertical-align: top;
+    padding-top: .65rem;
+}
+dialog.page-modal table td.detail-control .fa-copy {
+    font-size: 1.3rem;
+    color: #0a0a61;
+    cursor: pointer; /* Indicates it's clickable */
+    padding: .2rem;
+    border-radius: 4px;
+}
+dialog.page-modal table td.detail-control.copied .fa-copy {
+    color: white;
+    background-color: #072e1a;
+}
+dialog.page-modal table td.detail-control.error .fa-copy {
+    color: white;
+    background-color: #4b0a0a;
+}
+.details-header-name {
+    margin: 1rem 0rem .25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #0e17bf;
+}
+.details-header-title {
+    font-size: 1.15rem;
+    color: #1e26c8;
+    font-style: italic;
+    padding-left: 1rem;
+}
+div#pageContent .content-cont {
+    height: 90vh;
+    margin: 0;
+}
+.table.details-table {
+    height: 80vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+div#pageContent .sub-header-cont {
+    border-radius: 5px 0;
+    margin-bottom: .5rem;
+    font-size: 1.75rem;
+}

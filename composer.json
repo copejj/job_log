@@ -1,5 +1,9 @@
 {
+    "autoload": {
+        "psr-4": { "Jeff\\Code\\": "src/" }
+    },
     "require": {
-        "laravel/installer": "^5.17"
+        "laravel/installer": "^5.17",
+        "atlas/pdo": "^2"
     }
 }
