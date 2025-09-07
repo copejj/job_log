@@ -169,7 +169,7 @@ class Log extends Record
 					, street
 					, street_ext
 					, city
-					, abbr as state
+					, states.name as state
 					, zip
 				from job_logs
 					join company_addresses using (company_id)

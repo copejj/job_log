@@ -5,7 +5,6 @@ html, body {
 
 body {
     font-family: "Roboto", Arial, sans-serif; /* Roboto as primary, Arial as fallback, then any generic sans-serif */
-    border-right: 2rem double #868aff;
 }
 
 h1 {
@@ -18,8 +17,9 @@ pre {
 
 .full-page-content {
     background-color: #f0f0f0;
-    height: 100vh;
-    box-sizing: border-box;
+    height: 100%;
+    box-sizing: content-box;
+    border-right: 2rem double #0e17bf;
 }
 
 .header-cont, 
@@ -56,7 +56,7 @@ div#pageContent .sub-header-cont {
     height: 5vh;
     font-size: 2.5rem;
     font-style: italic;
-    border-bottom: .5rem solid #868aff;
+    border-bottom: .5rem solid #0e17bf;
 }
 
 .sub-header-cont {
