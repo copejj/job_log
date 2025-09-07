@@ -4,15 +4,16 @@ html, body {
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif; /* Roboto as primary, Arial as fallback, then any generic sans-serif */
+    font-family: "Roboto", Arial, sans-serif; /* Roboto as primary, Arial as fallback, then any generic sans-serif */
+    border-right: 2rem double #868aff;
 }
 
 h1 {
-  font-family: "Playfair Display", Georgia, serif; /* Playfair Display for headings, then Georgia, then any generic serif */
+    font-family: "Playfair Display", Georgia, serif; /* Playfair Display for headings, then Georgia, then any generic serif */
 }
 
 pre {
-  font-family: "Fira Code", "Courier New", monospace; /* Fira Code for code blocks, then Courier New, then any generic monospace */
+    font-family: "Fira Code", "Courier New", monospace; /* Fira Code for code blocks, then Courier New, then any generic monospace */
 }
 
 .full-page-content {
@@ -55,6 +56,7 @@ div#pageContent .sub-header-cont {
     height: 5vh;
     font-size: 2.5rem;
     font-style: italic;
+    border-bottom: .5rem solid #868aff;
 }
 
 .sub-header-cont {
@@ -71,7 +73,7 @@ div#pageContent .sub-header-cont {
 
 .content-cont {
     margin: 1rem;
-    min-height: 77.4vh;
+    min-height: 76.6vh;
     box-sizing: border-box;
 }
 

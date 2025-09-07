@@ -44,6 +44,7 @@ class Logs extends HeaderedContent
 					$args = $this->post;
 			}
 		}
+
 		$this->service = Service::init($args);
 	}
 
