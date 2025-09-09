@@ -19,7 +19,8 @@ pre {
     background-color: #f0f0f0;
     height: 100%;
     box-sizing: content-box;
-    border-right: 2rem double #0e17bf;
+    border-right: .5rem solid transparent;
+    border-image: linear-gradient(to bottom, #00067d, #f0f0f0, #f0f0f0, #00067d) 1;
 }
 
 .header-cont, 
@@ -56,7 +57,8 @@ div#pageContent .sub-header-cont {
     height: 5vh;
     font-size: 2.5rem;
     font-style: italic;
-    border-bottom: .5rem solid #0e17bf;
+    border-bottom: .5rem solid transparent;
+    border-image: linear-gradient(to right, #0f18be, #42469c) 1;
 }
 
 .sub-header-cont {
@@ -69,11 +71,13 @@ div#pageContent .sub-header-cont {
 	margin-top: 1rem;
 	font-size: .75rem;
 	font-style: italic;
+    border-top: .5rem solid transparent;
+    border-image: linear-gradient(to right, #0e17be, #282d90) 1;
 }
 
 .content-cont {
     margin: 1rem;
-    min-height: 76.6vh;
+    min-height: 75.7vh;
     box-sizing: border-box;
 }
 
@@ -116,7 +120,7 @@ div#pageContent .sub-header-cont {
     min-width: 4rem;
     height: 1.5rem;
 }
-.text-input, .select-input, .date-input {
+.text-input, .select-input, .date-input, .password-input {
 	max-width: 20rem;
 }
 dialog.page-modal .text-input, 

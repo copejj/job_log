@@ -15,14 +15,24 @@ class Links implements Printable
 
 	public function __construct(string $page='')
 	{
-		$this->links = [
-			new Home(),
-			new Logs(),
-			new Weeks(),
-			new Companies(),
-			new Users(),
-			(empty($_SESSION['user_id']) ? new Login() : new Logout()),
-		];
+		if (empty($_SESSION['user_id']))
+		{
+			$this->links = [
+				new Home(),
+				new Login(),
+			];
+		}
+		else
+		{
+			$this->links = [
+				new Home(),
+				new Logs(),
+				new Weeks(),
+				new Companies(),
+				new Users(),
+				new Logout(),
+			];
+		}
 		$this->page = $page;
 	}
 
@@ -78,8 +88,8 @@ class Weeks extends Link
 class Users extends Link
 {
 	protected array $data = [
-		'page' => 'users',
-		'label' => 'Users',
+		'page' => 'user',
+		'label' => 'User',
 	];
 }
 

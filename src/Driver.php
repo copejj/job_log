@@ -9,6 +9,9 @@ use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
 use Jeff\Code\Controller\UnderDevelopment;
+use Jeff\Code\Controller\Users\User;
+use Jeff\Code\Controller\Users\Login;
+use Jeff\Code\Controller\Users\Logout;
 use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
 
@@ -88,10 +91,13 @@ class Driver
 				}
 				break;
 			case 'login':
-				$this->content = new UnderDevelopment();
+				$this->content = new Login();
 				break;
-			case 'users':
-				$this->content = new UnderDevelopment();
+			case 'logout':
+				$this->content = new Logout();
+				break;
+			case 'user':
+				$this->content = new User();
 				break;
 			case '':
 			default:
