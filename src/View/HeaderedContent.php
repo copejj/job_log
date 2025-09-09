@@ -12,7 +12,7 @@ abstract class HeaderedContent extends HeadlessContent
 				<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 				<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 				<link rel="stylesheet" href="css/style.css">
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+				<link rel="stylesheet" href="css/font-awesome.min.css">
 				<link href="css/datatables/datatables.min.css" rel="stylesheet" integrity="sha384-R2Fgx8DD9wAkVgw6wT8uF062Yb82xSJ9SoEeo6yG3TnkFB1xM/YFXwjBYo0kQ0ct" crossorigin="anonymous">
 				<script src="js/datatables/datatables.min.js" integrity="sha384-UeCeWNYLaY2mvxN9AsU1R1+aV0hde/ksgd68wqgf87HJF8ge3gGnhUPPh0hHFooK" crossorigin="anonymous"></script>
 				<title>Jeff's Work Log Page</title>

@@ -20,6 +20,8 @@ class Links implements Printable
 			new Logs(),
 			new Weeks(),
 			new Companies(),
+			new Users(),
+			(empty($_SESSION['user_id']) ? new Login() : new Logout()),
 		];
 		$this->page = $page;
 	}
@@ -73,3 +75,26 @@ class Weeks extends Link
 	];
 }
 
+class Users extends Link
+{
+	protected array $data = [
+		'page' => 'users',
+		'label' => 'Users',
+	];
+}
+
+class Login extends Link
+{
+	protected array $data = [
+		'page' => 'login',
+		'label' => 'Login',
+	];
+}
+
+class Logout extends Link
+{
+	protected array $data = [
+		'page' => 'login',
+		'label' => 'Logout',
+	];
+}

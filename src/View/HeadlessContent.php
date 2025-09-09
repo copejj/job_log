@@ -38,6 +38,7 @@ abstract class HeadlessContent extends Content
 			D::p('GET', $this->get);
 			D::p('POST', $this->post);
 			D::p('SERVER', $_SERVER);
+			D::p('SESSION', $_SESSION);
 		}
 	}
 }

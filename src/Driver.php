@@ -8,6 +8,7 @@ use Jeff\Code\Controller\Links;
 use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
+use Jeff\Code\Controller\UnderDevelopment;
 use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
 
@@ -27,7 +28,19 @@ class Driver
 
 	public function getContent(): Content
 	{
-		$page = $this->get['page'] ?? '';
+		$page = '';
+		if (!empty($this->get['page']))
+		{
+			if (empty($_SESSION['user_id']))
+			{
+				$page = 'login';
+			}
+			else
+			{
+				$page = $this->get['page'];
+			}
+		}
+
 		$action = $this->post['action'] ?? $this->get['action'] ?? '';
 		$this->content = null;
 		switch ($page)
@@ -73,6 +86,12 @@ class Driver
 					default:
 						$this->content = new Companies();
 				}
+				break;
+			case 'login':
+				$this->content = new UnderDevelopment();
+				break;
+			case 'users':
+				$this->content = new UnderDevelopment();
 				break;
 			case '':
 			default:
