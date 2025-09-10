@@ -28,6 +28,13 @@ abstract class HeadlessContent extends Content
 		<?php
 	}
 
+	protected function content(): void
+	{
+		?>
+		<p>This page is under construction, please be patient.<i class="fa-solid fa-person-digging"></i></p>
+		<?php
+	}
+
 	protected function bottom(): void
 	{
 		?>
