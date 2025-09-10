@@ -2,7 +2,6 @@
 namespace Jeff\Code\Model\Users;
 
 use Jeff\Code\Model\Record;
-use Jeff\Code\Util\D;
 
 class User extends Record
 {
@@ -57,13 +56,11 @@ class User extends Record
 
 	protected static function getKey(): string
 	{
-		D::p(__FUNCTION__, func_get_args());
 		return 'user_id';
 	}
 
 	protected static function validate(array $data): bool
 	{
-		D::p(__FUNCTION__, $data);
 		switch (true)
 		{
 			case empty($data['username']):
@@ -82,7 +79,6 @@ class User extends Record
 
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
-		D::p(__FUNCTION__, func_get_args());
 		$bind[] = $args['username'];
 		return 
 			"SELECT *

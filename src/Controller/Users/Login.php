@@ -99,6 +99,9 @@ class Login extends HeaderedContent
 			echo new Form([
 				new Inputs([ 
 					new Input('new_user', 'hidden', 'new_user'),
+					new Input('first_name', 'text', $data['first_name'] ?? '', '', $this->labels->first_name),
+					new Input('last_name', 'text', $data['last_name'] ?? '', '', $this->labels->last_name),
+					new Input('email', 'text', $data['email'] ?? '', '', $this->labels->user_email),
 					new Input('username', 'text', $data['username'] ?? '', '', $this->labels->username),
 					new Input('password', 'password', $data['password'] ?? '', '', $this->labels->password),
 					new Input('confirm_password', 'password', $data['confirm_password'] ?? '', '', $this->labels->confirm_password),
