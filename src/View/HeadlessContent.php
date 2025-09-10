@@ -35,7 +35,8 @@ abstract class HeadlessContent extends Content
 	protected function content(): void
 	{
 		?>
-		<p>This page is under construction, please be patient.<i class="fa-solid fa-person-digging"></i></p>
+		<p>This page is under construction, please be patient.</p>
+		<div> <i class="fa-solid fa-person-digging under-contruction"></i> </div>
 		<?php
 	}
 

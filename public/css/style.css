@@ -40,7 +40,10 @@ div#pageContent .sub-header-cont {
 }
 
 .link.link-selected {
-    background-image: linear-gradient(to right, #70717a00, #bbbde1, #c5c7ee, #bbbde1, #70717a00);
+    background-image: linear-gradient(to right, #2d5375, #31517d, #2d5375);
+    color: white;
+    border: 2px solid #305576;
+    border-radius: 0 0 5px 5px;
 }
 
 .link {
@@ -48,9 +51,12 @@ div#pageContent .sub-header-cont {
     width: 5rem;
     text-align: center;
 }
-
 .link a {
     text-decoration: none;
+    color: #32517e;
+}
+.link.link-selected a {
+    color: white;
 }
 
 .header-cont {
@@ -297,4 +303,11 @@ div#pageContent .sub-header-cont {
     border-radius: 2px;
     padding: .5rem 1rem;
     margin-bottom: 1rem;
+}
+.under-contruction {
+    margin: 2rem;
+    font-size: 10rem;
+    color: transparent;
+    background-image: linear-gradient(to right, #2d5375, #a35900);
+    background-clip: text;
 }
