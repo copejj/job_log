@@ -95,4 +95,14 @@ class User extends Record
 	{
 		return new User($data);
 	}
+
+	public function toArray(): array
+	{
+		$user_data = [];
+		foreach (['user_id', 'first_name', 'last_name', 'email'] as $key)
+		{
+			$user_data[$key] = $this->data[$key];
+		}
+		return $user_data;
+	} 
 }

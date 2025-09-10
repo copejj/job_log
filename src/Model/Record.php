@@ -118,6 +118,11 @@ abstract class Record
 		}
 	}
 
+	public function toArray(): array
+	{
+		return [];
+	}
+
 	public function __toString()
 	{
 		return print_r($this->data, true);

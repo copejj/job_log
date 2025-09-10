@@ -12,6 +12,7 @@ abstract class Content
 		'links' => null,
 		'selected' => null,
 		'update_data' => false,
+		'has_redirect' => null,
 	];
 
 	protected function init(): void { }

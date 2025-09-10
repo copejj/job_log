@@ -33,32 +33,22 @@ class Login extends HeaderedContent
 			if (empty($post['create_user']))
 			{
 				// login existing user
-				D::p('POOST', $post);
 				$user = User::get($post);
-				D::p('login user', $user);
-				if (empty($user))
+				if (empty($user) || !password_verify($post['password'], $user->password_hash))
 				{
-					$message = "Login failed".__LINE__;
+					$message = "Login failed";
 				}
 				else
 				{
-					D::p('password', [$post['password'], $user->password_hash, password_verify($post['password'], $user->password_hash)]);
-					if (password_verify($post['password'], $user->password_hash))
-					{
-						$message = 'Login successful';
-						$this->user = $user;
-						$_SESSION['user_id'] = $this->user->user_id;
-					}
-					else
-					{
-						$message = 'Login Failed'.__LINE__;
-					}
+					$message = 'Login successful';
+					$this->user = $user;
+					$this->acted = true;
+					$this->has_redirect = '/?page=log';
+					$_SESSION = $this->user->toArray();
 				}
-				D::p('message: ' . $message);
 			}
 			else
 			{
-				D::p('create user', $post);
 				if (empty($post['new_user']))
 				{
 					//edit an existing user
@@ -66,12 +56,14 @@ class Login extends HeaderedContent
 				else
 				{
 					//create a new user
-					$this->user = User::create($post);
-					if (!empty($this->user->user_id))
+					$user = User::create($post);
+					if (!empty($user->user_id))
 					{
 						$message = "User created successfully";
+						$this->user = $user;
 						$this->acted = true;
-						$_SESSION['user_id'] = $this->user->user_id;
+						$this->has_redirect = '/?page=log';
+						$_SESSION = $this->user->toArray();
 					}
 				}
 			}

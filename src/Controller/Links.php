@@ -26,7 +26,6 @@ class Links implements Printable
 		else
 		{
 			$links = [
-				new Home(),
 				new Logs(),
 				new Weeks(),
 				new Companies(),
