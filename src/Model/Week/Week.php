@@ -96,6 +96,7 @@ class Week extends Record
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
 		$conds = [];
+		$bind[] = $_SESSION['user_id'] ?? 0;
 		$arguably = [static::getKey()];
 		foreach ($arguably as $arg)
 		{
@@ -130,6 +131,7 @@ class Week extends Record
 				select count(job_log_id) job_count, week_id
 				from job_logs
 					join target using (week_id)
+				where user_id = ?
 				group by week_id 
 			)
 			select week_id as id, weeks.*, coalesce(job_count, 0) as job_count

@@ -30,10 +30,6 @@ class Weeks extends HeaderedContent
 
 	public function content(): void
 	{
-		echo new Form([
-			new Input('action', 'hidden', 'add'),
-			new Input('add_week', 'submit', 'New'),
-		]);
 		echo new Table(new WeekMetadata(), $this->service->getAll(), new Attributes([]), new DataTableAttributes(['order' => '[[2, "desc"], [3, "desc"]]']));
 	}
 }

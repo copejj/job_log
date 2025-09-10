@@ -75,6 +75,7 @@ class Company extends Record
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
 		$conds = [];
+		$bind[] = $_SESSION['user_id'];
 		$arguably = [ static::getKey() ];
 		foreach ($arguably as $arg)
 		{
@@ -108,6 +109,7 @@ class Company extends Record
 				select count(job_log_id) job_count, company_id
 				from job_logs
 					join target using (company_id)
+				where user_id = ?
 				group by company_id 
 			)
 			select company_id
