@@ -75,7 +75,6 @@ class Company extends Record
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
 		$conds = [];
-		$bind[] = $_SESSION['user_id'];
 		$arguably = [ static::getKey() ];
 		foreach ($arguably as $arg)
 		{
@@ -85,6 +84,8 @@ class Company extends Record
 				$bind[] = $args[$arg];
 			}
 		}
+
+		$bind[] = $_SESSION['user_id'];
 
 		$sql_cond = '';
 		if (!empty($conds))
