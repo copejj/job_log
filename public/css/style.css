@@ -2,19 +2,15 @@ html, body {
     margin: 0;
     padding: 0;
 }
-
 body {
-    font-family: "Roboto", Arial, sans-serif; /* Roboto as primary, Arial as fallback, then any generic sans-serif */
+    font-family: "Roboto", Arial, sans-serif; 
 }
-
 h1 {
-    font-family: "Playfair Display", Georgia, serif; /* Playfair Display for headings, then Georgia, then any generic serif */
+    font-family: "Playfair Display", Georgia, serif;
 }
-
 pre {
-    font-family: "Fira Code", "Courier New", monospace; /* Fira Code for code blocks, then Courier New, then any generic monospace */
+    font-family: "Fira Code", "Courier New", monospace;
 }
-
 .full-page-content {
     background-color: #f0f0f0;
     height: 100%;
@@ -22,7 +18,6 @@ pre {
     border-right: .5rem solid transparent;
     border-image: linear-gradient(to bottom, #00067d, #f0f0f0, #f0f0f0, #00067d) 1;
 }
-
 .header-cont, 
 .footer-cont,
 div#pageContent .sub-header-cont {
@@ -30,7 +25,6 @@ div#pageContent .sub-header-cont {
 	color: white;
 	padding: 1rem;
 }
-
 .links-cont {
     background-image: linear-gradient(to right, #ffffff, #9192a7, #a4a4a8);
 	margin-bottom: 1rem;
@@ -38,14 +32,12 @@ div#pageContent .sub-header-cont {
     width: 100%;
     box-sizing: border-box;
 }
-
 .link.link-selected {
     background-image: linear-gradient(to right, #2d5375, #31517d, #2d5375);
     color: white;
     border: 2px solid #305576;
     border-radius: 0 0 5px 5px;
 }
-
 .link {
     padding: 0.5rem;
     width: 5rem;
@@ -58,7 +50,6 @@ div#pageContent .sub-header-cont {
 .link.link-selected a {
     color: white;
 }
-
 .header-cont {
     height: 5vh;
     font-size: 2.5rem;
@@ -66,13 +57,11 @@ div#pageContent .sub-header-cont {
     border-bottom: .5rem solid transparent;
     border-image: linear-gradient(to right, #2d5375, #42469c) 1;
 }
-
 .sub-header-cont {
     height: 4vh;
     font-size: 1.5rem;
     font-style: italic;
 }
-
 .footer-cont {
 	margin-top: 1rem;
 	font-size: .75rem;
@@ -80,37 +69,30 @@ div#pageContent .sub-header-cont {
     border-top: .5rem solid transparent;
     border-image: linear-gradient(to right, #2d5375, #282d90) 1;
 }
-
 .content-cont {
     margin: 1rem;
     min-height: 75.7vh;
     box-sizing: border-box;
 }
-
 .select-input {
     min-width: 20rem;
     height: 2rem;
 	margin-right: 1rem;
 }
-
 .check-span {
     width: 33%;
     display: inline-table;
 }
-
 .input-label {
 	font-size: 1.1rem;
 	font-weight: bold;
 }
-
 .input-cont {
 	margin-bottom: 1rem;
 }
-
 .table-cont {
 	padding: 1rem;
 }
-
 .input-cont {
     display: grid;
 	width: 90%;
@@ -208,18 +190,14 @@ td.fit-width {
     width: 1%;
     white-space: nowrap;
 }
-/* Styling for the backdrop */
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
 }
-
-/* Styling for the modal content */
 dialog {
     border: none;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Center the modal */
     margin: auto;
 }
 dialog.page-modal table {
