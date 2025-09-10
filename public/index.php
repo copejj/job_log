@@ -4,6 +4,8 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 use Jeff\Code\Driver;
 use Jeff\Code\Util\Config;
 
+session_start();
+
 if (Config::get('ENVIRONMENT') !== 'prod')
 {
 	ini_set('display_errors', 1);

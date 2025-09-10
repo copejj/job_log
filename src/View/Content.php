@@ -27,7 +27,6 @@ abstract class Content
 
 	public function display(): void
 	{
-		session_start();
 		$this->init();
 		$this->processing();
 		$this->header();

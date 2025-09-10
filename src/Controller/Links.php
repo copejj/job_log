@@ -1,30 +1,31 @@
 <?php
 namespace Jeff\Code\Controller;
 
+use Jeff\Code\Util\D;
 use Jeff\Code\View\Display\Printable;
 use Jeff\Code\View\Elements\Link;
 
 class Links implements Printable
 {
-	/**
-	 * Links types only
-	 * @var Links[]
-	 */
-	protected array $links = [];
 	protected string $page = '';
 
 	public function __construct(string $page='')
 	{
+		$this->page = $page;
+	}
+
+	public function __toString(): string
+	{
 		if (empty($_SESSION['user_id']))
 		{
-			$this->links = [
+			$links = [
 				new Home(),
 				new Login(),
 			];
 		}
 		else
 		{
-			$this->links = [
+			$links = [
 				new Home(),
 				new Logs(),
 				new Weeks(),
@@ -33,14 +34,10 @@ class Links implements Printable
 				new Logout(),
 			];
 		}
-		$this->page = $page;
-	}
 
-	public function __toString(): string
-	{
 		$refs = [];
 		$current_page = $this->page ?? '';
-		foreach ($this->links as $link)
+		foreach ($links as $link)
 		{
 			$page = $link->page ?? '';
 			$label = $link->label ?? '';
@@ -104,7 +101,7 @@ class Login extends Link
 class Logout extends Link
 {
 	protected array $data = [
-		'page' => 'login',
+		'page' => 'logout',
 		'label' => 'Logout',
 	];
 }

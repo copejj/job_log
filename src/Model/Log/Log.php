@@ -21,6 +21,7 @@ class Log extends Record
 
 			$key = static::getKey();
 			$this->bind = [
+				$_SESSION['user_id'],
 				$this->data['week_id'],
 				$this->data['action_date'], 
 				$this->data['company_id'] ?? null, 
@@ -37,7 +38,8 @@ class Log extends Record
 			{
 				$this->sql = 
 					"INSERT into job_logs (
-						week_id
+						user_id
+						, week_id
 						, action_date
 						, company_id
 						, title
@@ -48,14 +50,15 @@ class Log extends Record
 						, contact
 						, contact_number
 					)
-					values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+					values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 					returning *";
 			}
 			else
 			{
 				$this->sql = 
 					"UPDATE job_logs
-					set week_id = ?
+					set user_id = ?
+						, week_id = ?
 						, action_date = ?
 						, company_id = ?
 						, title = ?
@@ -77,6 +80,7 @@ class Log extends Record
 	{
 		switch (true)
 		{
+			case empty($_SESSION['user_id']):
 			case empty($data['week_id']):
 			case empty($data['company_id']):
 			case empty($data['action_date']):
@@ -96,7 +100,9 @@ class Log extends Record
 
 	public static function getSelect(array $args = [], array &$bind = []): string
 	{
-		$conds = [];
+		$conds = ['user_id = ?'];
+		$bind[] = $_SESSION['user_id'] ?? 0;
+
 		$arguably = [
 			static::getKey(),
 			'week_id',
@@ -199,6 +205,7 @@ class Log extends Record
 	{
 		$key = static::getKey();
 		$bind[] = $args[$key];
-		return "DELETE from job_logs where {$key} = ?";
+		$bind[] = $_SESSION['user_id'];
+		return "DELETE from job_logs where {$key} = ? and user_id = ?";
 	}
 }
