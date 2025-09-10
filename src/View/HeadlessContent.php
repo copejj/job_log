@@ -23,9 +23,13 @@ abstract class HeadlessContent extends Content
 
 	protected function messages(): void
 	{
-		?>
-		<div class='message-cont'><?=$this->message?></div>
-		<?php
+		$message = $this->message ?? '';
+		if (!empty($message))
+		{
+			?>
+			<div class='message-cont'><?=$message?></div>
+			<?php
+		}
 	}
 
 	protected function content(): void

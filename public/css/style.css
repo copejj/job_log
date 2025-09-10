@@ -26,7 +26,7 @@ pre {
 .header-cont, 
 .footer-cont,
 div#pageContent .sub-header-cont {
-    background-image: linear-gradient(to right, #0e17bf, #9192a7, #a4a4a8);
+    background-image: linear-gradient(to right, #2d5375, #9192a7, #a4a4a8);
 	color: white;
 	padding: 1rem;
 }
@@ -58,7 +58,7 @@ div#pageContent .sub-header-cont {
     font-size: 2.5rem;
     font-style: italic;
     border-bottom: .5rem solid transparent;
-    border-image: linear-gradient(to right, #0f18be, #42469c) 1;
+    border-image: linear-gradient(to right, #2d5375, #42469c) 1;
 }
 
 .sub-header-cont {
@@ -72,7 +72,7 @@ div#pageContent .sub-header-cont {
 	font-size: .75rem;
 	font-style: italic;
     border-top: .5rem solid transparent;
-    border-image: linear-gradient(to right, #0e17be, #282d90) 1;
+    border-image: linear-gradient(to right, #2d5375, #282d90) 1;
 }
 
 .content-cont {
@@ -290,4 +290,11 @@ div#pageContent .sub-header-cont {
     border-radius: 5px 0;
     margin-bottom: .5rem;
     font-size: 1.75rem;
+}
+.message-cont {
+    background: #2d5375;
+    color: white;
+    border-radius: 2px;
+    padding: .5rem 1rem;
+    margin-bottom: 1rem;
 }
