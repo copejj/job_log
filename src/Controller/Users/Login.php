@@ -15,8 +15,6 @@ class Login extends HeaderedContent
 	protected Labels $labels;
 	protected User $user;
 
-	protected bool $acted = false;
-
 	public function getTitle(): string
 	{
 		return "Login";

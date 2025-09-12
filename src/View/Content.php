@@ -2,6 +2,7 @@
 namespace Jeff\Code\View;
 
 use Exception;
+use Jeff\Code\Model\Meta\Labels;
 
 abstract class Content
 {
@@ -13,6 +14,8 @@ abstract class Content
 		'selected' => null,
 		'update_data' => false,
 		'has_redirect' => null,
+		'labels' => null,
+		'acted' => false,
 	];
 
 	protected function init(): void { }
@@ -28,6 +31,7 @@ abstract class Content
 
 	public function display(): void
 	{
+		$this->labels = new Labels();
 		$this->init();
 		$this->processing();
 		$this->header();

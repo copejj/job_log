@@ -135,7 +135,8 @@ class Log extends HeaderedContent
 			}
 			catch (Exception $e)
 			{
-				$message = "Exception: " . $e->getMessage();
+				\Jeff\Code\Util\D::p('exception', $e);
+				$message = $e->getMessage();
 			}
 
 			$this->message = $message;

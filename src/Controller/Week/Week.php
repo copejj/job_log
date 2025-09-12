@@ -63,13 +63,14 @@ class Week extends HeaderedContent
 			catch (Exception $e)
 			{
 				$exception = $e->getMessage();
+				\Jeff\Code\Util\D::p('exception', $e);
 				if (preg_match('/duplicate key value violates unique constraint/', $exception))
 				{
 					$message = "This week range already exists.";
 				}
 				else
 				{
-					$message = "Exception: '{$exception}'";
+					$message = $exception;
 				}
 			}
 

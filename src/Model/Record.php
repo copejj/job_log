@@ -54,18 +54,21 @@ abstract class Record
 		if ($this->update_data)
 		{
 			$this->onSave();
-			$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
-			if (!empty($result))
+			if (!empty($this->sql))
 			{
-				if (empty($this->data))
+				$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
+				if (!empty($result))
 				{
-					$this->data = $result;
-				}
-				else
-				{
-					foreach ($result as $key => $value)
+					if (empty($this->data))
 					{
-						$this->data[$key] = $value;
+						$this->data = $result;
+					}
+					else
+					{
+						foreach ($result as $key => $value)
+						{
+							$this->data[$key] = $value;
+						}
 					}
 				}
 			}

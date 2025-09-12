@@ -266,6 +266,7 @@ div#pageContent .content-cont {
 }
 .table.details-table {
     height: 80vh;
+    min-width: 30rem;
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;

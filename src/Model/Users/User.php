@@ -1,7 +1,9 @@
 <?php
 namespace Jeff\Code\Model\Users;
 
+use Exception;
 use Jeff\Code\Model\Record;
+use Jeff\Code\Util\D;
 
 class User extends Record
 {
@@ -14,7 +16,10 @@ class User extends Record
 				return false;
 			}
 
-			$this->data['password_hash'] = password_hash($this->data['password'], PASSWORD_ARGON2I);
+			if (!empty($this->data['password']))
+			{
+				$this->data['password_hash'] = password_hash($this->data['password'], PASSWORD_ARGON2I);
+			}
 
 			$this->bind = [
 				$this->data['first_name'] ?? '',
@@ -31,7 +36,7 @@ class User extends Record
 						first_name
 						, last_name
 						, email
-						, user_name
+						, username
 						, password_hash
 					)
 					VALUES (?, ?, ?, ?, ?)
@@ -44,12 +49,13 @@ class User extends Record
 					set first_name = ?
 						, last_name = ?
 						, email = ?
-						, user_name = ?
+						, username = ?
 						, password_hash = ?
 					where user_id = ?
 					returning *";
 				$this->bind[] = $this->data['user_id'];
 			}
+			D::p('query', [$this->sql, $this->bind]);
 		}
 		return true;
 	}
@@ -64,8 +70,6 @@ class User extends Record
 		switch (true)
 		{
 			case empty($data['username']):
-			case empty($data['password']):
-			case !empty($data['confirm_password']) && $data['confirm_password'] !== $data['password']:
 				return false;
 		}
 		return true;
@@ -79,12 +83,28 @@ class User extends Record
 
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
-		$bind[] = $args['username'];
+		$conds = [];
+		$conds[] = 'inactive_date is null';
+
+		$arguably = [static::getKey(), 'username'];
+		foreach ($arguably as $arg)
+		{
+			if (!empty($args[$arg]))
+			{
+				$conds[] = "{$arg} = ?";
+				$bind[] = $args[$arg];
+			}
+		}
+
+		$sql_cond = '';
+		if (!empty($conds))
+		{
+			$sql_cond = 'where ' . implode(' and ', $conds);
+		}
+
 		return 
-			"SELECT *
-			from users
-			where user_name = ?
-				and inactive_date is null";
+			"SELECT *, '' as password, '' as confirm_password
+			from users {$sql_cond}";
 	}
 
 	public static function getInstance(array $data): User
@@ -101,4 +121,31 @@ class User extends Record
 		}
 		return $user_data;
 	} 
+
+	public function __set(string $name, mixed $value): void
+	{
+		$set_value = $value;
+		if ($name === 'password_hash')
+		{
+			$password = trim($value[0] ?? '');
+			$confirm = trim($value[1] ?? '');
+			if (empty($password) && empty($confirm)) 
+			{
+				// if either of them are empty, just overwrite with the existing password hash
+				$set_value = $this->data['password_hash'];
+			}
+			else 
+			{
+				if ($password === $confirm)
+				{
+					$set_value = password_hash($password, PASSWORD_ARGON2I);
+				}
+				else
+				{
+					throw new Exception("Passwords don't match");
+				}
+			}
+		}
+		parent::__set($name, $set_value);
+	}
 }

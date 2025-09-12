@@ -100,7 +100,7 @@ class Company extends HeaderedContent
 			catch (Exception $e)
 			{
 				\Jeff\Code\Util\D::p('exception', $e);
-				$message = "Exception: " . $e->getMessage();
+				$message = $e->getMessage();
 			}
 
 			$this->message = $message;
