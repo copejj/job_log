@@ -3,7 +3,7 @@ namespace Jeff\Code\Model\Entities;
 
 use Jeff\Code\Model\Record;
 use Jeff\Code\Model\Week\Week;
-
+use Jeff\Code\Util\D;
 use Jeff\Code\View\Elements\Date;
 use Jeff\Code\View\Format\Formatter;
 
@@ -20,17 +20,24 @@ class Weeks extends Entities implements Formatter
 			order by start_date desc, end_date asc
 			limit 1";
 		$default = DB::getInstance(true)->fetchOne($sql);
-		$table = "(
-			with job_count as (
-				select week_id, count(1) as job_count
+		if (empty($default))
+		{
+			$week = new Week(['action_date' => date('Y-m-d')]);
+			$week->save(true);
+			$default = DB::getInstance(true)->fetchOne($sql);
+		}
+		$table = 
+			"(
+				WITH job_count as (
+					select week_id, count(1) as job_count
+					from weeks
+						join job_logs using (week_id)
+					group by week_id
+				)
+				select *
 				from weeks
-					join job_logs using (week_id)
-				group by week_id
-			)
-			select *
-			from weeks
-				join job_count using (week_id)
-		) weeks";
+					join job_count using (week_id)
+			) weeks";
 		parent::__construct($table, 'week_id', 'name', 'start_date desc, end_date desc', $default['week_id'] ?? '');
 	}
 

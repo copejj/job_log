@@ -55,7 +55,6 @@ class User extends Record
 					returning *";
 				$this->bind[] = $this->data['user_id'];
 			}
-			D::p('query', [$this->sql, $this->bind]);
 		}
 		return true;
 	}

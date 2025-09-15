@@ -2,6 +2,7 @@
 namespace Jeff\Code\Model\Week;
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\Util\D;
 
 class Week extends Record
 {

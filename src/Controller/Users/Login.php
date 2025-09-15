@@ -32,7 +32,12 @@ class Login extends HeaderedContent
 			{
 				// login existing user
 				$user = User::get($post);
-				if (empty($user) || !password_verify($post['password'], $user->password_hash))
+				$password = $post['password'] ?? '';
+				if (empty($password))
+				{
+					$message = "Please login to continue";
+				}
+				else if (empty($user) || !password_verify($password, $user->password_hash))
 				{
 					$message = "Login failed";
 				}
