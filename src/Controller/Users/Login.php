@@ -59,6 +59,7 @@ class Login extends HeaderedContent
 				else
 				{
 					//create a new user
+					/*
 					$user = User::create($post);
 					if (!empty($user->user_id))
 					{
@@ -68,6 +69,7 @@ class Login extends HeaderedContent
 						$this->has_redirect = '/?page=log';
 						$_SESSION = $this->user->toArray();
 					}
+					*/
 				}
 			}
 		}
@@ -94,7 +96,7 @@ class Login extends HeaderedContent
 					new Input('password', 'password', $data['password'] ?? '', '', $this->labels->password),
 				]),
 				new Input('login_user', 'submit', 'Login'),
-				new Input('create_user', 'submit', 'New'),
+				// new Input('create_user', 'submit', 'New'),
 			], 'post', new Attributes(['id' => 'user_form']));
 		}
 		else
