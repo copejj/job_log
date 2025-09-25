@@ -141,7 +141,7 @@ class Log extends Record
 					, website
 				from job_logs
 					left join weeks using (week_id)
-					left join companies using (company_id) {$sql_cond}
+					left join companies using (company_id, user_id) {$sql_cond}
 			), actions as (
 				with data as (
 					select job_log_id, job_log_action_id, action_id, actions.name as action_name

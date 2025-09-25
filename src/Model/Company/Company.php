@@ -19,7 +19,9 @@ class Company extends Record
 				return false;
 			}
 
+			$key = static::getKey();
 			$this->bind = [
+				$_SESSION['user_id'],
 				$this->data['name'],
 				$this->data['email'] ?? '',
 				$this->data['website'] ?? '',
@@ -31,27 +33,29 @@ class Company extends Record
 			{
 				$this->sql = 
 					"INSERT into companies (
-						name
+						user_id
+						, name
 						, email
 						, website
 						, phone 
 						, fax
 					) 
-					values (?, ?, ?, ?, ?) 
+					values (?, ?, ?, ?, ?, ?) 
 					returning *";
 			}
 			else 
 			{
 				$this->sql = 
 					"UPDATE companies 
-					set name = ?
+					set user_id
+						, name = ?
 						, email = ?
 						, website = ?
 						, phone = ?
 						, fax = ?
 					where company_id = ? 
 					returning *";
-				$this->bind[] = $this->data['company_id'];
+				$this->bind[] = $this->data[$key];
 			}
 		}
 		return true;
@@ -61,6 +65,7 @@ class Company extends Record
 	{
 		switch (true)
 		{
+			case empty($_SESSION['user_id']):
 			case empty($data['name']):
 				return false;
 		}
@@ -74,8 +79,12 @@ class Company extends Record
 
 	public static function getSelect(array $args=[], array &$bind=[]): string
 	{
-		$conds = [];
-		$arguably = [ static::getKey() ];
+		$conds = ['user_id = ?'];
+		$bind[] = $_SESSION['user_id'] ?? 0;
+
+		$arguably = [ 
+			static::getKey() 
+		];
 		foreach ($arguably as $arg)
 		{
 			if (!empty($args[$arg]))
@@ -94,7 +103,7 @@ class Company extends Record
 		}
 		$sql = 
 			"WITH target as (
-				select company_id
+				select company_id, user_id
 				from companies {$sql_cond}
 			), addresses as (
 				with data as (
@@ -109,7 +118,7 @@ class Company extends Record
 			), job_count as (
 				select count(job_log_id) job_count, company_id
 				from job_logs
-					join target using (company_id)
+					join target using (company_id, user_id)
 				where user_id = ?
 				group by company_id 
 			)
