@@ -7,6 +7,7 @@ abstract class HeaderedContent extends HeadlessContent
 {
 	protected function header(): void
 	{
+		$extra_text = (!empty($_SESSION['user_id']) && empty($_SESSION['can_edit'])) ? '(read only)' : '';
 		$redirect = '';
 		$has_redirect = $this->has_redirect;
 		if (!empty($has_redirect))
@@ -32,7 +33,7 @@ abstract class HeaderedContent extends HeadlessContent
 			</head>
 			<body>
 				<div class='full-page-content'>
-					<div class='header-cont'> Work Log </div>
+					<div class='header-cont'> Work Log <?=$extra_text?> </div>
 		<?php
 	}
 
