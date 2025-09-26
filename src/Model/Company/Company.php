@@ -47,7 +47,7 @@ class Company extends Record
 			{
 				$this->sql = 
 					"UPDATE companies 
-					set user_id
+					set user_id = ?
 						, name = ?
 						, email = ?
 						, website = ?
