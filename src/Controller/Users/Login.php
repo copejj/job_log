@@ -9,11 +9,13 @@ use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Inputs;
 use Jeff\Code\View\HeaderedContent;
 use Jeff\Code\Model\Users\User;
+use Jeff\Code\Util\Config;
 
 class Login extends HeaderedContent
 {
 	protected Labels $labels;
 	protected User $user;
+	protected bool $new_enabled = false;
 
 	public function getTitle(): string
 	{
@@ -23,6 +25,10 @@ class Login extends HeaderedContent
 	public function processing():void
 	{
 		$this->labels = new Labels();
+		if (!empty(trim(Config::get('NEW_USER_ENABLED'))))
+		{
+			$this->new_enabled = true;
+		}
 
 		$post = $this->post;
 		$message = '';
@@ -50,16 +56,11 @@ class Login extends HeaderedContent
 					$_SESSION = $this->user->toArray();
 				}
 			}
-			else
+			else if (!empty($this->new_enabled))
 			{
-				if (empty($post['new_user']))
+				//create a new user
+				if (!empty($post['new_user']))
 				{
-					//edit an existing user
-				}
-				else
-				{
-					//create a new user
-					/*
 					$user = User::create($post);
 					if (!empty($user->user_id))
 					{
@@ -69,7 +70,6 @@ class Login extends HeaderedContent
 						$this->has_redirect = '/?page=log';
 						$_SESSION = $this->user->toArray();
 					}
-					*/
 				}
 			}
 		}
@@ -90,14 +90,20 @@ class Login extends HeaderedContent
 		<?php
 		if (empty($data['create_user']))
 		{
-			echo new Form([
+			$inputs = [
 				new Inputs([ 
 					new Input('username', 'text', $data['username'] ?? '', '', $this->labels->username),
 					new Input('password', 'password', $data['password'] ?? '', '', $this->labels->password),
 				]),
-				new Input('login_user', 'submit', 'Login'),
-				// new Input('create_user', 'submit', 'New'),
-			], 'post', new Attributes(['id' => 'user_form']));
+				new Input('login_user', 'submit', 'Login')
+			];
+
+			if ($this->new_enabled)
+			{
+				$inputs[] = new Input('create_user', 'submit', 'New');
+
+			}
+			echo new Form($inputs, 'post', new Attributes(['id' => 'user_form']));
 		}
 		else
 		{
