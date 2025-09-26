@@ -26,6 +26,7 @@ use Jeff\Code\Model\Meta\Labels;
 use Jeff\Code\View\HeaderedContent;
 
 use Jeff\Code\Model\Week\Week;
+use Jeff\Code\Util\D;
 
 class Log extends HeaderedContent
 {
@@ -79,7 +80,11 @@ class Log extends HeaderedContent
 				if (empty($this->log))
 				{
 					$log = Service::create($post);
-					if (!empty($log))
+					if (empty($log))
+					{
+						$message = 'There was an error saving the log';
+					}
+					else
 					{
 						$this->log = $log;
 
@@ -109,7 +114,7 @@ class Log extends HeaderedContent
 					}
 				}
 
-				$job_log_id = $this->log->job_log_id;
+				$job_log_id = $this->log->job_log_id ?? 0;
 				if (!empty($job_log_id))
 				{
 					if ($this->saveActions($job_log_id, $this->post['actions'] ?? []))

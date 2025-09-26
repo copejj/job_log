@@ -30,7 +30,10 @@ abstract class Record
 	{
 		$bind = [];
 		$sql = static::getDelete($data, $bind);
-		DB::getInstance()->perform($sql, $bind);
+		if (!empty($_SESSION['can_edit']))
+		{
+			DB::getInstance()->perform($sql, $bind);
+		}
 	}
 
 	public static function create(array $data): ?Record
@@ -56,7 +59,11 @@ abstract class Record
 			$this->onSave();
 			if (!empty($this->sql))
 			{
-				$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
+				if (!empty($_SESSION['can_edit']))
+				{
+					$result = DB::getInstance()->fetchOne($this->sql, $this->bind);
+				}
+
 				if (!empty($result))
 				{
 					if (empty($this->data))

@@ -2,6 +2,7 @@
 namespace Jeff\Code\Model\Log;
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\Util\D;
 
 class Log extends Record
 {
@@ -24,7 +25,7 @@ class Log extends Record
 				$_SESSION['user_id'],
 				$this->data['week_id'],
 				$this->data['action_date'], 
-				$this->data['company_id'] ?? null, 
+				empty($this->data['company_id']) ? null : $this->data['company_id'], 
 				$this->data['title'] ?? null, 
 				$this->data['job_number'] ?? null, 
 				$this->data['next_step'] ?? null, 
@@ -82,7 +83,7 @@ class Log extends Record
 		{
 			case empty($_SESSION['user_id']):
 			case empty($data['week_id']):
-			case empty($data['company_id']):
+			//case empty($data['company_id']):
 			case empty($data['action_date']):
 				return false;
 		}

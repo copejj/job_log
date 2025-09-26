@@ -62,7 +62,8 @@ class Login extends HeaderedContent
 				if (!empty($post['new_user']))
 				{
 					$user = User::create($post);
-					if (!empty($user->user_id))
+					$user_id = $user->user_id;
+					if (!empty($user_id))
 					{
 						$message = "User created successfully";
 						$this->user = $user;
