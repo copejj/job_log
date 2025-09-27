@@ -3,7 +3,6 @@ namespace Jeff\Code\Model\Users;
 
 use Exception;
 use Jeff\Code\Model\Record;
-use Jeff\Code\Util\D;
 
 class User extends Record
 {
@@ -41,6 +40,9 @@ class User extends Record
 					)
 					VALUES (?, ?, ?, ?, ?)
 					returning *";
+
+				// creating a new user
+				$_SESSION['can_edit'] = 1;
 			}
 			else
 			{

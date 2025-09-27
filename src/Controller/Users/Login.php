@@ -2,7 +2,6 @@
 namespace Jeff\Code\Controller\Users;
 
 use Jeff\Code\Model\Meta\Labels;
-use Jeff\Code\Util\D;
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
@@ -62,7 +61,7 @@ class Login extends HeaderedContent
 				if (!empty($post['new_user']))
 				{
 					$user = User::create($post);
-					$user_id = $user->user_id;
+					$user_id = $user->user_id ?? 0;
 					if (!empty($user_id))
 					{
 						$message = "User created successfully";

@@ -2,7 +2,6 @@
 namespace Jeff\Code\Model;
 
 use Exception;
-use Jeff\Code\Util\D;
 use Jeff\Code\Util\DB;
 
 abstract class Record
