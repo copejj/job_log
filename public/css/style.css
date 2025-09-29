@@ -290,3 +290,21 @@ div#pageContent .sub-header-cont {
     background-image: linear-gradient(to right, #2d5375, #a35900);
     background-clip: text;
 }
+.menu-container {
+    overflow: hidden; /* Clear floats within the container */
+}
+.menu-container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.menu-container li {
+    display: inline-block; /* Display list items inline */
+}
+.align-right {
+    float: right; /* Align the entire menu to the right */
+}
+.align-left {
+    float: left; /* Align the entire menu to the left */
+}

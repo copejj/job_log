@@ -40,7 +40,7 @@ abstract class HeaderedContent extends HeadlessContent
 	protected function links(): void
 	{
 		?>
-			<div class='links-cont'>
+			<div class='menu-container links-cont'>
 				<?=$this->links?>
 			</div>
 		<?php
