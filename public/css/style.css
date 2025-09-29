@@ -16,7 +16,7 @@ pre {
     height: 100%;
     box-sizing: content-box;
     border-right: .5rem solid transparent;
-    border-image: linear-gradient(to bottom, #00067d, #f0f0f0, #f0f0f0, #00067d) 1;
+    border-image: linear-gradient(to bottom, #1b2a3b, #f0f0f0, #f0f0f0, #00067d) 1;
 }
 .header-cont, 
 .footer-cont,
@@ -55,7 +55,7 @@ div#pageContent .sub-header-cont {
     font-size: 2.5rem;
     font-style: italic;
     border-bottom: .5rem solid transparent;
-    border-image: linear-gradient(to right, #2d5375, #42469c) 1;
+    border-image: linear-gradient(to right, #2d5375, #56616d) 1;
 }
 .sub-header-cont {
     height: 4vh;
@@ -307,4 +307,9 @@ div#pageContent .sub-header-cont {
 }
 .align-left {
     float: left; /* Align the entire menu to the left */
+}
+.input-cont.line-separator {
+    border-top: 2px #a4a4a8 solid;
+    margin-top: 1rem;
+    width: 21rem;
 }

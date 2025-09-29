@@ -69,8 +69,10 @@ class User extends HeaderedContent
 				new Input('last_name', 'text', $data['last_name'] ?? '', '', $this->labels->last_name),
 				new Input('email', 'text', $data['email'] ?? '', '', $this->labels->user_email),
 				new Input('username', 'text', $data['username'] ?? '', '', $this->labels->username),
-				new Input('password', 'password', $data['password'] ?? '', '', $this->labels->password),
-				new Input('confirm_password', 'password', $data['confirm_password'] ?? '', '', $this->labels->confirm_password),
+				new Inputs([
+					new Input('password', 'password', $data['password'] ?? '', '', $this->labels->change_password, new Attributes(['placeholder' => str_repeat('&#9679;', 20)])),
+					new Input('confirm_password', 'password', $data['confirm_password'] ?? '', '', $this->labels->confirm_change, new Attributes(['placeholder' => str_repeat('&#9679;', 20)])),
+				], '', '', '', new Attributes(['class' => 'line-separator'])),
 			]),
 			new Input('save_user', 'submit', 'Save'),
 		], 'post', new Attributes(['id' => 'user_form']));
