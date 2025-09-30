@@ -68,4 +68,9 @@ abstract class Content
 			throw new Exception("Array key '{$name}' does not exist.");
 		}
 	}
+
+	public function __isset($key)
+	{
+		return ($this->__get($key) !== null);
+	}
 }

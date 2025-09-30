@@ -29,8 +29,8 @@ class Links implements Printable
 				new Logs(),
 				new Weeks(),
 				new Companies(),
-				new Users(),
 				new Logout(),
+				new Users(),
 			];
 		}
 
@@ -92,7 +92,7 @@ class Login extends Link
 {
 	public function __construct()
 	{
-		parent::__construct('login', 'Login');
+		parent::__construct('login', 'Login', new Attributes(['class' => 'align-right']));
 	}
 }
 
@@ -100,6 +100,6 @@ class Logout extends Link
 {
 	public function __construct()
 	{
-		parent::__construct('logout', 'Logout');
+		parent::__construct('logout', 'Logout', new Attributes(['class' => 'align-right']));
 	}
 }

@@ -9,8 +9,7 @@ abstract class HeaderedContent extends HeadlessContent
 	{
 		$extra_text = (!empty($_SESSION['user_id']) && empty($_SESSION['can_edit'])) ? '(read only)' : '';
 		$redirect = '';
-		$has_redirect = $this->has_redirect;
-		if (!empty($has_redirect))
+		if (!empty($this->has_redirect))
 		{
 			$redirect = 
 				"<meta charset='UTF-8'>

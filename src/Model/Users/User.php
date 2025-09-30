@@ -116,7 +116,7 @@ class User extends Record
 	public function toArray(): array
 	{
 		$user_data = [];
-		foreach (['user_id', 'first_name', 'last_name', 'email', 'can_edit'] as $key)
+		foreach (['user_id', 'first_name', 'last_name', 'email', 'can_edit', 'is_admin'] as $key)
 		{
 			$user_data[$key] = $this->data[$key];
 		}

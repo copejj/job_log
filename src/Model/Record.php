@@ -127,6 +127,11 @@ abstract class Record
 		}
 	}
 
+	public function __isset($key)
+	{
+		return ($this->__get($key) !== null);
+	}
+
 	public function toArray(): array
 	{
 		return [];
