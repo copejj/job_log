@@ -58,7 +58,8 @@ class Invite extends HeaderedContent
 			<p>Hi <?=$data['first_name']?>,</p>
 			<p><?=ucwords($_SESSION['first_name'] . ' ' . $_SESSION['last_name'])?> wants to invite you to try <a href='<?=$url?>'>Brain Dribbler (Work Activity Log)</a></p>
 			<p><?=ucwords($_SESSION['first_name'])?> has provided you with a temporary link that will be available for <?=Config::get('INVITE_INTERVAL')?>.  
-				Just click on the following link to create a user account: <a href='<?="{$url}/?page=user&k={$data['key']}"?>'>I'm ready to be THAT cool!</a></p>
+				Click on the following link to create a user account.</p>
+			<p><a href='<?="{$url}/?page=user&k={$data['key']}"?>'>I'm ready to be THAT cool!</a></p>
 			<p>Thanks,<br>The Dribbling Team</p>
 			
 			<?php

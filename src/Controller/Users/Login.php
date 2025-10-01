@@ -37,7 +37,6 @@ class Login extends HeaderedContent
 			$invite = Invite::get(['key' => $this->get['k']]);
 			if (!empty($invite))
 			{
-				D::p('invite', $invite);
 				$user_data = [
 					'create_user' => 1,
 					'first_name' => $invite->first_name,
