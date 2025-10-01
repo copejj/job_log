@@ -1,7 +1,9 @@
 <?php
 namespace Jeff\Code\Controller\Users;
 
+use Exception;
 use Jeff\Code\Model\Meta\Labels;
+use Jeff\Code\Model\Users\Invite;
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
@@ -9,6 +11,7 @@ use Jeff\Code\View\Elements\Inputs;
 use Jeff\Code\View\HeaderedContent;
 use Jeff\Code\Model\Users\User;
 use Jeff\Code\Util\Config;
+use Jeff\Code\Util\D;
 
 class Login extends HeaderedContent
 {
@@ -27,6 +30,23 @@ class Login extends HeaderedContent
 		if (!empty(trim(Config::get('NEW_USER_ENABLED'))))
 		{
 			$this->new_enabled = true;
+		}
+
+		if (!empty($this->get['k']))
+		{
+			$invite = Invite::get(['key' => $this->get['k']]);
+			if (!empty($invite))
+			{
+				D::p('invite', $invite);
+				$user_data = [
+					'create_user' => 1,
+					'first_name' => $invite->first_name,
+					'last_name' => $invite->last_name,
+					'email' => $invite->email,
+				];
+				$this->user = User::getInstance($user_data);
+				$this->new_enabled = true;
+			}
 		}
 
 		$post = $this->post;
@@ -60,15 +80,28 @@ class Login extends HeaderedContent
 				//create a new user
 				if (!empty($post['new_user']))
 				{
-					$user = User::create($post);
-					$user_id = $user->user_id ?? 0;
-					if (!empty($user_id))
+					try
 					{
-						$message = "User created successfully";
-						$this->user = $user;
-						$this->acted = true;
-						$this->has_redirect = '/?page=log';
-						$_SESSION = $this->user->toArray();
+						$user = User::create($post);
+						$user_id = $user->user_id ?? 0;
+						if (!empty($user_id))
+						{
+							$message = "User created successfully";
+							$this->user = $user;
+							$this->acted = true;
+							$this->has_redirect = '/?page=log';
+							$_SESSION = $this->user->toArray();
+
+							if (!empty($invite))
+							{
+								$invite->user_id = $user_id;
+								$invite->save();
+							}
+						}
+					}
+					catch (Exception $e)
+					{
+						$message = $e->getMessage();
 					}
 				}
 			}

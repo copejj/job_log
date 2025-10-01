@@ -15,14 +15,14 @@ class Invite extends Record
 				return false;
 			}
 
-			$this->bind = [
-				$this->data['first_name'] ?? null,
-				$this->data['last_name'] ?? null,
-				$this->data['email'] ?? null,
-			];
-
 			if (empty($this->data['invite_id']))
 			{
+				$this->bind = [
+					$this->data['first_name'] ?? null,
+					$this->data['last_name'] ?? null,
+					$this->data['email'] ?? null,
+				];
+
 				$this->sql =
 					"INSERT into invites(
 						first_name
@@ -34,7 +34,16 @@ class Invite extends Record
 			}
 			else
 			{
+				$this->bind = [
+					$this->data['user_id'] ?? null,
+					$this->data['invite_id'] ?? null,
+				];
+
 				// do something else
+				$this->sql = 
+					"UPDATE invites
+					set user_id = ?
+					where invite_id = ?";
 			}
 		}
 		return false;

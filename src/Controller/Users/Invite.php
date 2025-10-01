@@ -16,19 +16,7 @@ class Invite extends HeaderedContent
 
 	public function processing(): void
 	{
-		if (!empty($this->get['k']))
-		{
-			$this->invite = Service::get($this->get);
-			if (empty($this->invite))
-			{
-				$this->message = "This invite has either timed out, been used, expired or is invalid.";
-			}
-			else 
-			{
-				D::p('found the user');
-			}
-		}
-		else if (!empty($this->post))
+		if (!empty($this->post))
 		{
 			if (!$this->perms->hasAccess('invites'))
 			{
@@ -39,7 +27,6 @@ class Invite extends HeaderedContent
 			$this->invite->save(true);
 			$this->message = "Invite created successfully";
 		}
-		D::p('invite', $this->invite ?? null);
 	}
 
 	public function getTitle(): string
@@ -71,7 +58,7 @@ class Invite extends HeaderedContent
 			<p>Hi <?=$data['first_name']?>,</p>
 			<p><?=ucwords($_SESSION['first_name'] . ' ' . $_SESSION['last_name'])?> wants to invite you to try <a href='<?=$url?>'>Brain Dribbler (Work Activity Log)</a></p>
 			<p><?=ucwords($_SESSION['first_name'])?> has provided you with a temporary link that will be available for <?=Config::get('INVITE_INTERVAL')?>.  
-				Just click on the following link to create a user account: <a href='<?="{$url}/?page={$this->get['page']}&k={$data['key']}"?>'>I'm ready to be THAT cool!</a></p>
+				Just click on the following link to create a user account: <a href='<?="{$url}/?page=user&k={$data['key']}"?>'>I'm ready to be THAT cool!</a></p>
 			<p>Thanks,<br>The Dribbling Team</p>
 			
 			<?php
