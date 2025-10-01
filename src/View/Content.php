@@ -9,6 +9,7 @@ abstract class Content
 	protected array $data = [
 		'get' => null,
 		'post' => null,
+		'perms' => null,
 		'message' => '',
 		'links' => null,
 		'selected' => null,

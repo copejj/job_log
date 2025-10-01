@@ -1,6 +1,7 @@
 <?php
 namespace Jeff\Code\Controller;
 
+use Jeff\Code\Model\Users\Permissions;
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Display\Printable;
 use Jeff\Code\View\Elements\Link;
@@ -9,9 +10,12 @@ class Links implements Printable
 {
 	protected string $page = '';
 
+	private Permissions $perms;
+
 	public function __construct(string $page='')
 	{
 		$this->page = $page;
+		$this->perms = new Permissions();
 	}
 
 	public function __toString(): string
@@ -32,6 +36,11 @@ class Links implements Printable
 				new Logout(),
 				new Users(),
 			];
+
+			if ($this->perms->hasAccess('invites'))
+			{
+				$links[] = new Invite();
+			}
 		}
 
 		$refs = [];
@@ -101,5 +110,13 @@ class Logout extends Link
 	public function __construct()
 	{
 		parent::__construct('logout', 'Logout', new Attributes(['class' => 'align-right']));
+	}
+}
+
+class Invite extends Link
+{
+	public function __construct()
+	{
+		parent::__construct('invite', 'Invite');
 	}
 }

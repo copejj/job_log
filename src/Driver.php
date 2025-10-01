@@ -4,17 +4,17 @@ namespace Jeff\Code;
 use Jeff\Code\Controller\Index;
 use Jeff\Code\Controller\Company\Company;
 use Jeff\Code\Controller\Company\Companies;
+use Jeff\Code\Controller\Users\Invite;
 use Jeff\Code\Controller\Links;
 use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
-use Jeff\Code\Controller\UnderDevelopment;
 use Jeff\Code\Controller\Users\User;
 use Jeff\Code\Controller\Users\Login;
 use Jeff\Code\Controller\Users\Logout;
 use Jeff\Code\Controller\Week\Week;
 use Jeff\Code\Controller\Week\Weeks;
-
+use Jeff\Code\Model\Users\Permissions;
 use Jeff\Code\View\Content;
 
 class Driver
@@ -22,11 +22,13 @@ class Driver
 	protected ?Content $content;
 	protected array $get;
 	protected array $post;
+	protected Permissions $perms;
 
 	public function __construct(array $get, array $post)
 	{
 		$this->get = $get;
-		$this->post= $post;
+		$this->post = $post;
+		$this->perms = new Permissions();
 	}
 
 	public function getContent(): Content
@@ -99,11 +101,15 @@ class Driver
 			case 'user':
 				$this->content = new User();
 				break;
+			case 'invite':
+				$this->content = new Invite();
+				break;
 			case '':
 			default:
 				$this->content = new Index();
 		}
 
+		$this->content->perms = $this->perms;
 		$this->content->get = $this->get;
 		$this->content->post = $this->post;
 		$this->content->links = new Links($page ?? '');

@@ -4,7 +4,7 @@ namespace Jeff\Code\Controller\Users;
 use Exception;
 
 use Jeff\Code\Model\Users\User as Service;
-use Jeff\Code\Util\D;
+
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Input;
@@ -18,8 +18,8 @@ class User extends HeaderedContent
 	public function processing(): void
 	{
 		$this->user = Service::load($_SESSION['user_id']);
-		$post = $this->post;
 		$message = '';
+		$post = $this->post;
 		if (!empty($post))
 		{
 			try
