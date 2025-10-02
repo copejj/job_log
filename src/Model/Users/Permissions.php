@@ -15,7 +15,7 @@ class Permissions
 		}
 	}
 
-	protected function __get(string $key): ?bool
+	public function __get(string $key): ?bool
 	{
 		if (isset($this->permissions[$key]))
 		{

@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS public.invites;
+
 CREATE TABLE IF NOT EXISTS public.invites
 (
     invite_id serial NOT NULL,
@@ -8,6 +10,7 @@ CREATE TABLE IF NOT EXISTS public.invites
     last_name text COLLATE pg_catalog."default",
     email text COLLATE pg_catalog."default",
     CONSTRAINT invites_pkey PRIMARY KEY (invite_id)
-)
+) TABLESPACE pg_default;
 
-TABLESPACE pg_default;
+ALTER TABLE IF EXISTS public.invites OWNER to dribbler;
+GRANT ALL ON TABLE public.invites TO dribbler;
