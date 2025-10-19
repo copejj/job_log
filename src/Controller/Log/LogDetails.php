@@ -41,9 +41,6 @@ class LogDetailsMetadata extends Metadata
 		$this->metadata = [
 			'week_id' => [ 'format' => 'Jeff\Code\Model\Entities\Weeks' ],
 			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ],
-			'title' => [ ],
-			'status' => [],
-			'job_number' => [ ],
 			'name' => [ ],
 			'street' => [ ],
 			'street_ext' => [ ],
@@ -51,6 +48,9 @@ class LogDetailsMetadata extends Metadata
 			'state' => [ ],
 			'zip' => [ ],
 			'website' => [ ],
+			'title' => [ ],
+			'status' => [],
+			'job_number' => [ ],
 			'notes' => [ 'type' => 'textarea' ],
 		];
 	}
