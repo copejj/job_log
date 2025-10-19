@@ -38,6 +38,25 @@ div#pageContent .sub-header-cont {
     border: 2px solid #305576;
     border-radius: 0 0 5px 5px;
 }
+.links-cont,
+.header-cont, 
+.footer-cont,
+.link.link-selected {
+    background-blend-mode: multiply;
+    background-size: cover;
+    animation-name: headerFade;
+    animation-duration: 500ms;
+}
+@keyframes headerFade {
+    from {
+        background-color: #2d5375;
+        border-color: #2d5375;
+    }
+    to {
+        background-color: transparent;
+        border-color: transparent;
+    }
+}
 .link {
     padding: 0.5rem;
     width: 5rem;
