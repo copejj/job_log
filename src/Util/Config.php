@@ -9,7 +9,7 @@ class Config
 	static protected $place = [];
 	static protected $target = [];
 
-	private const FILENAME = '../.env.php';
+	private const FILENAME = '.env.php';
 
 	static private function init()
 	{
@@ -18,7 +18,7 @@ class Config
 			// The config_setting section needs env values for the database 
 			// connection so we need to set the env variables immediately
 			// before retrieving the config_settings values
-			$file = require static::FILENAME;
+			$file = require dirname(__DIR__, 2) .'/'. static::FILENAME;
 			self::$env = $file;
 
 			$settings = self::getSettings();
