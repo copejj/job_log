@@ -3,11 +3,18 @@ namespace Jeff\Code\View;
 
 use Jeff\Code\Util\Config;
 use Jeff\Code\Util\D;
+use Jeff\Code\Util\IPCheck;
 
 abstract class HeadlessContent extends Content
 {
 	protected function top(): void
 	{
+		$ipCheck = new IPCheck();
+		$ret = $ipCheck->runScript();	
+		if (!empty($ret))
+		{
+			$this->message = $ret;
+		}
 		?>
 		<div class='content-cont'>
 		<?php

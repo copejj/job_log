@@ -1,8 +1,6 @@
 <?php
 namespace Jeff\Code\View;
 
-use Jeff\Code\Util\D;
-
 abstract class HeaderedContent extends HeadlessContent
 {
 	protected function header(): void
