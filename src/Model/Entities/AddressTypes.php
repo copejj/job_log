@@ -10,6 +10,6 @@ class AddressTypes extends Entities
 
 	public function name(array $row): string
 	{
-		return "{$row['name']} Address";
+		return trim("{$row['name']} Address");
 	}
 }

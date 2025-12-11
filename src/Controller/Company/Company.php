@@ -1,6 +1,7 @@
 <?php
 namespace Jeff\Code\Controller\Company;
 
+use Dom\Attr;
 use Exception;
 
 use Jeff\Code\Model\Company\Company as Service;
@@ -138,6 +139,56 @@ class Company extends HeaderedContent
 				$('#company_form').append("<?=new Input('action', 'hidden', $this->mode)?>");
 				return true;
 			}
+			function parse_address(element)
+			{
+				let full = element.value;
+				let street = '';
+				let street_ext = '';
+				let city = '';
+				let state = '';
+				let zip = '';
+
+				// Simple US address parsing
+				let parts = full.split(',');
+				switch (parts.length)
+				{
+					case (3):
+						street = parts[0].trim();
+						city = parts[1].trim();
+						let state_zip = parts[2].trim().split(' ');
+						state = state_zip[0].trim();
+						zip = state_zip[1].trim();
+						break;
+					case (4):
+						street = parts[0].trim();
+						city = parts[1].trim();
+						state = parts[2].trim();
+						zip = parts[3].trim();
+						break;
+					case (5):
+						street = parts[0].trim();
+						street_ext = parts[1].trim();
+						city = parts[2].trim();
+						state = parts[3].trim();
+						zip = parts[4].trim();
+						break;
+					default:
+						street = full;
+						return;
+				}
+
+				element.value = street;
+				let parent = $(element).closest('.inputs-address-group');
+				parent.find('input[name$="[street_ext]"]').val(street_ext);
+				parent.find('input[name$="[city]"]').val(city);
+				parent.find('select[name$="[state_id]"] option').each(function(){
+					if ($(this).text().trim().includes(state))
+					{
+						$(this).prop('selected', true);
+					}
+				});
+				parent.find('input[name$="[zip]"]').val(zip);
+			}
 		</script>
 		<?php
 		$address_inputs = [];
@@ -148,7 +199,7 @@ class Company extends HeaderedContent
 				new Input("addresses[{$id}][company_id]", 'hidden', $data['addresses'][$id]['company_id'] ?? $data['company_id'] ?? 0),
 				new Input("addresses[{$id}][address_type_id]", 'hidden', $data['addresses'][$id]['address_type_id'] ?? $id),
 				new Input("addresses[{$id}][address_id]", 'hidden', $data['addresses'][$id]['address_id'] ?? ''),
-				new Input("addresses[{$id}][street]", 'text', '', $data['addresses'][$id]['street'] ?? '', $this->labels->street),
+				new Input("addresses[{$id}][street]", 'text', '', $data['addresses'][$id]['street'] ?? '', $this->labels->street, new Attributes(['onchange' => 'parse_address(this)'])),
 				new Input("addresses[{$id}][street_ext]", 'text', '', $data['addresses'][$id]['street_ext'] ?? '', $this->labels->street_ext),
 				new Input("addresses[{$id}][city]", 'text', '', $data['addresses'][$id]['city'] ?? '', $this->labels->city),
 				new Select("addresses[{$id}][state_id]", $this->states->data, 0, (int) ($data['addresses'][$id]['state_id'] ?? 0), $this->labels->state, "[ Selected a state ]"),
