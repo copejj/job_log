@@ -155,15 +155,27 @@ class Company extends HeaderedContent
 					case (3):
 						street = parts[0].trim();
 						city = parts[1].trim();
-						let state_zip = parts[2].trim().split(' ');
-						state = state_zip[0].trim();
-						zip = state_zip[1].trim();
+						if (parts[2].trim().match(/([A-Za-z]+),? ([0-9\-]+)/))
+						{
+							state = RegExp.$1;
+							zip = RegExp.$2;
+						}
 						break;
 					case (4):
 						street = parts[0].trim();
-						city = parts[1].trim();
-						state = parts[2].trim();
-						zip = parts[3].trim();
+						if (parts[3].trim().match(/([A-Za-z]+),? ([0-9\-]+)/))
+						{
+							street_ext = parts[1].trim();
+							city = parts[2].trim();
+							state = RegExp.$1;
+							zip = RegExp.$2;
+						}
+						else
+						{
+							city = parts[1].trim();
+							state = parts[2].trim();
+							zip = parts[3].trim();
+						}
 						break;
 					case (5):
 						street = parts[0].trim();
