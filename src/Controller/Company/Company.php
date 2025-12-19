@@ -1,7 +1,6 @@
 <?php
 namespace Jeff\Code\Controller\Company;
 
-use Dom\Attr;
 use Exception;
 
 use Jeff\Code\Model\Company\Company as Service;
@@ -40,7 +39,7 @@ class Company extends HeaderedContent
 		{
 			$this->company = Service::load($this->post['company_id']);
 			$this->mode = 'edit';
-			$this->title= 'Edit';
+			$this->title = 'Edit';
 		}
 	}
 
@@ -53,6 +52,14 @@ class Company extends HeaderedContent
 			{
 				if (empty($this->company))
 				{
+					// check if company already exists
+					$company = Service::getByName($this->post['name'] ?? '');
+					if (!empty($company))
+					{
+						throw new Exception("Company '{$this->post['name']}' already exists");
+					}
+
+					// create a new company
 					$company = Service::create($this->post);
 					if (!empty($company))
 					{

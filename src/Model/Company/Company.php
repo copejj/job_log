@@ -2,6 +2,7 @@
 namespace Jeff\Code\Model\Company;
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\Util\DB;
 
 class Company extends Record
 {
@@ -83,7 +84,8 @@ class Company extends Record
 		$bind[] = $_SESSION['user_id'] ?? 0;
 
 		$arguably = [ 
-			static::getKey() 
+			static::getKey()
+			, 'name'
 		];
 		foreach ($arguably as $arg)
 		{
@@ -143,5 +145,17 @@ class Company extends Record
 		$key = static::getKey();
 		$bind[] = $args[$key];
 		return "DELETE from companies where {$key} = ?";
+	}
+
+	public static function getByName(string $name): ?Company
+	{
+		$bind = [];
+		$sql = static::getSelect(['name' => $name], $bind);
+		$result = DB::fetchOne($sql, $bind);
+		if (!empty($result))
+		{
+			return new Company($result);
+		}
+		return null;
 	}
 }
