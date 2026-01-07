@@ -90,7 +90,10 @@ class Table
 		$table_name = 'datatable_' . sprintf('%s', random_int(100000, 999999));
 		?>
 			<script>
+
 				$(document).ready(function() {
+					DataTable.datetime('DD/MM/YYYY');
+
 					$('#<?=$table_name?>').DataTable({<?=$this->dt_attrs?>});
 				});
 			</script>

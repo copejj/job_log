@@ -30,7 +30,7 @@ class Weeks extends HeaderedContent
 
 	public function content(): void
 	{
-		echo new Table(new WeekMetadata(), $this->service->getAll(), new Attributes([]), new DataTableAttributes(['order' => '[[2, "desc"], [3, "desc"]]']));
+		echo new Table(new WeekMetadata(), $this->service->getAll(), new Attributes([]), new DataTableAttributes([ 'order' => '[[3, "desc"]]', 'columnDefs' => "[{ type: 'date', targets: [2, 3] }]", ]));
 	}
 }
 

@@ -74,7 +74,7 @@ class Logs extends HeaderedContent
 			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ All weeks ]', new Attributes(['onchange' => 'set_filter(this)'])),
 			new Select('company_id', $this->companies->data, (int) ($this->post['company_id'] ?? 0), 0, 'Company', '[ All companies ]', new Attributes(['onchange' => 'set_filter(this)'])),
 		], 'post', $attrs);
-		echo new Table(new LogMetadata(), $this->service->getAll(), null, new DataTableAttributes(['order' => '[[2, "asc"], [1, "desc"]]']));
+		echo new Table(new LogMetadata(), $this->service->getAll(), null, new DataTableAttributes([ 'order' => '[[2, "asc"], [1, "desc"]]', 'columnDefs' => "[{ type: 'date', targets: [2, 3] }]", ]));
 	}
 }
 
