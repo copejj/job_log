@@ -7,7 +7,7 @@ class Companies extends Entities
 {
 	public function __construct()
 	{
-		parent::__construct('companies', 'company_id', 'name', 'name');
+		parent::__construct('companies', 'company_id', 'name', 'lower(name)');
 	}
 
 	protected function init(): void

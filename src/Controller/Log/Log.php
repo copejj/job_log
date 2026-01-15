@@ -18,10 +18,12 @@ use Jeff\Code\View\Elements\Select;
 use Jeff\Code\View\Elements\TextArea;
 
 use Jeff\Code\Model\Entities\Actions;
-use Jeff\Code\Model\Entities\Methods;
-use Jeff\Code\Model\Entities\Weeks;
 use Jeff\Code\Model\Entities\Companies;
+use Jeff\Code\Model\Entities\Methods;
+use Jeff\Code\Model\Entities\Settings;
 use Jeff\Code\Model\Entities\Status;
+use Jeff\Code\Model\Entities\Weeks;
+
 use Jeff\Code\Model\Meta\Labels;
 use Jeff\Code\View\HeaderedContent;
 
@@ -42,6 +44,7 @@ class Log extends HeaderedContent
 	protected Weeks $weeks;
 	protected Companies $companies;
 	protected Labels $labels;
+	protected Settings $settings;
 
 	public function init(): void
 	{
@@ -51,6 +54,7 @@ class Log extends HeaderedContent
 		$this->weeks = new Weeks();
 		$this->companies = new Companies();
 		$this->labels = new Labels();
+		$this->settings = new Settings();
 
 		if (!empty($this->post['job_log_id']))
 		{
@@ -216,12 +220,37 @@ class Log extends HeaderedContent
 		$data = $this->log->data ?? $this->post;
 		$data = $this->formatData($data);
 
+		$settings = $this->settings->data ?? [];
+		$settings_setter = [];
+		if (!empty($settings))
+		{
+			$actions = [
+				'action_ids' => "$('#checkboxes-actions-%s').prop('checked', true);",
+				'method_ids' => "$('#checkboxes-methods-%s').prop('checked', true);",
+				'status_ids' => "$('#select-status_id option[value=%s]').prop('selected', true);",
+			];
+
+			foreach ($actions as $field => $action)
+			{
+				if (!empty($settings[$field]))
+				{
+					foreach ($settings[$field] as $id)
+					{
+						$settings_setter[] = sprintf($action, $id);
+					}
+				}
+			}
+		}
 		?>
 		<script>
 			function save_form()
 			{
 				$('#log_form').append("<?=new Input('action', 'hidden', $this->mode)?>");
 				return true;
+			}
+			function set_common_values()
+			{
+				<?=implode($settings_setter)?>
 			}
 		</script>
 		<?php
@@ -232,6 +261,7 @@ class Log extends HeaderedContent
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Select('company_id', $this->companies->data, (int) ($data['company_id'] ?? 0), $this->companies->default, $this->labels->company_id, '[ Select a company ]'),
 				new Input('job_number', 'text', $data['job_number'] ?? '', '', $this->labels->job_number),
+				new Input('set_common', 'button', 'Set Common', '', $this->labels->settings, new Attributes(['onclick' => 'set_common_values()'])),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), $this->labels->actions, 'actions', null, new Attributes(['id' => 'actions_group'])),
 				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), $this->labels->methods, 'methods', null, new Attributes(['id' => 'methods_group'])),
 				new Select('status_id', $this->status->data, (int) ($data['status_id'] ?? 0), $this->status->default, $this->labels->status_id),
