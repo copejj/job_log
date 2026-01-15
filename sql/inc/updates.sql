@@ -1,1 +1,0 @@
-insert into labels (key, label) values ('settings', 'Settings');
