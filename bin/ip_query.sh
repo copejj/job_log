@@ -18,7 +18,7 @@ if [ $? -ne 0 ]; then
     echo "Error calling API $API_URL"
 fi
 
-if [ "$DOMAIN_IP" -ne "$PUBLIC_IP" ]; then
+if [ "$DOMAIN_IP" != "$PUBLIC_IP" ]; then
     echo "Domain IP ($DOMAIN_IP) does not match Public IP ($PUBLIC_IP), please update."
 fi
 
