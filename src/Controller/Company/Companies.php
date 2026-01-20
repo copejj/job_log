@@ -50,12 +50,12 @@ class CompanyMetadata extends Metadata
 				'class' => 'fit-width',
 			],
 			'job_count' => [
-				'format' => 'Jeff\Code\Controller\Company\CompanyViewAction',
+				'format' => 'Jeff\Code\Controller\Company\CompanyViewLogs',
 				'class' => 'fit-width',
 			],
 			'name' => [ ],
 			'website' => [ 
-				'format' => 'Jeff\Code\Controller\Company\CompanyNewTab' 
+				'format' => 'Jeff\Code\Controller\Company\CompanyLink' 
 			],
 			'email' => [ ],
 			'phone' => [ ],
@@ -63,7 +63,7 @@ class CompanyMetadata extends Metadata
 	}
 }
 
-class CompanyNewTab implements Formatter
+class CompanyLink implements Formatter
 {
 	public static function format(string $key, Record $data): string
 	{
@@ -112,7 +112,7 @@ class CompanyAction extends EditAction
 	}
 }
 
-class CompanyViewAction extends EditAction
+class CompanyViewLogs extends EditAction
 {
 	protected static function getType(): string
 	{

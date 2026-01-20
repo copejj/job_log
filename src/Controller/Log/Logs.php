@@ -5,7 +5,6 @@ use Jeff\Code\Model\Log\Logs as Service;
 use Jeff\Code\Model\Record;
 use Jeff\Code\Model\Entities\Companies;
 use Jeff\Code\Model\Entities\Weeks;
-
 use Jeff\Code\View\Display\Attributes;
 use Jeff\Code\View\Display\DataTableAttributes;
 use Jeff\Code\View\Display\Metadata;
@@ -14,6 +13,7 @@ use Jeff\Code\View\Elements\Form;
 use Jeff\Code\View\Elements\Format\EditAction;
 use Jeff\Code\View\Elements\Input;
 use Jeff\Code\View\Elements\Select;
+use Jeff\Code\View\Format\Formatter;
 use Jeff\Code\View\HeaderedContent;
 
 class Logs extends HeaderedContent
@@ -74,7 +74,7 @@ class Logs extends HeaderedContent
 			new Select('week_id', $this->weeks->data, (int) ($this->post['week_id'] ?? 0), $week_default, 'Week', '[ All weeks ]', new Attributes(['onchange' => 'set_filter(this)'])),
 			new Select('company_id', $this->companies->data, (int) ($this->post['company_id'] ?? 0), 0, 'Company', '[ All companies ]', new Attributes(['onchange' => 'set_filter(this)'])),
 		], 'post', $attrs);
-		echo new Table(new LogMetadata(), $this->service->getAll(), null, new DataTableAttributes([ 'order' => '[[2, "asc"], [1, "desc"]]', 'columnDefs' => "[{ type: 'date', targets: [2, 3] }]", ]));
+		echo new Table(new LogMetadata(), $this->service->getAll(), null, new DataTableAttributes([ 'order' => '[[2, "asc"], [1, "desc"]]', 'columnDefs' => "[{ type: 'date', targets: [1] }]", ]));
 	}
 }
 
@@ -89,11 +89,38 @@ class LogMetadata extends Metadata
 				'class' => 'fit-width',
 			],
 			'action_date' => [ 'format' => 'Jeff\Code\View\Elements\Date' ],
-			'name' => [ ],
+			'name' => [ 
+				'format' => 'Jeff\Code\Controller\Log\CompanyViewLogs' 
+			],
 			'title' => [ ],
 			'status' => [ ],
 			'job_number' => [ ],
 		];
+	}
+}
+
+class CompanyViewLogs extends EditAction
+{
+	protected static function getType(): string
+	{
+		return 'company';
+	}
+
+	protected static function getAttributes(): Attributes
+	{
+		return new Attributes([
+			'action' => '/?page=log',
+		]);
+	}
+
+	protected static function getAction(): string
+	{
+		return 'view';
+	}
+
+	protected static function getText(Record $data): string
+	{
+		return $data->name ?? "<i>Unknown Company</i>";
 	}
 }
 

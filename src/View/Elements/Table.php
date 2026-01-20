@@ -72,6 +72,7 @@ class Table
 					$class = " class='{$meta['class']}'";
 				}
 
+				$data_sort = strtolower($row->$key ?? '');
 				if (empty($meta['format']))
 				{
 					$text = $row->$key;
@@ -81,7 +82,7 @@ class Table
 					$text = $meta['format']::format($key, $row);
 				}
 
-				$cells[] = "<td{$class}>{$text}</td>";
+				$cells[] = "<td{$class} data-sort='{$data_sort}'>{$text}</td>";
 			}
 			$rows[] = "<tr>" . implode($cells) . "</tr>";
 		}
