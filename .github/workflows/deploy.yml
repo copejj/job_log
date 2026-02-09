@@ -23,18 +23,19 @@ jobs:
                     envs: TAG_NAME
                     script: |
                         # 1. Initialization and Output
-                        echo "--- Starting Deployment for $TAG_NAME ---"
+                        echo "[Step 1/4] Starting Deployment for $TAG_NAME"
                         cd ${{ vars.PROD_APP_PATH }}
 
                         # 2. Sync Code
-                        echo "[Step 3/8] Fetching code for tag: $TAG_NAME"
+                        echo "[Step 2/4] Fetching code for tag: $TAG_NAME"
                         git fetch --tags --all
                         git checkout "$TAG_NAME"
 
                         # 3. Make database changes (might implement later but probably not)
+                        echo "[Step 3/4] Potential future database change migration"
 
                         # 4. Final Cleanup
-                        echo "[Step 8/8] Cleaning up environment..."
+                        echo "[Step 4/4] Cleaning up environment..."
                         git checkout .
 
                         echo "--- Deployment of $TAG_NAME completed successfully! ---"

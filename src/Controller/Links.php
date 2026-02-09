@@ -35,6 +35,7 @@ class Links implements Printable
 				new Companies(),
 				new Logout(),
 				new Users(),
+				new About(),
 			];
 
 			if ($this->perms->hasAccess('invites'))
@@ -94,6 +95,14 @@ class Users extends Link
 	public function __construct()
 	{
 		parent::__construct('user', ucwords($_SESSION['first_name'] ?? 'User'), new Attributes(['class' => 'align-right']));
+	}
+}
+
+class About extends Link
+{
+	public function __construct()
+	{
+		return parent::__construct('about', 'About', new Attributes(['class' => 'align-right']));
 	}
 }
 
