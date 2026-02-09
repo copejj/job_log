@@ -2,7 +2,7 @@
 namespace Jeff\Code\Model\Company\Address;
 
 use Jeff\Code\Model\Address\Address;
-
+use Jeff\Code\Util\D;
 use Jeff\Code\Util\DB;
 
 class CompanyAddress extends Address
@@ -18,8 +18,11 @@ class CompanyAddress extends Address
 		{
 			if (empty($this->data['address_id']))
 			{
-				$address = Address::create($this->data);
-				$this->data['address_id'] = $address->address_id;
+				if (!empty($this->data['state_id']))
+				{
+					$address = Address::create($this->data);
+					$this->data['address_id'] = $address->address_id;
+				}
 			}
 			else
 			{
@@ -76,6 +79,7 @@ class CompanyAddress extends Address
 		{
 			case empty($data['company_id']):
 			case empty($data['address_type_id']):
+			case empty($data['address_id']):
 				return false;
 		}
 		return true;

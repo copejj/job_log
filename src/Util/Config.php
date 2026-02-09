@@ -5,73 +5,78 @@ use RuntimeException;
 
 class Config
 {
-	static protected $env;
-	static protected $place = [];
-	static protected $target = [];
+    static protected $env;
+    static protected $place = [];
+    static protected $target = [];
 
-	private const FILENAME = '../.env.php';
+    static private function init()
+    {
+        if (empty(self::$env)) {
+            // 1. Create the base environment from Server/PHP-FPM variables
+            $initialEnv = [
+                'ENVIRONMENT'      => getenv('ENVIRONMENT') ?: 'dev',
+                'DB_HOST'          => getenv('DB_HOST') ?: '127.0.0.1',
+                'DB_USER'          => getenv('DB_USER'),
+                'DB_PASS'          => getenv('DB_PASS'),
+                'DB_NAME'          => getenv('DB_NAME'),
+                'DB_PORT'          => getenv('DB_PORT') ?: '5432', // Default Postgres port
+                'NEW_USER_ENABLED' => filter_var(getenv('NEW_USER_ENABLED'), FILTER_VALIDATE_BOOLEAN),
+                'IP_HOST_URL'      => 'ipinfo.io/ip',
+            ];
 
-	static private function init()
-	{
-		if (empty(self::$env))
-		{
-			// The config_setting section needs env values for the database 
-			// connection so we need to set the env variables immediately
-			// before retrieving the config_settings values
-			$file = require static::FILENAME;
-			self::$env = $file;
+            // Set the static env immediately so DB class can use it to connect
+            self::$env = $initialEnv;
+            self::setPlacement($initialEnv, 'server_env');
 
-			$settings = self::getSettings();
-			self::$env = array_merge($settings, self::$env);
-
-			self::setPlacement($settings, 'db');
-			self::setPlacement($file, 'file');
-		}
-	}
-
-	static private function setPlacement(array $target, string $placement)
-	{
-		if (!empty($target))
-		{
-			foreach ($target as $key => $val)
-			{
-				self::$place[$key] = $placement;
-			}
-		}
-	}
-
-	static private function getSettings() : array
-	{
-		$env = [];
-		$sql = 
-			"SELECT distinct on (name) name, value, environment
-			from public.config
-			where inactive_date is null
-				and trim(upper(environment)) in ('ANY', ?)
-			order by name, environment desc";
-		$settings = DB::fetchAll($sql, [trim(strtoupper(self::$env['ENVIRONMENT']))]);
-		if (!empty($settings))
-		{
-			foreach ($settings as $setting)
-			{
-				if (!empty(trim($setting['name'])))
-				{
-					$env[$setting['name']] = $setting['value'];
-					self::$target[$setting['name']] = $setting['environment'];
-				}
-			}
-		}
-		return $env ?? [];
+            // 2. Fetch the rest of the settings from the Database
+            $settings = self::getSettings();
+            
+            // 3. Merge database settings over the server defaults
+            self::$env = array_merge(self::$env, $settings);
+            self::setPlacement($settings, 'db');
+        }
     }
 
-	static public function get(string $key)
-	{
-		static::init();
-		if (! array_key_exists($key, self::$env)) {
-			throw new RuntimeException("No such config key: {$key}");
-		}
-		return self::$env[$key];
-	}
+    static private function setPlacement(array $target, string $placement)
+    {
+        foreach ($target as $key => $val) {
+            self::$place[$key] = $placement;
+        }
+    }
+
+    static private function getSettings(): array
+    {
+        $env = [];
+        // Note: Ensure your DB class uses Config::get('DB_HOST'), etc.
+        $sql = "SELECT DISTINCT ON (name) name, value, environment
+                FROM public.config
+                WHERE inactive_date IS NULL
+					AND trim(upper(environment)) IN ('ANY', ?)
+                ORDER BY name, environment DESC";
+        
+        $settings = DB::fetchAll($sql, [trim(strtoupper(self::$env['ENVIRONMENT']))]);
+
+        if (!empty($settings)) {
+            foreach ($settings as $setting) {
+                $name = trim($setting['name']);
+                if (!empty($name)) {
+                    $env[$name] = $setting['value'];
+                    self::$target[$name] = $setting['environment'];
+                }
+            }
+        }
+        return $env;
+    }
+
+    static public function get(string $key)
+    {
+        static::init();
+        if (!array_key_exists($key, self::$env)) {
+            throw new RuntimeException("No such config key: {$key}");
+        }
+        return self::$env[$key];
+    }
+
 
 	static public function getAll()
 	{
