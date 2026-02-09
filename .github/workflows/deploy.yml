@@ -31,16 +31,9 @@ jobs:
                         git fetch --tags --all
                         git checkout "$TAG_NAME"
 
-                        # 5. Configuration & Build
-                        echo "[Step 5/8] Configuring application properties and building..."
-                        sed -i "s|<db_url>|$DB_URL|g" src/main/resources/application.properties
-                        sed -i "s|<db_user>|$DB_USER|g" src/main/resources/application.properties
-                        sed -i "s|<db_pass>|$DB_PASS|g" src/main/resources/application.properties
-                        sed -i "s|<api_base_url>|$API_BASE_URL|g" src/main/resources/application.properties
-                        sed -i "s|<server_context_path>|$SERVER_CONTEXT_PATH|g" src/main/resources/application.properties
-                        mvn clean package -DskipTests
+                        # 3. Make database changes (might implement later but probably not)
 
-                        # 8. Final Cleanup
+                        # 4. Final Cleanup
                         echo "[Step 8/8] Cleaning up environment..."
                         git checkout .
 
