@@ -1,0 +1,56 @@
+on:
+    release:
+        types: [published]
+    workflow_dispatch: 
+        inputs:
+            test_tag:
+                description: 'Tag to use for testing (e.g. v1.0.0-test)'
+                required: false
+                default: 'testing'
+
+jobs:
+    deploy-to-production:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Execute Remote Deployment
+                uses: appleboy/ssh-action@v1.2.0
+                with:
+                    host: ${{ vars.PROD_HOST }}
+                    port: ${{ secrets.SSH_PRIVATE_PORT }}
+                    username: ${{ secrets.SSH_PRIVATE_USERNAME }}
+                    key: ${{ secrets.SSH_PRIVATE_KEY }}
+                    # IMPORTANT: All variables used in the script must be listed here
+                    envs: DB_NAME,DB_USER,DB_PASS,DB_HOST,DB_URL,API_BASE_URL,SERVER_CONTEXT_PATH,TAG_NAME
+                    script: |
+                        # 1. Initialization and Output
+                        echo "--- Starting Deployment for $TAG_NAME ---"
+                        cd ${{ vars.PROD_APP_PATH }}
+
+                        # 2. Sync Code
+                        echo "[Step 3/8] Fetching code for tag: $TAG_NAME"
+                        git fetch --tags --all
+                        git checkout "$TAG_NAME"
+
+                        # 5. Configuration & Build
+                        echo "[Step 5/8] Configuring application properties and building..."
+                        sed -i "s|<db_url>|$DB_URL|g" src/main/resources/application.properties
+                        sed -i "s|<db_user>|$DB_USER|g" src/main/resources/application.properties
+                        sed -i "s|<db_pass>|$DB_PASS|g" src/main/resources/application.properties
+                        sed -i "s|<api_base_url>|$API_BASE_URL|g" src/main/resources/application.properties
+                        sed -i "s|<server_context_path>|$SERVER_CONTEXT_PATH|g" src/main/resources/application.properties
+                        mvn clean package -DskipTests
+
+                        # 8. Final Cleanup
+                        echo "[Step 8/8] Cleaning up environment..."
+                        git checkout .
+
+                        echo "--- Deployment of $TAG_NAME completed successfully! ---"
+                env:
+                    DB_NAME: ${{ secrets.DB_NAME }}
+                    DB_USER: ${{ secrets.DB_USER }}
+                    DB_PASS: ${{ secrets.DB_PASS }}
+                    DB_HOST: ${{ secrets.DB_HOST }}
+                    DB_URL: ${{ secrets.DB_URL }}
+                    API_BASE_URL: ${{ vars.API_BASE_URL }}
+                    SERVER_CONTEXT_PATH: ${{ vars.SERVER_CONTEXT_PATH }}
+                    TAG_NAME: ${{ github.event.inputs.test_tag || github.event.release.tag_name }}
