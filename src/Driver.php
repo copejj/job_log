@@ -9,6 +9,7 @@ use Jeff\Code\Controller\Links;
 use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
+use Jeff\Code\Controller\Server\Info;
 use Jeff\Code\Controller\Users\User;
 use Jeff\Code\Controller\Users\Login;
 use Jeff\Code\Controller\Users\Logout;
@@ -97,6 +98,9 @@ class Driver
 				break;
 			case 'logout':
 				$this->content = new Logout();
+				break;
+			case 'info':
+				$this->content = ($_SESSION['is_admin']) ? new Info() : new Index();
 				break;
 			case 'user':
 				$this->content = new User();

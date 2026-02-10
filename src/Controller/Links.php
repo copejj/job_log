@@ -41,6 +41,11 @@ class Links implements Printable
 			{
 				$links[] = new Invite();
 			}
+
+			if ($_SESSION['is_admin'])
+			{
+				$links[] = new Info();
+			}
 		}
 
 		$refs = [];
@@ -94,6 +99,14 @@ class Users extends Link
 	public function __construct()
 	{
 		parent::__construct('user', ucwords($_SESSION['first_name'] ?? 'User'), new Attributes(['class' => 'align-right']));
+	}
+}
+
+class Info extends Link
+{
+	public function __construct()
+	{
+		return parent::__construct('info', 'Info', new Attributes(['class' => 'align-right']));
 	}
 }
 
