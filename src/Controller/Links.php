@@ -35,12 +35,16 @@ class Links implements Printable
 				new Companies(),
 				new Logout(),
 				new Users(),
-				new About(),
 			];
 
 			if ($this->perms->hasAccess('invites'))
 			{
 				$links[] = new Invite();
+			}
+
+			if ($_SESSION['is_admin'])
+			{
+				$links[] = new Info();
 			}
 		}
 
@@ -98,7 +102,7 @@ class Users extends Link
 	}
 }
 
-class About extends Link
+class Info extends Link
 {
 	public function __construct()
 	{

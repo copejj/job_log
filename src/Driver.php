@@ -100,7 +100,7 @@ class Driver
 				$this->content = new Logout();
 				break;
 			case 'info':
-				$this->content = new Info();
+				$this->content = ($_SESSION['is_admin']) ? new Info() : new Index();
 				break;
 			case 'user':
 				$this->content = new User();

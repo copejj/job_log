@@ -6,6 +6,14 @@ use Jeff\Code\View\HeaderedContent;
 
 class Info extends HeaderedContent
 {
+	public function processing(): void
+	{
+		if (!$_SESSION['is_admin'])
+		{
+			$this->has_redirect = '/';
+		}
+	}
+
 	protected function getTitle(): string
 	{
 		return "Server Info";
