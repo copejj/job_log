@@ -102,7 +102,7 @@ class About extends Link
 {
 	public function __construct()
 	{
-		return parent::__construct('about', 'About', new Attributes(['class' => 'align-right']));
+		return parent::__construct('info', 'Info', new Attributes(['class' => 'align-right']));
 	}
 }
 

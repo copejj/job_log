@@ -1,13 +1,14 @@
 <?php
 namespace Jeff\Code\Controller\Server;
 
+use Jeff\Code\Util\D;
 use Jeff\Code\View\HeaderedContent;
 
-class About extends HeaderedContent
+class Info extends HeaderedContent
 {
 	protected function getTitle(): string
 	{
-		return "About";
+		return "Server Info";
 	}
 
 	protected function content(): void
@@ -19,15 +20,24 @@ class About extends HeaderedContent
 		$total_space = disk_total_space("/");
 		$disk_percent = round((($total_space - $free_space) / $total_space) * 100, 2);
 
-		$version = exec('git rev-parse --short HEAD');
+		$version = exec('/home/logs/git symbolic-ref --short -q HEAD || git describe --tags --exact-match', $output, $result_code);
 
+		// 1. Get the current branch
+		$branch = trim(shell_exec('git rev-parse --abbrev-ref HEAD 2>&1'));
+
+		// 2. Get the current tag (suppress error if no tag exists)
+		$tag = trim(shell_exec('git describe --tags --exact-match 2>/dev/null') ?? '');
 		?>
-		Server:
+		<h3>Git Branch/Version</h3>
+		<ul>
+			<li>Version: <?=$tag?></li>
+			<li>Branch: <?=$branch?></li>
+		</ul>
+		<h3>Server Status</h3>
 		<ul>
 			<li>Status: <?=$health_status?></li>
 			<li>Load: <?=$load[0]?></li>
 			<li>Disk Usage: <?=$disk_percent?>%</li>
-			<li>Version: <?=$version?>
 		</ul>
 		<?php
 	}
