@@ -51,8 +51,7 @@ class Config
         // Note: Ensure your DB class uses Config::get('DB_HOST'), etc.
         $sql = "SELECT DISTINCT ON (name) name, value, environment
                 FROM public.config
-                WHERE inactive_date IS NULL
-					AND trim(upper(environment)) IN ('ANY', ?)
+                WHERE trim(upper(environment)) IN ('ANY', ?)
                 ORDER BY name, environment DESC";
         
         $settings = DB::fetchAll($sql, [trim(strtoupper(self::$env['ENVIRONMENT']))]);
