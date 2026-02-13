@@ -20,23 +20,17 @@ class Links implements Printable
 
 	public function __toString(): string
 	{
+		$links = [];
 		if (empty($_SESSION['user_id']))
 		{
-			$links = [
-				new Home(),
-				new Login(),
-			];
+			$links[] = new Home();
+			$links[] = new Login();
 		}
 		else
 		{
-			$links = [
-				new Logs(),
-				new Weeks(),
-				new Companies(),
-				new Logout(),
-				new Users(),
-			];
-
+			$links[] = new Logs();
+			$links[] = new Weeks();
+			$links[] = new Companies();
 			if ($this->perms->hasAccess('invites'))
 			{
 				$links[] = new Invite();
@@ -46,6 +40,10 @@ class Links implements Printable
 			{
 				$links[] = new Info();
 			}
+			$links[] = new Users();
+			$links[] = new Logout();
+
+
 		}
 
 		$refs = [];
@@ -58,7 +56,7 @@ class Links implements Printable
 			}
 			$refs[] = "{$link}";
 		}
-		return "<ul>" . implode($refs) . "</ul>";
+		return "<ul class='navbar-nav'>" . implode($refs) . "</ul>";
 	}
 }
 

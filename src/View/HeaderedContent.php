@@ -31,16 +31,19 @@ abstract class HeaderedContent extends HeadlessContent
 			</head>
 			<body>
 				<div class='full-page-content'>
-					<div class='header-cont'> Applied Jobs Log <?=$extra_text?> </div>
+					<div class='header-cont'> 
+						<span class='site-name'>The Brain Dribbler</span><span class="site-location"><?=$extra_text?></span> </div>
 		<?php
 	}
 
 	protected function links(): void
 	{
 		?>
-			<div class='menu-container links-cont'>
-				<?=$this->links?>
-			</div>
+			<nav class='links-cont navbar navbar-expand-lg navbar-dark bg-dark'>
+				<div class='menu-container'>
+					<?=$this->links?>
+				</div>
+			</nav>
 		<?php
 	}
 
