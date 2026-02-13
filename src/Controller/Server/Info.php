@@ -1,8 +1,9 @@
 <?php
 namespace Jeff\Code\Controller\Server;
 
-use Jeff\Code\Util\D;
+use Jeff\Code\Util\Info\GitInfo;
 use Jeff\Code\View\HeaderedContent;
+use Jeff\Code\Util\Info\ServerInfo;
 
 class Info extends HeaderedContent
 {
@@ -21,31 +22,24 @@ class Info extends HeaderedContent
 
 	protected function content(): void
 	{
-		$load = sys_getloadavg();
-		$health_status = ($load[0] < 2.0) ? "Healthy" : "High Load"; // Threshold depends on your CPU cores
+		$serverInfo = new ServerInfo();
+		$gitInfo = new GitInfo();
 
-		$free_space = disk_free_space("/");
-		$total_space = disk_total_space("/");
-		$disk_percent = round((($total_space - $free_space) / $total_space) * 100, 2);
-
-		$version = exec('/home/logs/git symbolic-ref --short -q HEAD || git describe --tags --exact-match', $output, $result_code);
-
-		// 1. Get the current branch
-		$branch = trim(shell_exec('git rev-parse --abbrev-ref HEAD 2>&1'));
-
-		// 2. Get the current tag (suppress error if no tag exists)
-		$tag = trim(shell_exec('git describe --tags --exact-match 2>/dev/null') ?? '');
 		?>
-		<h3>Git Branch/Version</h3>
 		<ul>
-			<li>Version: <?=$tag?></li>
-			<li>Branch: <?=$branch?></li>
+			<h4>Git Branch/Version</h4>
+			<li>Branch: <?=$gitInfo->branch?> (<?=$gitInfo->hash?>)</li>
 		</ul>
-		<h3>Server Status</h3>
 		<ul>
-			<li>Status: <?=$health_status?></li>
-			<li>Load: <?=$load[0]?></li>
-			<li>Disk Usage: <?=$disk_percent?>%</li>
+			<h4>Server Status</h4>
+			<li>Status: <?=$serverInfo->health_status?></li>
+			<li>Load: <?=$serverInfo->server_load?></li>
+		</ul>
+		<ul>
+			<h4>Server Space</h4>
+			<li>Total Space: <?=$serverInfo->total_space?></li>
+			<li>Free Space: <?=$serverInfo->free_space?></li>
+			<li>Disk Usage: <?=$serverInfo->disk_percent?>%</li>
 		</ul>
 		<?php
 	}

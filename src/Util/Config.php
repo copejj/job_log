@@ -14,14 +14,15 @@ class Config
         if (empty(self::$env)) {
             // 1. Create the base environment from Server/PHP-FPM variables
             $initialEnv = [
-                'ENVIRONMENT'      => getenv('ENVIRONMENT') ?: 'dev',
-                'DB_HOST'          => getenv('DB_HOST') ?: '127.0.0.1',
-                'DB_USER'          => getenv('DB_USER'),
-                'DB_PASS'          => getenv('DB_PASS'),
-                'DB_NAME'          => getenv('DB_NAME'),
-                'DB_PORT'          => getenv('DB_PORT') ?: '5432', // Default Postgres port
-                'NEW_USER_ENABLED' => filter_var(getenv('NEW_USER_ENABLED'), FILTER_VALIDATE_BOOLEAN),
-                'IP_HOST_URL'      => 'ipinfo.io/ip',
+                'ENVIRONMENT'       => getenv('ENVIRONMENT') ?: 'dev',
+                'DB_HOST'           => getenv('DB_HOST') ?: '127.0.0.1',
+                'DB_USER'           => getenv('DB_USER'),
+                'DB_PASS'           => getenv('DB_PASS'),
+                'DB_NAME'           => getenv('DB_NAME'),
+                'DB_PORT'           => getenv('DB_PORT') ?: '5432', // Default Postgres port
+                'JAVA_EXTERNAL_URL' => getenv('JAVA_EXTERNAL_URL') ?: "http://localhost:8080",
+                'NEW_USER_ENABLED'  => filter_var(getenv('NEW_USER_ENABLED'), FILTER_VALIDATE_BOOLEAN),
+                'IP_HOST_URL'       => 'ipinfo.io/ip',
             ];
 
             // Set the static env immediately so DB class can use it to connect

@@ -1,6 +1,9 @@
 <?php
 namespace Jeff\Code\View;
 
+use DateTime;
+use Jeff\Code\Util\Info\GitInfo;
+
 abstract class HeaderedContent extends HeadlessContent
 {
 	protected function header(): void
@@ -49,8 +52,22 @@ abstract class HeaderedContent extends HeadlessContent
 
 	protected function footer(): void 
 	{
+		$gitInfo = new GitInfo();
+		$currentDate = new DateTime();
+
 		?>
-					<div class='footer-cont'> &copy; 2025 Jeff Cope, All Rights Reserved. </div>
+					<div class='footer-cont'> 
+						<div class="legal-info">
+							<small>
+								&copy; <?=$currentDate->format('Y')?> Brain Dribbler. All rights reserved.
+							</small>
+						</div>
+						<div class="version-info">
+							<small class="text-muted">
+								<span class='git-branch'><?=$gitInfo->branch?></span> (<span class="git-hash"><?=$gitInfo->hash?></span>)
+							</small>
+						</div>
+					</div>
 					<dialog id="pageModal" class='page-modal'>
 						<button id="closeModal"> X </button>
 						<div id="pageContent" class='page-content'></div>
