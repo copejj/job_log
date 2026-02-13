@@ -1,4 +1,5 @@
 html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -12,50 +13,33 @@ pre {
     font-family: "Fira Code", "Courier New", monospace;
 }
 .full-page-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
     background-color: #f0f0f0;
-    height: 100%;
-    box-sizing: content-box;
-    border-right: .5rem solid transparent;
-    border-image: linear-gradient(to bottom, #1b2a3b, #f0f0f0, #f0f0f0, #00067d) 1;
+}
+.full-page-content > div:last-of-type {
+    margin-top: auto;
 }
 .header-cont, 
 .footer-cont,
 div#pageContent .sub-header-cont {
-    background-image: linear-gradient(to right, #2d5375, #9192a7, #a4a4a8);
+    background-image: linear-gradient(to right, #2d5375, #9192a7, #364352);
 	color: white;
 	padding: 1rem;
 }
-.links-cont {
-    background-image: linear-gradient(to right, #ffffff, #9192a7, #a4a4a8);
-	margin-bottom: 1rem;
-    display: inline-flex;
-    width: 100%;
-    box-sizing: border-box;
-}
-.link.link-selected {
-    background-image: linear-gradient(to right, #2d5375, #31517d, #2d5375);
-    color: white;
-    border: 2px solid #305576;
-    border-radius: 0 0 5px 5px;
-}
-.link {
-    padding: 0.5rem;
-    width: 5rem;
-    text-align: center;
-}
-.link a {
-    text-decoration: none;
-    color: #32517e;
-}
-.link.link-selected a {
-    color: white;
-}
 .header-cont {
     height: 5vh;
-    font-size: 2.5rem;
-    font-style: italic;
     border-bottom: .5rem solid transparent;
-    border-image: linear-gradient(to right, #2d5375, #56616d) 1;
+    border-image: linear-gradient(to right, #2d5375, #364352) 1;
+}
+.header-cont .site-name {
+    font-size: 2.5rem;
+}
+.header-cont .site-location {
+    font-size: 2rem;
+    font-style: italic;
 }
 .sub-header-cont {
     height: 4vh;
@@ -63,16 +47,16 @@ div#pageContent .sub-header-cont {
     font-style: italic;
 }
 .footer-cont {
-	margin-top: 1rem;
+    flex-shrink: 0;
+	margin-top: auto;
 	font-size: .75rem;
 	font-style: italic;
     border-top: .5rem solid transparent;
-    border-image: linear-gradient(to right, #2d5375, #282d90) 1;
+    border-image: linear-gradient(to right, #2d5375, #364352) 1;
 }
 .content-cont {
+    flex: 1 0 auto;
     margin: 1rem;
-    min-height: 75.7vh;
-    box-sizing: border-box;
 }
 .select-input {
     min-width: 20rem;
@@ -135,8 +119,8 @@ dialog.page-modal .date-input {
     padding-left: 2rem;
 } 
 .text-area-input {
-    width: 50%;
-	height: auto;
+    width: 20rem;
+    height: 10rem;
 }
 .table-details .text-area-input {
     width: 100%;
@@ -165,6 +149,102 @@ div#actions_group div.check-div {
 div#methods_group div.check-div {
     width: 10%;
 }
+
+span.clear-button {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #496b89;
+    border-radius: .35rem;
+    text-align: center;
+    padding: .2rem;
+    margin: 1px;
+    width: 6rem;
+    height: 1rem;
+    display: inline-block;
+    vertical-align:middle;
+    font-size: .80rem;
+}
+
+span.clear-button a, 
+span.clear-button a:focus, 
+span.clear-button a:active {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+}
+
+span.clear-button .fa-solid, 
+span.clear-button a, 
+span.clear-button {
+    color: #496b89;
+}
+
+span.clear-button a {
+    width: 100%;
+}
+
+span.clear-button:hover .fa-solid, 
+span.clear-button:hover a, 
+span.clear-button:hover {
+    color: white;
+    background-color: #496b89;
+}
+
+.fa-solid, .fas {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    color: #2f5170;
+    margin-right: .5rem;
+    background-color: inherit;
+}
+
+.active-filter i {
+    color: #49894c !important; 
+    font-weight: bold;
+}
+
+div.table table.dataTable tbody tr:hover .active-filter i {
+    color: #83f7898a !important;
+    text-shadow: 0px 0px 7px rgb(255 255 255);
+}
+
+div.table table.dataTable.d-some{
+    display: table !important;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+div.table table.dataTable>tbody>tr:nth-child(even),
+div.table table.dataTable tbody tr:nth-child(even) { 
+    background-color: #9c9da740;
+}
+
+div.table table.dataTable>tbody>tr:nth-child(odd),
+div.table table.dataTable tbody tr:nth-child(odd) {
+    background-color: #586e8a00;
+}
+
+div.table table.dataTable>tbody>tr:hover .fa-solid,
+div.table table.dataTable tbody tr:hover .fas {
+    color: #ffffff;
+    background-color: inherit;
+}
+
+div.table table.dataTable>tbody>tr:hover,
+div.table table.dataTable tbody tr:hover {
+    color: #ffffff;
+    background-color: #475e7bf0;
+    transition: background-color 0.2s ease-in-out;
+}
+
+div.table table.dataTable tbody tr:hover a,
+div.table table.dataTable tbody tr:hover a:visited,
+div.table table.dataTable tbody tr:hover a:link {
+    color: #ffffff;
+    background-color: transparent; 
+    transition: color 0.2s ease-in-out;
+}
+
 div.table table.dataTable th.dt-type-numeric,
 div.table table.dataTable th.dt-type-date,
 div.table table.dataTable td.dt-type-numeric,
@@ -180,12 +260,6 @@ div.table table.dataTable td.dt-type-numeric div.dt-column-footer,
 div.table table.dataTable td.dt-type-date div.dt-column-header,
 div.table table.dataTable td.dt-type-date div.dt-column-footer {
 	flex-direction: row;
-}
-div.table table.dataTable th.dt-type-numeric,
-div.table table.dataTable th.dt-type-date,
-div.table table.dataTable td.dt-type-numeric,
-div.table table.dataTable td.dt-type-date {
-	text-align: left;
 }
 td.fit-width {
     width: 1%;
@@ -261,10 +335,6 @@ dialog.page-modal table td.detail-control.error .fa-copy {
     font-style: italic;
     padding-left: 1rem;
 }
-div#pageContent .content-cont {
-    height: 90vh;
-    margin: 0;
-}
 .table.details-table {
     height: 80vh;
     min-width: 30rem;
@@ -291,26 +361,205 @@ div#pageContent .sub-header-cont {
     background-image: linear-gradient(to right, #2d5375, #a35900);
     background-clip: text;
 }
-.menu-container {
-    overflow: hidden; /* Clear floats within the container */
-}
-.menu-container ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
 .menu-container li {
     display: inline-block; /* Display list items inline */
-}
-.align-right {
-    float: right; /* Align the entire menu to the right */
-}
-.align-left {
-    float: left; /* Align the entire menu to the left */
 }
 .input-cont.line-separator {
     border-top: 2px #a4a4a8 solid;
     margin-top: 1rem;
     width: 21rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+}
+
+.input-group input {
+    width: 100rem; 
+}
+
+select.select-input:required:invalid {
+    color: #999; /* Grey placeholder color */
+}
+
+select.select-input option {
+    color: #000;
+}
+
+select.select-input {
+    appearance: none;
+    -webkit-appearance: none;
+}
+.nav-item.link {
+    text-align: center;
+}
+.link {
+    padding: 0.2rem;
+    width: 5rem;
+    flex-shrink: 0;     
+}
+.link a {
+    text-decoration: none;
+    color: #e3e4e5;
+}
+.nav-link.link.link-selected {
+    background-image: linear-gradient(to right, #2d5375, #31517d, #2d5375);
+    color: white;
+    border: 2px solid #305576;
+    border-radius: 0 0 5px 5px;
+}
+.nav-link.link.link-selected a {
+    color: white;
+}
+
+.dropdown-menu li {
+    display: block !important;
+    width: 100% !important;
+    text-align: left;
+    padding: 0;
+}
+
+.nav-item:hover > .dropdown-menu {
+    display: block !important;
+}
+
+.links-cont {
+    background: #496b89;
+    margin-bottom: 1rem;
+    display: flex;
+    width: 100%;
+    overflow: visible !important; /* Critical for dropdowns */
+    flex-shrink: 0;
+}
+
+.menu-container {
+    width: 100%;
+    overflow: visible !important;
+}
+
+.menu-container ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.nav-item {
+    position: relative !important;
+    width: 6rem;
+    flex-shrink: 0;     
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #e3e4e5;
+}
+
+/* double check this down */
+.dropdown-menu {
+    position: absolute !important;
+    top: 100% !important; /* Below the bar */
+    left: 0;
+    z-index: 1000;
+    display: none !important; /* Hidden by default */
+    border: none !important;
+    min-width: 10rem;
+    background: #65829b;
+}
+
+.nav-item:hover > .dropdown-menu {
+    display: block !important;
+}
+
+.align-right .dropdown-menu {
+    left: auto !important;
+    right: 0 !important;
+}
+
+.dropdown-item {
+    padding: 0.75rem 1rem !important;
+    display: block !important;
+    text-decoration: none;
+}
+
+li.link:hover {
+    background-color:#3f6283; 
+}
+
+li.link.nav-item:hover,
+li.link.nav-item.link-selected:hover,
+li.link.nav-item:has(.link-selected),
+li.link.nav-item.link-selected {
+    border-radius: 0 1rem 0 0;
+}
+
+li.align-right.link.nav-item:hover,
+li.align-right.link.nav-item.link-select:hover,
+li.align-right.link.nav-item:has(.link-selected),
+li.align-right.link.nav-item.link-selected {
+    border-radius: 1rem 0 0 0;
+}
+
+li.link:has(.link-selected),
+li.link.link-selected {
+    background-color: #2f506f;
+}
+
+.dropdown-menu,
+.dropdown-menu>li.link:has(.dropdown-item):hover,
+.dropdown-menu>li.link.link-selected:has(.dropdown-item):hover,
+.dropdown-menu>li.link.link-selected:has(.dropdown-item) {
+    border-radius: 0 0 .5rem 1rem;
+}
+
+.navbar-nav > li.link:nth-child(1 of .link.align-right){
+    margin-left: auto;
+}
+
+td.company-cell {
+    display: flex;
+    align-items: center;
+}
+
+td.company-cell .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-cont {
+    display: flex;
+    align-items: stretch; /* Make both sides equal height */
+    gap: 40px;              
+    height: 69vh;        /* Set the limit here so both sides respect it */
+    overflow: hidden;    /* No scrolling on the outer container */
+}
+
+.about-text {
+    flex: 1.5;               
+    padding: 20px;
+    overflow-y: auto;    /* Only the text side scrolls if it gets too long */
+}
+
+.about-text p {
+    width: 90%;
+}
+
+.about-image {
+    display: flex;       /* Added this to make centering work */
+    justify-content: center;
+    align-items: center;
+    flex: 3;       
+    overflow: hidden;
+    height: 95%;        /* Match the 70vh of the parent */
+}
+
+.about-image img {
+    height: 100%;
+    border-radius: 1rem;
 }

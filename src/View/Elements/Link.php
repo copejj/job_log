@@ -2,7 +2,6 @@
 namespace Jeff\Code\View\Elements;
 
 use Exception;
-use Jeff\Code\Util\D;
 use Jeff\Code\View\Display\Attributes;
 
 class Link
@@ -18,7 +17,7 @@ class Link
 	{
 		$this->page = $page;
 		$this->label = $label;
-		$this->attr = new Attributes(['class' => 'link']);
+		$this->attr = new Attributes(['class' => 'link nav-item']);
 		if (!empty($attr))
 		{
 			$this->attr->merge($attr);
@@ -58,6 +57,6 @@ class Link
 	public function __toString(): string
 	{
 		$ref = (empty($this->page)) ? '' : "?page={$this->page}";
-		return "<li {$this->attr}><a href='/{$ref}'>{$this->label}</a></li>";
+		return "<li {$this->attr}><a class='nav-link' href='/{$ref}'>{$this->label}</a></li>";
 	}
 }
