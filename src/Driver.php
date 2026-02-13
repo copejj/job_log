@@ -37,6 +37,7 @@ class Driver
 	{
 		switch ($page = ($this->get['page'] ?? ''))
 		{
+			case '':
 			case 'login':
 			case 'about':
 				break;
