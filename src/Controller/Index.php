@@ -2,7 +2,6 @@
 namespace Jeff\Code\Controller;
 
 use Jeff\Code\Util\Config;
-use Jeff\Code\Util\D;
 use Jeff\Code\View\HeaderedContent;
 
 class Index extends HeaderedContent
