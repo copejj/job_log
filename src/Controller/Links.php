@@ -24,6 +24,7 @@ class Links implements Printable
 		if (empty($_SESSION['user_id']))
 		{
 			$links[] = new Home();
+			$links[] = new About();
 			$links[] = new Login();
 		}
 		else
@@ -108,11 +109,19 @@ class Info extends Link
 	}
 }
 
+class About extends Link
+{
+	public function __construct()
+	{
+		return parent::__construct('about', 'About', new Attributes(['class' => 'align-right']));
+	}
+}
+
 class Login extends Link
 {
 	public function __construct()
 	{
-		parent::__construct('login', 'Login', new Attributes(['class' => 'align-right']));
+		return parent::__construct('login', 'Login', new Attributes(['class' => 'align-right']));
 	}
 }
 

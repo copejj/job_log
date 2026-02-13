@@ -9,6 +9,7 @@ use Jeff\Code\Controller\Links;
 use Jeff\Code\Controller\Log\Log;
 use Jeff\Code\Controller\Log\LogDetails;
 use Jeff\Code\Controller\Log\Logs;
+use Jeff\Code\Controller\Server\About;
 use Jeff\Code\Controller\Server\Info;
 use Jeff\Code\Controller\Users\User;
 use Jeff\Code\Controller\Users\Login;
@@ -34,17 +35,16 @@ class Driver
 
 	public function getContent(): Content
 	{
-		$page = '';
-		if (!empty($this->get['page']))
+		switch ($page = ($this->get['page'] ?? ''))
 		{
-			if (empty($_SESSION['user_id']))
-			{
-				$page = 'login';
-			}
-			else
-			{
-				$page = $this->get['page'];
-			}
+			case 'login':
+			case 'about':
+				break;
+			default:
+				if (empty($_SESSION['user_id']))
+				{
+					$page = 'login';
+				}
 		}
 
 		$action = $this->post['action'] ?? $this->get['action'] ?? '';
@@ -92,6 +92,9 @@ class Driver
 					default:
 						$this->content = new Companies();
 				}
+				break;
+			case 'about':
+				$this->content = new About();
 				break;
 			case 'login':
 				$this->content = new Login();
