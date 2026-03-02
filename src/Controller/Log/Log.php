@@ -105,6 +105,8 @@ class Log extends HeaderedContent
 					$this->log->company_id = $post['company_id'] ?? null;
 					$this->log->title = $post['title'] ?? null;
 					$this->log->job_number = $post['job_number'] ?? null;
+					$this->log->job_link = $post['job_link'] ?? null;
+					$this->log->description = $post['description'] ?? null;
 					$this->log->next_step = $post['next_step'] ?? null;
 					$this->log->notes = $post['notes'] ?? null;
 					$this->log->confirmation = $post['confirmation'] ?? null;
@@ -261,6 +263,8 @@ class Log extends HeaderedContent
 				new Input('title', 'text', $data['title'] ?? '', '', 'Title'),
 				new Select('company_id', $this->companies->data, (int) ($data['company_id'] ?? 0), $this->companies->default, $this->labels->company_id, '[ Select a company ]'),
 				new Input('job_number', 'text', $data['job_number'] ?? '', '', $this->labels->job_number),
+				new Input('job_link', 'text', $data['job_link'] ?? '', '', $this->labels->job_link),
+				new TextArea('description', $data['description'] ?? '', '', $this->labels->description),
 				new Input('set_common', 'button', 'Set Common', '', $this->labels->settings, new Attributes(['onclick' => 'set_common_values()'])),
 				new Inputs(new Checkboxes('actions', $this->actions->data, $data['actions'] ?? []), $this->labels->actions, 'actions', null, new Attributes(['id' => 'actions_group'])),
 				new Inputs(new Checkboxes('methods', $this->methods->data, $data['methods'] ?? []), $this->labels->methods, 'methods', null, new Attributes(['id' => 'methods_group'])),

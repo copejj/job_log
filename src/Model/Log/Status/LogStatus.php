@@ -2,6 +2,7 @@
 namespace Jeff\Code\Model\Log\Status;
 
 use Jeff\Code\Model\Record;
+use Jeff\Code\Util\D;
 
 class LogStatus extends Record
 {
@@ -22,17 +23,21 @@ class LogStatus extends Record
 			$this->bind = [
 				$this->data[static::getKey()],
 				$this->data['status_id'], 
+				$this->data[static::getKey()],
+				$this->data['status_id'], 
 			];
 
 			$this->sql = 
-				"INSERT into job_log_statuses (
-					job_log_id
-					, status_id
-				)
-				values (?, ?)
-				on conflict (job_log_id, status_id) 
-				do update set status_date = now()
-				returning *";
+				"INSERT INTO job_log_statuses (job_log_id, status_id)
+				SELECT ?, ?
+				WHERE (
+					SELECT status_id 
+					FROM job_log_statuses 
+					WHERE job_log_id = ? 
+					ORDER BY status_date DESC 
+					LIMIT 1
+				) IS DISTINCT FROM ?
+				RETURNING *";
 		}
 		return true;
 	}

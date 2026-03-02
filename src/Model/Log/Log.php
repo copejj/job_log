@@ -28,6 +28,8 @@ class Log extends Record
 				empty($this->data['company_id']) ? null : $this->data['company_id'], 
 				$this->data['title'] ?? null, 
 				$this->data['job_number'] ?? null, 
+				$this->data['job_link'] ?? null, 
+				$this->data['description'] ?? null, 
 				$this->data['next_step'] ?? null, 
 				$this->data['notes'] ?? null, 
 				$this->data['confirmation'] ?? null, 
@@ -45,13 +47,15 @@ class Log extends Record
 						, company_id
 						, title
 						, job_number
+						, job_link
+						, description
 						, next_step
 						, notes
 						, confirmation
 						, contact
 						, contact_number
 					)
-					values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+					values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 					returning *";
 			}
 			else
@@ -64,6 +68,8 @@ class Log extends Record
 						, company_id = ?
 						, title = ?
 						, job_number = ?
+						, job_link = ?
+						, description = ?
 						, next_step = ?
 						, notes = ?
 						, confirmation = ?
@@ -129,6 +135,8 @@ class Log extends Record
 					, action_date
 					, title
 					, job_number
+					, job_link
+					, description
 					, next_step
 					, notes
 					, confirmation
