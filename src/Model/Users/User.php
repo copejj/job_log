@@ -3,6 +3,7 @@ namespace Jeff\Code\Model\Users;
 
 use Exception;
 use Jeff\Code\Model\Record;
+use Jeff\Code\Util\Users\Password;
 
 class User extends Record
 {
@@ -17,7 +18,7 @@ class User extends Record
 
 			if (!empty($this->data['password']))
 			{
-				$this->data['password_hash'] = password_hash($this->data['password'], PASSWORD_ARGON2I);
+				$this->data['password_hash'] = Password::hash($this->data['password']);
 			}
 
 			$this->bind = [
